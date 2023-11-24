@@ -4,7 +4,7 @@ import br.akd.svc.akadia.modules.backoffice.lead.models.entity.LeadEntity;
 import br.akd.svc.akadia.modules.backoffice.lead.models.enums.OrigemLeadEnum;
 import br.akd.svc.akadia.modules.backoffice.lead.repository.impl.LeadRepositoryImpl;
 import br.akd.svc.akadia.modules.global.telefone.entity.TelefoneEntity;
-import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.ClienteSistemaRequest;
+import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.services.validator.ClienteSistemaValidationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
