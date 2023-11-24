@@ -1,12 +1,18 @@
 package br.akd.svc.akadia.modules.web.plano.services;
 
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import br.akd.svc.akadia.modules.web.cartao.models.dto.request.CartaoRequest;
+import br.akd.svc.akadia.modules.web.plano.models.dto.request.PlanoRequest;
+import br.akd.svc.akadia.modules.web.plano.models.dto.response.PlanoResponse;
+import org.springframework.transaction.annotation.Transactional;
 
-@Slf4j
-@Service
-public class PlanoService {
+import java.util.UUID;
 
-    //TODO REFAZER TUDO
+public interface PlanoService {
+    @Transactional
+    PlanoResponse atualizaPlanoDoClienteSistemico(UUID idClienteSistema,
+                                                  PlanoRequest planoRequest,
+                                                  CartaoRequest cartaoRequest);
 
+    @Transactional
+    PlanoResponse cancelaPlanoDoClienteSistemico(UUID idClienteSistema);
 }
