@@ -1,7 +1,8 @@
 package br.akd.svc.akadia.modules.web.clientesistema.proxy.impl.atualizacao;
 
 import br.akd.svc.akadia.exceptions.InvalidRequestException;
-import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.ClienteSistemaRequest;
+import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.atualizacao.AtualizaClienteSistemaRequest;
+import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.ClienteSistemaAsaasProxy;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.impl.atualizacao.utils.AtualizacaoClienteAsaasProxyUtils;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.models.request.ClienteAsaasRequest;
@@ -24,13 +25,13 @@ public class AtualizacaoClienteAsaasProxyImpl {
     AtualizacaoClienteAsaasProxyUtils atualizacaoClienteAsaasProxyUtils;
 
     public void realizaAtualizacaoClienteAsaas(String asaasId,
-                                               ClienteSistemaRequest clienteSistemaRequest) {
+                                               AtualizaClienteSistemaRequest atualizaClienteSistemaRequest) {
 
         log.info("Método de serviço responsável pela atualização de cliente na integradora ASAAS acessado");
 
         log.info("Iniciando construção do objeto criaClienteAsaasRequest...");
         ClienteAsaasRequest clienteAsaasRequest = new ClienteAsaasRequest()
-                .constroiObjetoCriaClienteAsaasRequest(clienteSistemaRequest);
+                .constroiObjetoCriaClienteAsaasRequestParaAtualizacao(atualizaClienteSistemaRequest);
         log.info("Objeto CriaClienteAsaasRequest construído com sucesso");
 
         ResponseEntity<ClienteAsaasResponse> responseAsaas;

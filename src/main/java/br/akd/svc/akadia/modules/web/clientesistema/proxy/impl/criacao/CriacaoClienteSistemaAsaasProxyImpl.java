@@ -1,7 +1,7 @@
 package br.akd.svc.akadia.modules.web.clientesistema.proxy.impl.criacao;
 
 import br.akd.svc.akadia.exceptions.InvalidRequestException;
-import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.ClienteSistemaRequest;
+import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.ClienteSistemaAsaasProxy;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.impl.criacao.utils.CriacaoClienteAsaasProxyUtils;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.models.request.ClienteAsaasRequest;
