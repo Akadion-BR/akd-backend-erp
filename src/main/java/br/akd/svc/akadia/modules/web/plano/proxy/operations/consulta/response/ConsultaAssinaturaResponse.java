@@ -1,5 +1,6 @@
-package br.akd.svc.akadia.modules.web.proxy.asaas.responses.assinatura.consulta;
+package br.akd.svc.akadia.modules.web.plano.proxy.operations.consulta.response;
 
+import br.akd.svc.akadia.modules.web.plano.proxy.operations.consulta.response.split.ConsultaSplitResponse;
 import lombok.*;
 
 import java.util.List;
