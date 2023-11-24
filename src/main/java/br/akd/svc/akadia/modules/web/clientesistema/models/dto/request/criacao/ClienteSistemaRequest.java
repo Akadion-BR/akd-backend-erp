@@ -1,4 +1,4 @@
-package br.akd.svc.akadia.modules.web.clientesistema.models.dto.request;
+package br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao;
 
 import br.akd.svc.akadia.modules.global.endereco.dto.request.EnderecoRequest;
 import br.akd.svc.akadia.modules.global.telefone.request.TelefoneRequest;
