@@ -36,11 +36,9 @@ public class CriacaoClienteSistemaAsaasProxyImpl {
                 .constroiObjetoCriaClienteAsaasRequest(clienteRequest);
         log.info("Objeto CriaClienteAsaasRequest construído com sucesso");
 
-        ResponseEntity<ClienteAsaasResponse> responseAsaas;
-
         try {
             log.info("Realizando envio de requisição de criação de cliente para a integradora ASAAS...");
-            responseAsaas = clienteAsaasProxy.cadastraNovoCliente(
+            ResponseEntity<ClienteAsaasResponse> responseAsaas = clienteAsaasProxy.cadastraNovoCliente(
                     clienteAsaasRequest, System.getenv(Constantes.TOKEN_ASAAS));
             log.info("Criação de cliente sistêmico na integradora ASAAS realizado com sucesso");
 
@@ -62,7 +60,7 @@ public class CriacaoClienteSistemaAsaasProxyImpl {
         } catch (Exception e) {
             log.error("Ocorreu um erro interno durante a criação do cliente sistêmico na integradora de " +
                     "pagamentos ASAAS: {}", e.getMessage());
-            throw new InternalErrorException(ConstantesClienteSistema.ERRO_CRIACAO_CLIENTE_ASAAS);
+            throw new InternalErrorException(Constantes.ERRO_INTERNO);
         }
     }
 
