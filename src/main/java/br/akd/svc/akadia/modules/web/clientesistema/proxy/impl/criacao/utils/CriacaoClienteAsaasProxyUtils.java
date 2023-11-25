@@ -4,7 +4,6 @@ import br.akd.svc.akadia.exceptions.InternalErrorException;
 import br.akd.svc.akadia.exceptions.InvalidRequestException;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.models.error.FeignErrorResponse;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.models.response.ClienteAsaasResponse;
-import br.akd.svc.akadia.modules.web.clientesistema.utils.ConstantesClienteSistema;
 import br.akd.svc.akadia.utils.Constantes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,19 +20,19 @@ public class CriacaoClienteAsaasProxyUtils {
     public void realizaValidacaoResponseAsaas(ResponseEntity<ClienteAsaasResponse> responseEntity) {
         if (responseEntity == null) {
             log.error("O valor retornado pela integradora na criação do cliente é nulo");
-            throw new InvalidRequestException(Constantes.RETORNO_INTEGRADORA_NULO);
+            throw new InternalErrorException(Constantes.ERRO_INTERNO);
         }
 
         if (responseEntity.getStatusCodeValue() != 200) {
             log.error("Ocorreu um erro no processo de criação da cliente na integradora de pagamentos: {}",
                     responseEntity.getBody());
-            throw new InvalidRequestException(ConstantesClienteSistema.ERRO_CRIACAO_CLIENTE_ASAAS
-                    + responseEntity.getBody());
+            throw new InternalErrorException(Constantes.ERRO_INTERNO);
         }
 
         if (responseEntity.getBody() == null) {
-            log.error("O valor retornado pela integradora na criação do cliente é nulo");
-            throw new InvalidRequestException(Constantes.RETORNO_INTEGRADORA_NULO);
+            log.error("O valor retornado pela integradora no corpo do objeto da criação do cliente é " +
+                    "nulo: {}", responseEntity);
+            throw new InvalidRequestException(Constantes.ERRO_INTERNO);
         }
     }
 
@@ -51,7 +50,7 @@ public class CriacaoClienteAsaasProxyUtils {
         } catch (UnrecognizedPropertyException unrecognizedPropertyException) {
             log.error("Ocorreu um erro interno durante a criação do cliente sistêmico na integradora de " +
                     "pagamentos ASAAS: {}", unrecognizedPropertyException.getMessage());
-            return new InternalErrorException(ConstantesClienteSistema.ERRO_CRIACAO_CLIENTE_ASAAS);
+            return new InternalErrorException(Constantes.ERRO_INTERNO);
         }
     }
 }

@@ -52,7 +52,7 @@ public class ClienteSistemaRepositoryImpl {
             log.debug("Cliente encontrado: {}", clienteSistema);
         } else {
             log.warn("Nenhum cliente foi encontrado com o id informado: {}", id);
-            throw new ObjectNotFoundException("Nenhum cliente foi encontrado com o id informado");
+            throw new ObjectNotFoundException("Nenhum cliente foi encontrado. Favor tentar novamente em alguns minutos");
         }
 
         return clienteSistema;
@@ -77,6 +77,7 @@ public class ClienteSistemaRepositoryImpl {
         return clienteSistema;
     }
 
+    //TODO TRANSFORMAR EM JOB AGENDADO DIARIAMENTE
     public void implementaBuscaPorPlanosVencidosAtivos() {
         log.debug("Método que implementa busca por planos vencidos ativos acessado");
         clienteSistemaRepository.buscaPorClientesComPlanosVencidosAtivos(

@@ -41,4 +41,7 @@ public class Constantes {
     public static final String TOKEN_ASAAS = "TOKEN_ASAAS";
     public static final String FALHA_COMUNICACAO_ASAAS =
             "Ocorreu uma falha na comunicação com a integradora de pagamentos: ";
+
+    public static final String ERRO_INTERNO = "Ocorreu um erro interno no servidor da aplicação. Favor " +
+            "entrar com contato com o suporte";
 }
