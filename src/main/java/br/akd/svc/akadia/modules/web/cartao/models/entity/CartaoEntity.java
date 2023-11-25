@@ -1,5 +1,6 @@
 package br.akd.svc.akadia.modules.web.cartao.models.entity;
 
+import br.akd.svc.akadia.modules.web.cartao.models.dto.request.CartaoRequest;
 import br.akd.svc.akadia.modules.web.cartao.models.enums.BandeiraCartaoEnum;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -64,5 +65,21 @@ public class CartaoEntity {
             "4 - Hipercard")
     @Column(name = "ENM_BANDEIRA_CRT", nullable = false)
     private BandeiraCartaoEnum bandeiraCartaoEnum;
+
+    public CartaoEntity buildFromRequest(CartaoRequest cartaoRequest) {
+        return cartaoRequest != null
+                ? CartaoEntity.builder()
+                .id(null)
+                .nomePortador(cartaoRequest.getNomePortador())
+                .cpfCnpj(cartaoRequest.getCpfCnpj())
+                .numero(cartaoRequest.getNumero())
+                .ccv(cartaoRequest.getCcv())
+                .mesExpiracao(cartaoRequest.getMesExpiracao())
+                .anoExpiracao(cartaoRequest.getAnoExpiracao())
+                .tokenCartao(null)
+                .bandeiraCartaoEnum(cartaoRequest.getBandeiraCartaoEnum())
+                .build()
+                : null;
+    }
 
 }

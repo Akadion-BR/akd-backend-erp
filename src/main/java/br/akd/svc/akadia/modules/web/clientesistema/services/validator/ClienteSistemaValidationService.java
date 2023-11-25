@@ -1,7 +1,9 @@
 package br.akd.svc.akadia.modules.web.clientesistema.services.validator;
 
 import br.akd.svc.akadia.exceptions.InvalidRequestException;
-import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.ClienteSistemaRequest;
+import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
+import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.atualizacao.AtualizaClienteSistemaRequest;
+import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.entity.ClienteSistemaEntity;
 import br.akd.svc.akadia.modules.web.clientesistema.repository.ClienteSistemaRepository;
 import br.akd.svc.akadia.modules.web.empresa.models.entity.EmpresaEntity;
@@ -45,17 +47,31 @@ public class ClienteSistemaValidationService {
         validaSeCpfJaExiste(clienteSistemaRequest.getCpf());
     }
 
-    public void validaSeChavesUnicasJaExistemParaClienteSistemicoAtualizado(ClienteSistemaRequest clienteAtualizacao,
+    public void realizaValidacoesParaAtualizacaoDeClienteSistemico(AtualizaClienteSistemaRequest atualizaClienteSistemaRequest,
+                                                                   ClienteSistemaEntity clientePreAtualizacao) {
+        validaSeClienteSistemicoEstaExcluido(clientePreAtualizacao.getExclusao());
+        validaSeChavesUnicasJaExistemParaClienteSistemicoAtualizado(
+                atualizaClienteSistemaRequest, clientePreAtualizacao);
+    }
+
+    public void validaSeClienteSistemicoEstaExcluido(ExclusaoEntity exclusaoEntity) {
+        log.info("Método de validação de planoEntity excluído acessado");
+        if (exclusaoEntity != null) {
+            log.info("Validação de cliente sistêmico já excluído falhou. Não é possível realizar " +
+                    "operações em um cliente sistêmico que já foi excluído.");
+            throw new InvalidRequestException("Não é possível realizar operações em um cliente " +
+                    "sistêmico que já foi excluído");
+        }
+        log.info("A verificação de item excluído passou com sucesso");
+    }
+
+    public void validaSeChavesUnicasJaExistemParaClienteSistemicoAtualizado(AtualizaClienteSistemaRequest atualizaClienteSistemaRequest,
                                                                             ClienteSistemaEntity clientePreAtualizacao) {
         log.debug("Método de validação de chave única para atualização de cliente acessado...");
-        if (clienteAtualizacao.getCpf() != null && clientePreAtualizacao.getCpf() == null
-                || clienteAtualizacao.getCpf() != null
-                && !clientePreAtualizacao.getCpf().equals(clienteAtualizacao.getCpf()))
-            validaSeCpfJaExiste(clienteAtualizacao.getCpf());
-        if (clienteAtualizacao.getEmail() != null && clientePreAtualizacao.getEmail() == null
-                || clienteAtualizacao.getEmail() != null
-                && !clientePreAtualizacao.getEmail().equals(clienteAtualizacao.getEmail()))
-            validaSeEmailJaExiste(clienteAtualizacao.getCpf());
+        if (atualizaClienteSistemaRequest.getEmail() != null && clientePreAtualizacao.getEmail() == null
+                || atualizaClienteSistemaRequest.getEmail() != null
+                && !clientePreAtualizacao.getEmail().equals(atualizaClienteSistemaRequest.getEmail()))
+            validaSeEmailJaExiste(atualizaClienteSistemaRequest.getEmail());
     }
 
     public void validaSeEmailJaExiste(String email) {

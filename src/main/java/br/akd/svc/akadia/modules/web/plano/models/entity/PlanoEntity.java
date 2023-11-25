@@ -84,7 +84,7 @@ public class PlanoEntity {
                 .dataVencimento(LocalDate.now().plusDays(7L).toString())
                 .tipoPlanoEnum(planoRequest.getTipoPlanoEnum())
                 .statusPlanoEnum(StatusPlanoEnum.PERIODO_DE_TESTES)
-                .formaPagamentoSistemaEnum(FormaPagamentoSistemaEnum.BOLETO)
+                .formaPagamentoSistemaEnum(planoRequest.getFormaPagamentoSistemaEnum())
                 .build()
                 : null;
     }

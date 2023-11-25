@@ -4,7 +4,8 @@ import br.akd.svc.akadia.modules.global.endereco.entity.EnderecoEntity;
 import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.modules.global.telefone.entity.TelefoneEntity;
 import br.akd.svc.akadia.modules.web.cartao.models.entity.CartaoEntity;
-import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.ClienteSistemaRequest;
+import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.atualizacao.AtualizaClienteSistemaRequest;
+import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.empresa.models.entity.EmpresaEntity;
 import br.akd.svc.akadia.modules.web.pagamento.models.entity.PagamentoSistemaEntity;
 import br.akd.svc.akadia.modules.web.plano.models.entity.PlanoEntity;
@@ -147,11 +148,12 @@ public class ClienteSistemaEntity {
                 .collect(Collectors.toList()).get(0);
     }
 
-    public ClienteSistemaEntity buildFromRequest(ClienteSistemaRequest clienteSistemaRequest) {
+    public ClienteSistemaEntity buildFromRequest(String idClienteAsaas,
+                                                 ClienteSistemaRequest clienteSistemaRequest) {
         return clienteSistemaRequest != null
                 ? ClienteSistemaEntity.builder()
                 .id(null)
-                .codigoClienteAsaas(null)
+                .codigoClienteAsaas(idClienteAsaas)
                 .dataCadastro(LocalDate.now().toString())
                 .horaCadastro(LocalTime.now().toString())
                 .dataNascimento(clienteSistemaRequest.getDataNascimento())
@@ -172,23 +174,23 @@ public class ClienteSistemaEntity {
     }
 
     public ClienteSistemaEntity updateFromRequest(ClienteSistemaEntity clientePreAtualizacao,
-                                                  ClienteSistemaRequest clienteRequest) {
-        return clienteRequest != null
+                                                  AtualizaClienteSistemaRequest atualizaClienteSistemaRequest) {
+        return atualizaClienteSistemaRequest != null
                 ? ClienteSistemaEntity.builder()
                 .id(clientePreAtualizacao.getId())
                 .codigoClienteAsaas(clientePreAtualizacao.getCodigoClienteAsaas())
                 .dataCadastro(clientePreAtualizacao.getDataCadastro())
                 .horaCadastro(clientePreAtualizacao.getHoraCadastro())
-                .dataNascimento(clienteRequest.getDataNascimento())
-                .email(clienteRequest.getEmail())
-                .nome(clienteRequest.getNome())
-                .senha(clienteRequest.getSenha())
-                .cpf(clienteRequest.getCpf())
+                .dataNascimento(atualizaClienteSistemaRequest.getDataNascimento())
+                .email(atualizaClienteSistemaRequest.getEmail())
+                .nome(atualizaClienteSistemaRequest.getNome())
+                .senha(atualizaClienteSistemaRequest.getSenha())
+                .cpf(atualizaClienteSistemaRequest.getCpf())
                 .saldo(clientePreAtualizacao.getSaldo())
                 .exclusao(clientePreAtualizacao.getExclusao())
                 .plano(clientePreAtualizacao.getPlano())
-                .telefone(new TelefoneEntity().buildFromRequest(clienteRequest.getTelefone()))
-                .endereco(new EnderecoEntity().buildFromRequest(clienteRequest.getEndereco()))
+                .telefone(new TelefoneEntity().buildFromRequest(atualizaClienteSistemaRequest.getTelefone()))
+                .endereco(new EnderecoEntity().buildFromRequest(atualizaClienteSistemaRequest.getEndereco()))
                 .cartao(clientePreAtualizacao.getCartao())
                 .pagamentos(clientePreAtualizacao.getPagamentos())
                 .empresas(clientePreAtualizacao.getEmpresas())

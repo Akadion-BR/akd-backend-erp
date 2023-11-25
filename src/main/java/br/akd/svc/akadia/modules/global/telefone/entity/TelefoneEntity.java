@@ -50,6 +50,7 @@ public class TelefoneEntity {
                 ? TelefoneEntity.builder()
                 .prefixo(telefoneRequest.getPrefixo())
                 .numero(telefoneRequest.getNumero())
+                .tipoTelefone(telefoneRequest.getTipoTelefone())
                 .build()
                 : null;
     }

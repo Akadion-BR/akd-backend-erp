@@ -5,13 +5,14 @@ import br.akd.svc.akadia.exceptions.InvalidRequestException;
 import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
 import br.akd.svc.akadia.modules.backoffice.lead.models.entity.LeadEntity;
 import br.akd.svc.akadia.modules.backoffice.lead.service.LeadService;
-import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.ClienteSistemaRequest;
+import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.atualizacao.AtualizaClienteSistemaRequest;
+import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.response.ClienteSistemaResponse;
 import br.akd.svc.akadia.modules.web.clientesistema.models.entity.ClienteSistemaEntity;
 import br.akd.svc.akadia.modules.web.clientesistema.repository.impl.ClienteSistemaRepositoryImpl;
 import br.akd.svc.akadia.modules.web.clientesistema.services.crud.ClienteSistemaService;
 import br.akd.svc.akadia.modules.web.clientesistema.services.validator.ClienteSistemaValidationService;
-import br.akd.svc.akadia.modules.web.plano.services.PlanoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -52,9 +54,6 @@ public class ClienteSistemaController {
     ClienteSistemaValidationService clienteSistemaValidationService;
 
     @Autowired
-    PlanoService planoService;
-
-    @Autowired
     ClienteSistemaRepositoryImpl clienteSistemaRepositoryImpl;
 
     @Autowired
@@ -69,7 +68,7 @@ public class ClienteSistemaController {
     @GetMapping
     @Tag(name = "Busca de todos os clientes cadastrados")
     @Operation(summary = "Esse endpoint tem como objetivo realizar a busca de todos os clientes cadastrados no " +
-            "banco de dados", method = "POST")
+            "banco de dados", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Requisição executada com sucesso",
@@ -89,7 +88,7 @@ public class ClienteSistemaController {
      * @param clienteSistemaRequest Objeto contendo todos os atributos necessários para a criação de um novo lead
      * @return Retorna Lead persistido
      */
-    @PostMapping("/cadastro/verifica-email")
+    @PostMapping("/capta-leads")
     @Tag(name = "Captação de lead da criação de novo cliente")
     @Operation(summary = "Esse endpoint tem como objetivo realizar o cadastro das informações básicas do cliente " +
             "no banco de dados para formação de leads, além de verificar se o e-mail informado já existe",
@@ -106,9 +105,12 @@ public class ClienteSistemaController {
     })
     public ResponseEntity<LeadEntity> captaLeadsPreCadastro(@RequestBody ClienteSistemaRequest clienteSistemaRequest) {
         log.info("Método controlador de captação de leads pré-cadastro acessado");
+        //TODO CRIAR OU IMPLEMENTAR UM OBJETO REQUEST SÓ PARA A CAPTAÇÃO DE LEADS, POIS DA FORMA QUE ESTÁ IRÁ
+        // ACARRETAR EM CONFLITOS COM OS VALIDATORS DO CLIENTESISTEMAREQUEST
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 leadService.encaminhaLeadParaPersistencia(
                         clienteSistemaRequest));
+        //TODO IMPLEMENTAR LÓGICA
     }
 
     /**
@@ -118,7 +120,7 @@ public class ClienteSistemaController {
      * @param cpf CPF a ser validado
      * @return Retorna status da requisição
      */
-    @PostMapping("cadastro/verifica-cpf")
+    @PostMapping("/verifica-cpf")
     @Tag(name = "Validação de CPF da criação de novo cliente")
     @Operation(summary = "Esse endpoint tem como objetivo realizar a verificação de já existência do CPF enviado",
             method = "POST")
@@ -132,8 +134,9 @@ public class ClienteSistemaController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = InvalidRequestException.class))})
     })
-    public ResponseEntity<ClienteSistemaEntity> verificaSeCpfJaExiste(@RequestBody String cpf) {
+    public ResponseEntity<?> verificaSeCpfJaExiste(@RequestBody String cpf) {
         log.info("Método controlador de validação se cpf acessado");
+        //TODO ADICIONAR VALIDADOR DE CPF
         clienteSistemaValidationService.validaSeCpfJaExiste(cpf);
         log.info("Validação de cpf realizada com sucesso. O cpf informado está disponível");
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -147,7 +150,7 @@ public class ClienteSistemaController {
      * @param clienteSistemaRequest Objeto contendo todos os atributos necessários para a criação de um novo cliente
      * @return Retorna objeto Cliente criado convertido para o tipo ClienteResponse
      */
-    @PostMapping("cadastro/cria-cliente")
+    @PostMapping
     @Tag(name = "Cadastro de novo cliente")
     @Operation(summary = "Esse endpoint tem como objetivo realizar o cadastro de um novo cliente no banco de dados " +
             "do projeto e na integradora de pagamentos ASAAS",
@@ -170,7 +173,7 @@ public class ClienteSistemaController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = FeignConnectionException.class))})
     })
-    public ResponseEntity<ClienteSistemaEntity> criaNovoCliente(@RequestBody ClienteSistemaRequest clienteSistemaRequest) {
+    public ResponseEntity<ClienteSistemaResponse> criaNovoCliente(@Valid @RequestBody ClienteSistemaRequest clienteSistemaRequest) throws JsonProcessingException {
         log.info("Método controlador de criação de novo cliente acessado");
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 clienteSistemaService.cadastraNovoCliente(
@@ -182,11 +185,11 @@ public class ClienteSistemaController {
      * Esse endpoint tem como objetivo realizar a atualização dos dados do cliente no banco de dados do projeto
      * e na integradora de pagamentos ASAAS
      *
-     * @param idCliente             ID do cliente que deverá ser atualizado
-     * @param clienteSistemaRequest Objeto contendo todos os atributos necessários para a atualização de um cliente
+     * @param idCliente                     ID do cliente que deverá ser atualizado
+     * @param atualizaClienteSistemaRequest Objeto contendo todos os atributos necessários para a atualização de um cliente
      * @return Retorna objeto Cliente criado convertido para o tipo ClienteResponse
      */
-    @PutMapping("atualiza-cliente/{idCliente}")
+    @PutMapping("/{idCliente}")
     @Tag(name = "Atualização de dados do cliente")
     @Operation(summary = "Esse endpoint tem como objetivo realizar a atualização dos dados do cliente no banco de " +
             "dados do projeto e na integradora de pagamentos ASAAS",
@@ -209,90 +212,12 @@ public class ClienteSistemaController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = FeignConnectionException.class))})
     })
-    public ResponseEntity<ClienteSistemaEntity> atualizaDadosCliente(@PathVariable UUID idCliente,
-                                                                     @RequestBody ClienteSistemaRequest clienteSistemaRequest) {
+    public ResponseEntity<ClienteSistemaResponse> atualizaDadosCliente(@PathVariable UUID idCliente,
+                                                                       @Valid @RequestBody AtualizaClienteSistemaRequest atualizaClienteSistemaRequest) throws JsonProcessingException {
         log.info("Método controlador de atualização de dados do cliente de id {} acessado", idCliente);
-        return ResponseEntity.status(HttpStatus.OK).body(clienteSistemaService.atualizaDadosCliente(idCliente, clienteSistemaRequest));
+        return ResponseEntity.status(HttpStatus.OK).body(
+                clienteSistemaService.atualizaDadosCliente(
+                        idCliente,
+                        atualizaClienteSistemaRequest));
     }
-
-    //TODO IMPLEMENTAR MÉTODOS NOVAMENTE
-//    /**
-//     * Atualização de dados da assinatura do cliente
-//     * Esse endpoint tem como objetivo realizar a atualização dos dados da assinatura do cliente no banco de dados
-//     * do projeto e na integradora de pagamentos ASAAS
-//     *
-//     * @param idCliente             ID do cliente que deverá ser atualizado
-//     * @param clienteSistemaRequest Objeto contendo todos os atributos necessários para a atualização de um cliente
-//     * @return Retorna objeto Cliente criado convertido para o tipo ClienteResponse
-//     */
-//    @PutMapping("atualiza-assinatura/{idCliente}")
-//    @Tag(name = "Atualização de dados da assinatura do cliente")
-//    @Operation(summary = "Esse endpoint tem como objetivo realizar a atualização dos dados da assinatura do cliente " +
-//            "no banco de dados do projeto e na integradora de pagamentos ASAAS",
-//            method = "POST")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200",
-//                    description = "Assinatura do cliente atualizada com sucesso",
-//                    content = {@Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = ClienteSistemaResponse.class))}),
-//            @ApiResponse(responseCode = "400",
-//                    description = "Ocorreu um erro no processo de atualização da assinatura do cliente",
-//                    content = {@Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = InvalidRequestException.class))}),
-//            @ApiResponse(responseCode = "404",
-//                    description = "Nenhum cliente foi encontrado com o id informado",
-//                    content = {@Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = ObjectNotFoundException.class))}),
-//            @ApiResponse(responseCode = "500",
-//                    description = "Ocorreu uma falha na conexão com o feign",
-//                    content = {@Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = FeignConnectionException.class))})
-//    })
-//    public ResponseEntity<ClienteSistemaEntity> atualizaDadosAssinaturaCliente(@PathVariable UUID idCliente,
-//                                                                               @RequestBody ClienteSistemaRequest clienteSistemaRequest) {
-//        log.info("Método controlador de atualização de dados da assinatura do cliente de id {} acessado", idCliente);
-//        return ResponseEntity.status(HttpStatus.OK).body(
-//                planoService.atualizaDadosAssinatura(
-//                        idCliente,
-//                        clienteSistemaRequest));
-//    }
-//
-//    /**
-//     * Cancelamento da assinatura do cliente
-//     * Esse endpoint tem como objetivo realizar o cancelammento da assinatura do cliente no banco de dados do projeto
-//     * e na integradora de pagamentos ASAAS
-//     *
-//     * @param idCliente             ID do cliente que deverá ser atualizado
-//     * @param clienteSistemaRequest Objeto contendo todos os atributos necessários para a atualização de um cliente
-//     * @return Retorna objeto Cliente criado convertido para o tipo ClienteResponse
-//     */
-//    @DeleteMapping("cancela-assinatura/{idCliente}")
-//    @Tag(name = "Cancelamento da assinatura do cliente")
-//    @Operation(summary = "Esse endpoint tem como objetivo realizar o cancelammento da assinatura do cliente no banco " +
-//            "de dados do projeto e na integradora de pagamentos ASAAS",
-//            method = "POST")
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200",
-//                    description = "Assinatura do cliente cancelada com sucesso",
-//                    content = {@Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = ClienteSistemaResponse.class))}),
-//            @ApiResponse(responseCode = "400",
-//                    description = "Ocorreu um erro no processo de cancelamento da assinatura do cliente",
-//                    content = {@Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = InvalidRequestException.class))}),
-//            @ApiResponse(responseCode = "404",
-//                    description = "Nenhum cliente foi encontrado com o id informado",
-//                    content = {@Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = ObjectNotFoundException.class))}),
-//            @ApiResponse(responseCode = "500",
-//                    description = "Ocorreu uma falha na conexão com o feign",
-//                    content = {@Content(mediaType = "application/json",
-//                            schema = @Schema(implementation = FeignConnectionException.class))})
-//    })
-//    public ResponseEntity<ClienteSistemaEntity> cancelaAssinaturaCliente(@PathVariable UUID idCliente) {
-//        log.info("Método controlador de cancelamento de assinatura do cliente acessado");
-//        return ResponseEntity.status(HttpStatus.OK).body(
-//                planoService.cancelaAssinatura(
-//                        idCliente));
-//    }
 }

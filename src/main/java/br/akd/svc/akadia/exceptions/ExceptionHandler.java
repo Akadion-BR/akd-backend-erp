@@ -50,7 +50,7 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
                                                                  ObjectNotFoundException objectNotFoundException) {
         StandartError standartError = StandartError.builder()
                 .localDateTime(LocalDateTime.now())
-                .status(400)
+                .status(404)
                 .error(objectNotFoundException.getMessage())
                 .path(req.getRequestURI())
                 .build();
@@ -105,6 +105,19 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
                 .path(((ServletWebRequest) request).getRequest().getRequestURI())
                 .build();
         return ResponseEntity.status(status).body(standartError);
+    }
+
+    @org.springframework.web.bind.annotation.ExceptionHandler
+    public ResponseEntity<StandartError> internalErrorException(HttpServletRequest req,
+                                                                InternalErrorException exception) {
+        StandartError standartError = StandartError.builder()
+                .localDateTime(LocalDateTime.now())
+                .status(500)
+                .error(exception.getMessage())
+                .path(req.getRequestURI())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(standartError);
     }
 
 }
