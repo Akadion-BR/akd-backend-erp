@@ -12,8 +12,11 @@ import br.akd.svc.akadia.modules.web.clientesistema.services.crud.ClienteSistema
 import br.akd.svc.akadia.modules.web.clientesistema.services.validator.ClienteSistemaValidationService;
 import br.akd.svc.akadia.modules.web.plano.proxy.operations.criacao.CriacaoPlanoAsaasProxyImpl;
 import br.akd.svc.akadia.modules.web.plano.proxy.operations.remocao.impl.RemocaoPlanoAsaasProxyImpl;
+import br.akd.svc.akadia.utils.Constantes;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -40,7 +43,7 @@ public class ClienteSistemaServiceImpl implements ClienteSistemaService {
     RemocaoPlanoAsaasProxyImpl remocaoPlanoAsaasProxy;
 
     @Override
-    public ClienteSistemaResponse cadastraNovoCliente(ClienteSistemaRequest clienteSistemaRequest) {
+    public ClienteSistemaResponse cadastraNovoCliente(ClienteSistemaRequest clienteSistemaRequest) throws JsonProcessingException {
 
         log.info("Método de serviço de cadastro de novo cliente acessado");
 
@@ -65,38 +68,37 @@ public class ClienteSistemaServiceImpl implements ClienteSistemaService {
         clienteSistema.getPlano().setCodigoAssinaturaAsaas(idAssinaturaAsaas);
         log.info("Código de assinatura asaas setada no plano do cliente sistêmico com sucesso");
 
-        ClienteSistemaEntity clientePersistido;
         try {
             log.info("Iniciando acesso ao método de implementação de persistência do cliente...");
-            clientePersistido = clienteSistemaRepositoryImpl.implementaPersistencia(clienteSistema);
+            ClienteSistemaEntity clientePersistido = clienteSistemaRepositoryImpl
+                    .implementaPersistencia(clienteSistema);
             log.info("Persistência do cliente sistêmico realizada com sucesso");
+
+            log.info("Iniciando acesso ao método responsável por realizar a conversão de objeto do tipo " +
+                    "ClienteSistemaEntity para objeto do tipo ClienteSistemaResponse...");
+            ClienteSistemaResponse clienteSistemaResponse = new ClienteSistemaResponse()
+                    .buildFromEntity(clientePersistido);
+            log.info("Conversão de tipagem realizada com sucesso");
+
+            log.info("Criação do cliente sistêmico realizada com sucesso. Retornando dados...");
+            return clienteSistemaResponse;
         } catch (Exception e) {
-            log.error("Ocorreu um erro durante o processo de persistência do plano: {}", e.getMessage());
+            log.error("Ocorreu um erro durante a tentativa de persistência do plano. " +
+                    "Erro: {}", e.getMessage());
 
             log.info("Iniciando acesso ao método de cancelamento do plano na integradora ASAAS " +
                     "para realização de rollback...");
-            remocaoPlanoAsaasProxy.realizaCancelamentoDePlanoDeAssinaturaNaIntegradoraAsaas(idAssinaturaAsaas);
+            remocaoPlanoAsaasProxy.realizaCancelamentoDePlanoDeAssinaturaNaIntegradoraAsaas(
+                    idAssinaturaAsaas);
 
             log.info("Rollback do plano na integradora ASAAS finalizado com sucesso");
-            throw new InternalErrorException("Ocorreu um erro durante a tentativa de persistência do plano. " +
-                    "Erro: " + e.getMessage());
+            throw new InternalErrorException(Constantes.ERRO_INTERNO);
         }
-
-        log.info("Iniciando acesso ao método responsável por realizar a conversão de objeto do tipo " +
-                "ClienteSistemaEntity para objeto do tipo ClienteSistemaResponse...");
-        ClienteSistemaResponse clienteSistemaResponse = new ClienteSistemaResponse()
-                .buildFromEntity(clientePersistido);
-        log.info("Conversão de tipagem realizada com sucesso");
-
-        log.info("Criação do cliente sistêmico realizada com sucesso. Retornando dados...");
-        return clienteSistemaResponse;
-
     }
 
     @Override
     public ClienteSistemaResponse atualizaDadosCliente(UUID uuidClienteSistema,
-                                                       AtualizaClienteSistemaRequest atualizaClienteSistemaRequest) {
-        log.info("Método de serviço de atualização de dados do cliente sistêmico acessado");
+                                                       AtualizaClienteSistemaRequest atualizaClienteSistemaRequest) throws JsonProcessingException {
 
         log.info("Iniciando acesso ao método de implementação de busca de cliente sistêmico por id...");
         ClienteSistemaEntity clienteSistema = clienteSistemaRepositoryImpl
@@ -104,19 +106,35 @@ public class ClienteSistemaServiceImpl implements ClienteSistemaService {
         log.info("Busca de cliente sistêmico por id realizada com sucesso");
 
         log.info("Iniciando acesso ao método de validação dos atributos recebidos...");
-        clienteSistemaValidationService.validaSeChavesUnicasJaExistemParaClienteSistemicoAtualizado(
+        clienteSistemaValidationService.realizaValidacoesParaAtualizacaoDeClienteSistemico(
                 atualizaClienteSistemaRequest, clienteSistema);
         log.info("Validação do método de atualização de cliente sistêmico realizada com sucesso");
 
-        log.info("Iniciando construção do objeto ClienteSistemaEntity...");
-        ClienteSistemaEntity clienteAtualizado = new ClienteSistemaEntity()
-                .updateFromRequest(clienteSistema, atualizaClienteSistemaRequest);
-        log.info("Objeto ClienteSistemaEntity construído com sucesso");
+        ClienteSistemaEntity clienteAtualizado;
+        ClienteSistemaEntity clientePosPersistencia;
 
-        log.info("Iniciando acesso ao método de implementação de persistência do cliente sistêmico...");
-        ClienteSistemaEntity clientePosPersistencia = clienteSistemaRepositoryImpl
-                .implementaPersistencia(clienteAtualizado);
-        log.info("Cliente sistêmico persistido com sucesso");
+        try {
+            log.info("Método de serviço de atualização de dados do cliente sistêmico acessado");
+
+            log.info("Iniciando construção do objeto ClienteSistemaEntity...");
+            clienteAtualizado = new ClienteSistemaEntity()
+                    .updateFromRequest(clienteSistema, atualizaClienteSistemaRequest);
+            log.info("Objeto ClienteSistemaEntity construído com sucesso");
+
+            log.info("Iniciando acesso ao método de implementação de persistência do cliente sistêmico...");
+            clientePosPersistencia = clienteSistemaRepositoryImpl
+                    .implementaPersistencia(clienteAtualizado);
+            log.info("Cliente sistêmico persistido com sucesso");
+
+        } catch (DataIntegrityViolationException e) {
+            log.error("Ocorreu um erro durante o processo de persistência no banco de dados durante " +
+                    "a atualização do cliente sistêmico: " + e.getMessage());
+            throw new InternalErrorException(Constantes.ERRO_INTERNO);
+        } catch (Exception e) {
+            log.error("Ocorreu um erro durante o processo de atualização do cliente sistêmico: "
+                    + e.getMessage());
+            throw new InternalErrorException(Constantes.ERRO_INTERNO);
+        }
 
         log.info("Iniciando acesso ao método de atualização dos dados do cliente sistêmico na " +
                 "integradora de pagamentos...");
