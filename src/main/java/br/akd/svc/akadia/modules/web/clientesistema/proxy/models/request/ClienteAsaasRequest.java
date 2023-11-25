@@ -30,6 +30,7 @@ public class ClienteAsaasRequest {
     private String municipalInscription;
     private String stateInscription;
     private String groupName;
+    private String company;
 
     public ClienteAsaasRequest constroiObjetoCriaClienteAsaasRequest(ClienteSistemaRequest clienteSistemaRequest) {
         EnderecoRequest endereco = clienteSistemaRequest.getEndereco();
@@ -50,6 +51,7 @@ public class ClienteAsaasRequest {
                 .municipalInscription(null)
                 .stateInscription(null)
                 .groupName("AKD")
+                .company("Akadion")
                 .build();
     }
 
@@ -73,6 +75,7 @@ public class ClienteAsaasRequest {
                 .municipalInscription(null)
                 .stateInscription(null)
                 .groupName("AKD")
+                .company("Akadion")
                 .build();
     }
 }
