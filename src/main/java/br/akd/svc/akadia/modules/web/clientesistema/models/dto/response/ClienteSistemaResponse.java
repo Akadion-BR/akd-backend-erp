@@ -31,7 +31,7 @@ public class ClienteSistemaResponse {
     public ClienteSistemaResponse buildFromEntity(ClienteSistemaEntity clienteSistemaEntity) {
         return clienteSistemaEntity != null
                 ? ClienteSistemaResponse.builder()
-                .id(null)
+                .id(clienteSistemaEntity.getId())
                 .dataCadastro(clienteSistemaEntity.getDataCadastro())
                 .horaCadastro(clienteSistemaEntity.getHoraCadastro())
                 .dataNascimento(clienteSistemaEntity.getDataNascimento())
