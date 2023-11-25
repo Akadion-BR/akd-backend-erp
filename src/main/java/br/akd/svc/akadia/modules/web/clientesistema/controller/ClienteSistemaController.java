@@ -12,6 +12,7 @@ import br.akd.svc.akadia.modules.web.clientesistema.models.entity.ClienteSistema
 import br.akd.svc.akadia.modules.web.clientesistema.repository.impl.ClienteSistemaRepositoryImpl;
 import br.akd.svc.akadia.modules.web.clientesistema.services.crud.ClienteSistemaService;
 import br.akd.svc.akadia.modules.web.clientesistema.services.validator.ClienteSistemaValidationService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -66,7 +68,7 @@ public class ClienteSistemaController {
     @GetMapping
     @Tag(name = "Busca de todos os clientes cadastrados")
     @Operation(summary = "Esse endpoint tem como objetivo realizar a busca de todos os clientes cadastrados no " +
-            "banco de dados", method = "POST")
+            "banco de dados", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = "Requisição executada com sucesso",
@@ -86,7 +88,7 @@ public class ClienteSistemaController {
      * @param clienteSistemaRequest Objeto contendo todos os atributos necessários para a criação de um novo lead
      * @return Retorna Lead persistido
      */
-    @PostMapping("/cadastro/verifica-email")
+    @PostMapping("/capta-leads")
     @Tag(name = "Captação de lead da criação de novo cliente")
     @Operation(summary = "Esse endpoint tem como objetivo realizar o cadastro das informações básicas do cliente " +
             "no banco de dados para formação de leads, além de verificar se o e-mail informado já existe",
@@ -103,9 +105,12 @@ public class ClienteSistemaController {
     })
     public ResponseEntity<LeadEntity> captaLeadsPreCadastro(@RequestBody ClienteSistemaRequest clienteSistemaRequest) {
         log.info("Método controlador de captação de leads pré-cadastro acessado");
+        //TODO CRIAR OU IMPLEMENTAR UM OBJETO REQUEST SÓ PARA A CAPTAÇÃO DE LEADS, POIS DA FORMA QUE ESTÁ IRÁ
+        // ACARRETAR EM CONFLITOS COM OS VALIDATORS DO CLIENTESISTEMAREQUEST
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 leadService.encaminhaLeadParaPersistencia(
                         clienteSistemaRequest));
+        //TODO IMPLEMENTAR LÓGICA
     }
 
     /**
@@ -115,7 +120,7 @@ public class ClienteSistemaController {
      * @param cpf CPF a ser validado
      * @return Retorna status da requisição
      */
-    @PostMapping("cadastro/verifica-cpf")
+    @PostMapping("/verifica-cpf")
     @Tag(name = "Validação de CPF da criação de novo cliente")
     @Operation(summary = "Esse endpoint tem como objetivo realizar a verificação de já existência do CPF enviado",
             method = "POST")
@@ -129,8 +134,9 @@ public class ClienteSistemaController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = InvalidRequestException.class))})
     })
-    public ResponseEntity<ClienteSistemaEntity> verificaSeCpfJaExiste(@RequestBody String cpf) {
+    public ResponseEntity<?> verificaSeCpfJaExiste(@RequestBody String cpf) {
         log.info("Método controlador de validação se cpf acessado");
+        //TODO ADICIONAR VALIDADOR DE CPF
         clienteSistemaValidationService.validaSeCpfJaExiste(cpf);
         log.info("Validação de cpf realizada com sucesso. O cpf informado está disponível");
         return ResponseEntity.status(HttpStatus.OK).build();
@@ -144,7 +150,7 @@ public class ClienteSistemaController {
      * @param clienteSistemaRequest Objeto contendo todos os atributos necessários para a criação de um novo cliente
      * @return Retorna objeto Cliente criado convertido para o tipo ClienteResponse
      */
-    @PostMapping("cadastro/cria-cliente")
+    @PostMapping
     @Tag(name = "Cadastro de novo cliente")
     @Operation(summary = "Esse endpoint tem como objetivo realizar o cadastro de um novo cliente no banco de dados " +
             "do projeto e na integradora de pagamentos ASAAS",
@@ -167,7 +173,7 @@ public class ClienteSistemaController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = FeignConnectionException.class))})
     })
-    public ResponseEntity<ClienteSistemaResponse> criaNovoCliente(@RequestBody ClienteSistemaRequest clienteSistemaRequest) {
+    public ResponseEntity<ClienteSistemaResponse> criaNovoCliente(@Valid @RequestBody ClienteSistemaRequest clienteSistemaRequest) throws JsonProcessingException {
         log.info("Método controlador de criação de novo cliente acessado");
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 clienteSistemaService.cadastraNovoCliente(
@@ -183,7 +189,7 @@ public class ClienteSistemaController {
      * @param atualizaClienteSistemaRequest Objeto contendo todos os atributos necessários para a atualização de um cliente
      * @return Retorna objeto Cliente criado convertido para o tipo ClienteResponse
      */
-    @PutMapping("atualiza-cliente/{idCliente}")
+    @PutMapping("/{idCliente}")
     @Tag(name = "Atualização de dados do cliente")
     @Operation(summary = "Esse endpoint tem como objetivo realizar a atualização dos dados do cliente no banco de " +
             "dados do projeto e na integradora de pagamentos ASAAS",
@@ -207,7 +213,7 @@ public class ClienteSistemaController {
                             schema = @Schema(implementation = FeignConnectionException.class))})
     })
     public ResponseEntity<ClienteSistemaResponse> atualizaDadosCliente(@PathVariable UUID idCliente,
-                                                                       @RequestBody AtualizaClienteSistemaRequest atualizaClienteSistemaRequest) {
+                                                                       @Valid @RequestBody AtualizaClienteSistemaRequest atualizaClienteSistemaRequest) throws JsonProcessingException {
         log.info("Método controlador de atualização de dados do cliente de id {} acessado", idCliente);
         return ResponseEntity.status(HttpStatus.OK).body(
                 clienteSistemaService.atualizaDadosCliente(
