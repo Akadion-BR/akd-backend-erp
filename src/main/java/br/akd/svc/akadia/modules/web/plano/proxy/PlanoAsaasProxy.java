@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name = "ASAAS-PLANO", url = "${URL_ASAAS}")
 public interface PlanoAsaasProxy {
-    @PostMapping(value = "api/v3/subscriptions")
+    @PostMapping(value = "/subscriptions")
     ResponseEntity<CriaPlanoAsaasResponse> cadastraNovaAssinatura(@RequestBody CriaPlanoAsaasRequest criaPlanoAsaasRequest,
                                                                   @RequestHeader(value = "access_token") String accessToken);
 
-    @GetMapping(value = "api/v3/subscriptions/{idAssinatura}")
+    @GetMapping(value = "/subscriptions/{idAssinatura}")
     ResponseEntity<ConsultaAssinaturaResponse> consultaAssinatura(@PathVariable String idAssinatura,
                                                                   @RequestHeader(value = "access_token") String accessToken);
 
@@ -25,7 +25,7 @@ public interface PlanoAsaasProxy {
                                                                        @RequestBody AtualizaAssinaturaAsaasRequest atualizaAssinaturaAsaasRequest,
                                                                        @RequestHeader(value = "access_token") String accessToken);
 
-    @DeleteMapping(value = "/api/v3/subscriptions/{id}")
+    @DeleteMapping(value = "/subscriptions/{id}")
     ResponseEntity<CancelamentoAssinaturaResponse> cancelarAssinatura(@PathVariable(value = "id") String id,
                                                                       @RequestHeader(value = "access_token") String accessToken);
 }
