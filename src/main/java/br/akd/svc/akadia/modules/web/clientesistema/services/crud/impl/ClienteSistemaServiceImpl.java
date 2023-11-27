@@ -50,7 +50,6 @@ public class ClienteSistemaServiceImpl implements ClienteSistemaService {
 
     @Override
     public ClienteSistemaResponse cadastraNovoCliente(ClienteSistemaRequest clienteSistemaRequest) throws JsonProcessingException {
-
         log.info("Método de serviço de cadastro de novo cliente acessado");
 
         log.info("Iniciando validações de dados...");
@@ -85,6 +84,8 @@ public class ClienteSistemaServiceImpl implements ClienteSistemaService {
             ClienteSistemaResponse clienteSistemaResponse = new ClienteSistemaResponse()
                     .buildFromEntity(clientePersistido);
             log.info(Constantes.CONVERSAO_SUCESSO);
+
+            //TODO IMPLEMENTAR ENVIO DE E-MAIL ASSINCRONO DE BOAS-VINDAS
 
             log.info("Criação do cliente sistêmico realizada com sucesso. Retornando dados...");
             return clienteSistemaResponse;
