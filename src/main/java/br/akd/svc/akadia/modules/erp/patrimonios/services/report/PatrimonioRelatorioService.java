@@ -9,7 +9,7 @@ import br.akd.svc.akadia.modules.erp.patrimonios.models.entity.PatrimonioEntity;
 import br.akd.svc.akadia.modules.erp.patrimonios.repository.impl.PatrimonioRepositoryImpl;
 import br.akd.svc.akadia.utils.Constantes;
 import br.akd.svc.akadia.utils.ConversorDeDados;
-import br.akd.svc.akadia.utils.SecurityUtil;
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import com.lowagie.text.Font;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;

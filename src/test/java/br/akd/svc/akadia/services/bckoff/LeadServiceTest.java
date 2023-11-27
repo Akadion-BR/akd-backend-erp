@@ -38,7 +38,7 @@ class LeadServiceTest {
         when(leadRepositoryImpl.implementaPersistencia(LeadEntityBuilder.builder().build()))
                 .thenReturn(LeadEntityBuilder.builder().build());
 
-        leadService.encaminhaLeadParaPersistencia(ClienteSistemaDtoBuilder.builder().comTelefone().comEndereco().build());
+        leadService.criaNovoLead(ClienteSistemaDtoBuilder.builder().comTelefone().comEndereco().build());
 
     }
 

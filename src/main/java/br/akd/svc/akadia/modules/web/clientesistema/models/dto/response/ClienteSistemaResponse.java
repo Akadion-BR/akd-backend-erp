@@ -5,9 +5,13 @@ import br.akd.svc.akadia.modules.global.telefone.response.TelefoneResponse;
 import br.akd.svc.akadia.modules.web.clientesistema.models.entity.ClienteSistemaEntity;
 import br.akd.svc.akadia.modules.web.plano.models.dto.response.PlanoResponse;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Getter
 @Setter
 @Builder
@@ -28,22 +32,30 @@ public class ClienteSistemaResponse {
     private TelefoneResponse telefone;
     private EnderecoResponse endereco;
 
-    public ClienteSistemaResponse buildFromEntity(ClienteSistemaEntity clienteSistemaEntity) {
-        return clienteSistemaEntity != null
-                ? ClienteSistemaResponse.builder()
-                .id(clienteSistemaEntity.getId())
-                .dataCadastro(clienteSistemaEntity.getDataCadastro())
-                .horaCadastro(clienteSistemaEntity.getHoraCadastro())
-                .dataNascimento(clienteSistemaEntity.getDataNascimento())
-                .email(clienteSistemaEntity.getEmail())
-                .nome(clienteSistemaEntity.getNome())
-                .senha(clienteSistemaEntity.getSenha())
-                .cpf(clienteSistemaEntity.getCpf())
-                .saldo(clienteSistemaEntity.getSaldo())
-                .plano(new PlanoResponse().buildFromEntity(clienteSistemaEntity.getPlano()))
-                .telefone(new TelefoneResponse().buildFromEntity(clienteSistemaEntity.getTelefone()))
-                .endereco(new EnderecoResponse().buildFromEntity(clienteSistemaEntity.getEndereco()))
-                .build()
-                : null;
+    public ClienteSistemaResponse buildFromEntity(ClienteSistemaEntity clientesSistemaEntity) {
+        log.info("Método de conversão de objeto do tipo ClienteEntity para objeto do tipo ClienteResponse acessado");
+
+        log.info("Iniciando construção do objeto ClienteResponse...");
+        ClienteSistemaResponse clienteSistemaResponse = ClienteSistemaResponse.builder()
+                .id(clientesSistemaEntity.getId())
+                .dataCadastro(clientesSistemaEntity.getDataCadastro())
+                .horaCadastro(clientesSistemaEntity.getHoraCadastro())
+                .dataNascimento(clientesSistemaEntity.getDataNascimento())
+                .email(clientesSistemaEntity.getEmail())
+                .nome(clientesSistemaEntity.getNome())
+                .cpf(clientesSistemaEntity.getCpf())
+                .saldo(clientesSistemaEntity.getSaldo())
+                .plano(new PlanoResponse().buildFromEntity(clientesSistemaEntity.getPlano()))
+                .telefone(new TelefoneResponse().buildFromEntity(clientesSistemaEntity.getTelefone()))
+                .endereco(new EnderecoResponse().buildFromEntity(clientesSistemaEntity.getEndereco()))
+                .build();
+        log.info("Objeto clienteSistemaResponse buildado com sucesso. Retornando...");
+        return clienteSistemaResponse;
+    }
+
+    public List<ClienteSistemaResponse> buildFromList(List<ClienteSistemaEntity> clienteSistemaEntities) {
+        List<ClienteSistemaResponse> clienteSistemaResponses = new ArrayList<>();
+        clienteSistemaEntities.forEach(cliente -> clienteSistemaResponses.add(buildFromEntity(cliente)));
+        return clienteSistemaResponses;
     }
 }

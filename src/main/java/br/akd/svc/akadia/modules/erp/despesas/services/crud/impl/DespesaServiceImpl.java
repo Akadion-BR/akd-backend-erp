@@ -18,7 +18,7 @@ import br.akd.svc.akadia.modules.erp.despesas.services.crud.DespesaService;
 import br.akd.svc.akadia.modules.erp.despesas.services.validator.DespesaValidationService;
 import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.utils.Constantes;
-import br.akd.svc.akadia.utils.SecurityUtil;
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

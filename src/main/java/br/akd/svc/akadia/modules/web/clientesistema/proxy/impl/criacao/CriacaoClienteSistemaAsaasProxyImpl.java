@@ -6,7 +6,6 @@ import br.akd.svc.akadia.modules.web.clientesistema.proxy.ClienteSistemaAsaasPro
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.impl.criacao.utils.CriacaoClienteAsaasProxyUtils;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.models.request.ClienteAsaasRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.models.response.ClienteAsaasResponse;
-import br.akd.svc.akadia.modules.web.clientesistema.utils.ConstantesClienteSistema;
 import br.akd.svc.akadia.utils.Constantes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import feign.FeignException;

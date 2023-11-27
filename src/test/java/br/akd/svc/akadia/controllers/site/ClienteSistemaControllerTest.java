@@ -52,7 +52,7 @@ class ClienteSistemaControllerTest {
     @Test
     @DisplayName("Deve testar método controlador de captação de leads pré-cadastro")
     void deveTestarMetodoControladorDeRecebimentoDeCaptacaoDeLeadsPreCadastro() {
-        when(leadService.encaminhaLeadParaPersistencia(any()))
+        when(leadService.criaNovoLead(any()))
                 .thenReturn(LeadEntityBuilder.builder().build());
         Assertions.assertEquals("<201 CREATED Created,LeadEntity(id=1, nome=Fulano da Silva, " +
                         "email=fulano@gmail.com, origemLeadEnum=MANUAL, telefone=TelefoneEntity(id=1, prefixo=11, " +

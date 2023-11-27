@@ -40,7 +40,7 @@ public class ClientePageResponse {
         log.info("Iniciando iteração da lista de ClienteEntity obtida na busca para conversão para objetos do tipo " +
                 "ClienteResponse...");
         for (ClienteEntity cliente : clientesEntity.getContent()) {
-            ClienteResponse clienteResponse = new ClienteResponse().constroiClienteResponse(cliente);
+            ClienteResponse clienteResponse = new ClienteResponse().buildFromEntity(cliente);
             clientesResponse.add(clienteResponse);
         }
         log.info("Iteração finalizada com sucesso. Listagem de objetos do tipo ClienteResponse preenchida");

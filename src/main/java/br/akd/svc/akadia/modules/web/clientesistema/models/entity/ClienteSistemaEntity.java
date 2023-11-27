@@ -9,6 +9,7 @@ import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.C
 import br.akd.svc.akadia.modules.web.empresa.models.entity.EmpresaEntity;
 import br.akd.svc.akadia.modules.web.pagamento.models.entity.PagamentoSistemaEntity;
 import br.akd.svc.akadia.modules.web.plano.models.entity.PlanoEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -25,10 +26,10 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Entity
-@Builder
-@ToString
 @Getter
 @Setter
+@Builder
+@ToString
 @DynamicUpdate
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,6 +42,7 @@ import java.util.stream.Collectors;
 public class ClienteSistemaEntity {
 
     @Id
+    @JsonIgnore
     @Type(type = "uuid-char")
     @GeneratedValue(generator = "UUID")
     @Comment("Chave primária do cliente do sistema - UUID")
@@ -48,42 +50,52 @@ public class ClienteSistemaEntity {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
+    @JsonIgnore
     @Comment("Código de identificação do cliente sistêmico na integradora ASAAS")
     @Column(name = "COD_ASAAS_CLS", nullable = false, updatable = false)
     private String codigoClienteAsaas;
 
+    @JsonIgnore
     @Comment("Data em que o cadastro do cliente sistêmico foi realizado")
     @Column(name = "DT_DATACADASTRO_CLS", nullable = false, updatable = false, length = 10)
     private String dataCadastro;
 
+    @JsonIgnore
     @Comment("Hora em que o cadastro do cliente sistêmico foi realizado")
     @Column(name = "HR_HORACADASTRO_CLS", nullable = false, updatable = false, length = 18)
     private String horaCadastro;
 
+    @JsonIgnore
     @Comment("Data de nascimento do cliente sistêmico")
     @Column(name = "DT_DATANASCIMENTO_CLS", length = 10)
     private String dataNascimento;
 
+    @JsonIgnore
     @Comment("E-mail do cliente sistêmico")
     @Column(name = "EML_EMAIL_CLS", nullable = false, length = 70)
     private String email;
 
+    @JsonIgnore
     @Comment("Nome do cliente sistêmico")
     @Column(name = "STR_NOME_CLS", nullable = false, length = 70)
     private String nome;
 
+    @JsonIgnore
     @Comment("Senha de acesso ao sistema do cliente sistêmico")
     @Column(name = "STR_SENHA_CLS", nullable = false, length = 25)
     private String senha;
 
+    @JsonIgnore
     @Comment("CPF do cliente sistêmico")
     @Column(name = "STR_CPF_CLS", nullable = false, updatable = false, length = 14)
     private String cpf;
 
+    @JsonIgnore
     @Comment("Saldo do cliente")
     @Column(name = "DBL_SALDO_CLS", nullable = false, scale = 2)
     private Double saldo = 0.0;
 
+    @JsonIgnore
     @ToString.Exclude
     @Comment("Código de exclusão do cliente sistêmico")
     @OneToOne(targetEntity = PlanoEntity.class,
@@ -92,6 +104,7 @@ public class ClienteSistemaEntity {
             fetch = FetchType.LAZY)
     private ExclusaoEntity exclusao;
 
+    @JsonIgnore
     @ToString.Exclude
     @Comment("Código do plano do cliente sistêmico")
     @OneToOne(targetEntity = PlanoEntity.class,
@@ -100,6 +113,7 @@ public class ClienteSistemaEntity {
             fetch = FetchType.LAZY)
     private PlanoEntity plano;
 
+    @JsonIgnore
     @ToString.Exclude
     @Comment("Código do telefone da do cliente sistêmico")
     @OneToOne(targetEntity = TelefoneEntity.class,
@@ -108,6 +122,7 @@ public class ClienteSistemaEntity {
             fetch = FetchType.LAZY)
     private TelefoneEntity telefone;
 
+    @JsonIgnore
     @ToString.Exclude
     @Comment("Código do endereço do cliente sistêmico")
     @OneToOne(targetEntity = EnderecoEntity.class,
@@ -116,6 +131,7 @@ public class ClienteSistemaEntity {
             fetch = FetchType.LAZY)
     private EnderecoEntity endereco;
 
+    @JsonIgnore
     @ToString.Exclude
     @Comment("Código do cartão do cliente sistêmico")
     @OneToOne(targetEntity = CartaoEntity.class,
@@ -124,6 +140,7 @@ public class ClienteSistemaEntity {
             fetch = FetchType.LAZY)
     private CartaoEntity cartao;
 
+    @JsonIgnore
     @ToString.Exclude
     @Builder.Default
     @Comment("Lista de pagamentos realizados pelo sistêmico")
@@ -131,6 +148,7 @@ public class ClienteSistemaEntity {
     @OneToMany(targetEntity = EmpresaEntity.class, orphanRemoval = true, cascade = CascadeType.ALL)
     private List<PagamentoSistemaEntity> pagamentos = new ArrayList<>();
 
+    @JsonIgnore
     @ToString.Exclude
     @Builder.Default
     @Comment("Lista de empresas do cliente sistêmico")

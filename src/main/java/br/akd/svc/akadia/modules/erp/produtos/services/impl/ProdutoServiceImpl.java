@@ -15,7 +15,7 @@ import br.akd.svc.akadia.modules.erp.produtos.repository.ProdutoRepository;
 import br.akd.svc.akadia.modules.erp.produtos.repository.impl.ProdutoRepositoryImpl;
 import br.akd.svc.akadia.modules.erp.produtos.services.ProdutoService;
 import br.akd.svc.akadia.utils.Constantes;
-import br.akd.svc.akadia.utils.SecurityUtil;
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

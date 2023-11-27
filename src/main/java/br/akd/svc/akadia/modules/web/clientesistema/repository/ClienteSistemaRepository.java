@@ -29,9 +29,8 @@ public interface ClienteSistemaRepository extends JpaRepository<ClienteSistemaEn
     boolean verificaSeClienteAtivoJaExisteComCpfInformado(String email);
 
     @Query("Select c From ClienteSistemaEntity c " +
-            "WHERE c.plano.statusPlanoEnum = ?1 " +
-            "AND c.plano.dataVencimento < ?2 ")
-    List<ClienteSistemaEntity> buscaPorClientesComPlanosVencidosAtivos(String statusPlanoEnum,
-                                                                       String dataVencimento);
+            "WHERE c.plano.statusPlanoEnum != 'INATIVO' " +
+            "AND c.plano.dataVencimento < ?1")
+    List<ClienteSistemaEntity> buscaPorClientesComPlanosVencidosAtivos(String dataVencimento);
 
 }
