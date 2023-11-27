@@ -994,24 +994,6 @@
 										},
 										{
 											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGFqyXR+Q9uG30=",
-											"_parent": {
-												"$ref": "AAAAAAGFpg8RuddbCVM="
-											},
-											"model": {
-												"$ref": "AAAAAAGFqyXR7g9rrLw="
-											},
-											"fillColor": "#fbe1c7",
-											"font": "Arial;13;0",
-											"left": 3077,
-											"top": 2257,
-											"width": 322.791015625,
-											"height": 13,
-											"text": "-cartao: Cartao",
-											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
 											"_id": "AAAAAAGFphnlkNguRTY=",
 											"_parent": {
 												"$ref": "AAAAAAGFpg8RuddbCVM="
@@ -1022,7 +1004,7 @@
 											"fillColor": "#fbe1c7",
 											"font": "Arial;13;0",
 											"left": 3077,
-											"top": 2272,
+											"top": 2257,
 											"width": 322.791015625,
 											"height": 13,
 											"text": "-pagamentos: List<PagamentoSistema>",
@@ -1040,7 +1022,7 @@
 											"fillColor": "#fbe1c7",
 											"font": "Arial;13;0",
 											"left": 3077,
-											"top": 2287,
+											"top": 2272,
 											"width": 322.791015625,
 											"height": 13,
 											"text": "-empresas: List<Empresa>",
@@ -1052,7 +1034,7 @@
 									"left": 3072,
 									"top": 2057,
 									"width": 332.791015625,
-									"height": 248
+									"height": 233
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -1066,7 +1048,7 @@
 									"fillColor": "#fbe1c7",
 									"font": "Arial;13;0",
 									"left": 3072,
-									"top": 2305,
+									"top": 2290,
 									"width": 332.791015625,
 									"height": 10
 								},
@@ -32220,24 +32202,6 @@
 											"height": 13,
 											"text": "-statusPagamentoSistemaEnum: StatusPagamentoSistemaEnum {ordered}",
 											"horizontalAlignment": 0
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAGFqxCp/zFCZJM=",
-											"_parent": {
-												"$ref": "AAAAAAGFqH0BUPZATkw="
-											},
-											"model": {
-												"$ref": "AAAAAAGFqxCp8TE8Yhs="
-											},
-											"fillColor": "#fbe1c7",
-											"font": "Arial;13;0",
-											"left": 2621,
-											"top": 1978,
-											"width": 435.017578125,
-											"height": 13,
-											"text": "-Cartao: cartao",
-											"horizontalAlignment": 0
 										}
 									],
 									"fillColor": "#fbe1c7",
@@ -32245,7 +32209,7 @@
 									"left": 2616,
 									"top": 1793,
 									"width": 445.017578125,
-									"height": 203
+									"height": 188
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -32259,7 +32223,7 @@
 									"fillColor": "#fbe1c7",
 									"font": "Arial;13;0",
 									"left": 2616,
-									"top": 1996,
+									"top": 1981,
 									"width": 445.017578125,
 									"height": 10
 								},
@@ -47554,18 +47518,6 @@
 								},
 								{
 									"_type": "UMLAttribute",
-									"_id": "AAAAAAGFqyXR7g9rrLw=",
-									"_parent": {
-										"$ref": "AAAAAAGFpg8Rt9dT3kM="
-									},
-									"name": "cartao",
-									"visibility": "private",
-									"type": {
-										"$ref": "AAAAAAGFpoE6euiqUc0="
-									}
-								},
-								{
-									"_type": "UMLAttribute",
 									"_id": "AAAAAAGFphnlitgrvLY=",
 									"_parent": {
 										"$ref": "AAAAAAGFpg8Rt9dT3kM="
@@ -49955,16 +49907,6 @@
 										"$ref": "AAAAAAGGBFHzfDX21C4="
 									},
 									"isOrdered": true
-								},
-								{
-									"_type": "UMLAttribute",
-									"_id": "AAAAAAGFqxCp8TE8Yhs=",
-									"_parent": {
-										"$ref": "AAAAAAGFqH0BT/Y4OoI="
-									},
-									"name": "Cartao",
-									"visibility": "private",
-									"type": "cartao"
 								}
 							]
 						}
