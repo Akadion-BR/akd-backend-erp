@@ -1,4 +1,4 @@
-package br.akd.svc.akadia.modules.web.plano.services.impl;
+package br.akd.svc.akadia.modules.web.plano.services.crud.impl;
 
 import br.akd.svc.akadia.modules.web.cartao.models.dto.request.CartaoRequest;
 import br.akd.svc.akadia.modules.web.cartao.models.entity.CartaoEntity;
@@ -9,7 +9,7 @@ import br.akd.svc.akadia.modules.web.plano.models.dto.response.PlanoResponse;
 import br.akd.svc.akadia.modules.web.plano.models.entity.PlanoEntity;
 import br.akd.svc.akadia.modules.web.plano.proxy.operations.atualizacao.impl.AtualizacaoPlanoAsaasProxyImpl;
 import br.akd.svc.akadia.modules.web.plano.proxy.operations.remocao.impl.RemocaoPlanoAsaasProxyImpl;
-import br.akd.svc.akadia.modules.web.plano.services.PlanoService;
+import br.akd.svc.akadia.modules.web.plano.services.crud.PlanoService;
 import br.akd.svc.akadia.modules.web.plano.services.validator.PlanoValidationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

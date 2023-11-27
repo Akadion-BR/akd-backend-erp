@@ -6,7 +6,7 @@ import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
 import br.akd.svc.akadia.modules.web.cartao.models.dto.request.CartaoRequest;
 import br.akd.svc.akadia.modules.web.plano.models.dto.request.PlanoRequest;
 import br.akd.svc.akadia.modules.web.plano.models.dto.response.PlanoResponse;
-import br.akd.svc.akadia.modules.web.plano.services.PlanoService;
+import br.akd.svc.akadia.modules.web.plano.services.crud.PlanoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

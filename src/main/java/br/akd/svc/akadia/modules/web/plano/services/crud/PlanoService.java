@@ -1,4 +1,4 @@
-package br.akd.svc.akadia.modules.web.plano.services;
+package br.akd.svc.akadia.modules.web.plano.services.crud;
 
 import br.akd.svc.akadia.modules.web.cartao.models.dto.request.CartaoRequest;
 import br.akd.svc.akadia.modules.web.plano.models.dto.request.PlanoRequest;
