@@ -1,5 +1,6 @@
 package br.akd.svc.akadia.modules.backoffice.lead.models.entity;
 
+import br.akd.svc.akadia.modules.backoffice.lead.models.dto.request.LeadRequest;
 import br.akd.svc.akadia.modules.backoffice.lead.models.enums.OrigemLeadEnum;
 import br.akd.svc.akadia.modules.global.telefone.entity.TelefoneEntity;
 import lombok.*;
@@ -49,5 +50,17 @@ public class LeadEntity {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private TelefoneEntity telefone;
+
+    public LeadEntity buildFromRequest(LeadRequest leadRequest) {
+        return (leadRequest != null)
+                ? LeadEntity.builder()
+                .id(null)
+                .nome(leadRequest.getNome())
+                .email(leadRequest.getEmail())
+                .origemLeadEnum(OrigemLeadEnum.PRE_CADASTRO)
+                .telefone(new TelefoneEntity().buildFromRequest(leadRequest.getTelefone()))
+                .build()
+                : null;
+    }
 
 }

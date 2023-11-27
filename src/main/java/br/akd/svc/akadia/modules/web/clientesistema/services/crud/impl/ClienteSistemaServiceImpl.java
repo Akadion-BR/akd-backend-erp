@@ -1,6 +1,7 @@
 package br.akd.svc.akadia.modules.web.clientesistema.services.crud.impl;
 
 import br.akd.svc.akadia.exceptions.InternalErrorException;
+import br.akd.svc.akadia.modules.global.cpfcnpj.models.CpfRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.atualizacao.AtualizaClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.response.ClienteSistemaResponse;
@@ -13,12 +14,14 @@ import br.akd.svc.akadia.modules.web.clientesistema.services.validator.ClienteSi
 import br.akd.svc.akadia.modules.web.plano.proxy.operations.criacao.CriacaoPlanoAsaasProxyImpl;
 import br.akd.svc.akadia.modules.web.plano.proxy.operations.remocao.impl.RemocaoPlanoAsaasProxyImpl;
 import br.akd.svc.akadia.utils.Constantes;
+import br.akd.svc.akadia.modules.global.cpfcnpj.service.CpfService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -29,6 +32,9 @@ public class ClienteSistemaServiceImpl implements ClienteSistemaService {
 
     @Autowired
     ClienteSistemaValidationService clienteSistemaValidationService;
+
+    @Autowired
+    CpfService cpfService;
 
     @Autowired
     CriacaoClienteSistemaAsaasProxyImpl criacaoClienteSistemaAsaasProxy;
@@ -78,7 +84,7 @@ public class ClienteSistemaServiceImpl implements ClienteSistemaService {
                     "ClienteSistemaEntity para objeto do tipo ClienteSistemaResponse...");
             ClienteSistemaResponse clienteSistemaResponse = new ClienteSistemaResponse()
                     .buildFromEntity(clientePersistido);
-            log.info("Conversão de tipagem realizada com sucesso");
+            log.info(Constantes.CONVERSAO_SUCESSO);
 
             log.info("Criação do cliente sistêmico realizada com sucesso. Retornando dados...");
             return clienteSistemaResponse;
@@ -94,6 +100,42 @@ public class ClienteSistemaServiceImpl implements ClienteSistemaService {
             log.info("Rollback do plano na integradora ASAAS finalizado com sucesso");
             throw new InternalErrorException(Constantes.ERRO_INTERNO);
         }
+    }
+
+    @Override
+    public List<ClienteSistemaResponse> buscaTodos() {
+        log.debug("Método que implementa lógica de busca de todos os clientes sistêmicos acessado");
+        try {
+            log.info("Iniciando busca por todos os clientes sistêmicos cadastrados...");
+            List<ClienteSistemaEntity> clientesEncontrados = clienteSistemaRepositoryImpl.buscaTodosClientes();
+            log.info("Busca de clientes sistêmicos realizada com sucesso. Quantidade de clientes encontrados: {}",
+                    clientesEncontrados.size());
+
+            log.info("Iniciando conversão de clientes sistêmicos do tipo Entity para clientes sistêmicos do " +
+                    "tipo Response...");
+            List<ClienteSistemaResponse> clientesConvertidos = new ClienteSistemaResponse()
+                    .buildFromList(clientesEncontrados);
+            log.info(Constantes.CONVERSAO_SUCESSO);
+
+            log.info("Obtenção de todos os clientes sistêmicos realizada com sucesso. Retornando dados obtidos...");
+            return clientesConvertidos;
+        } catch (Exception e) {
+            log.error("Ocorreu um erro durante a obtenção de todos os clientes sistêmicos: {}", e.getMessage());
+            throw new InternalErrorException(Constantes.ERRO_INTERNO);
+        }
+    }
+
+    @Override
+    public void realizaValidacaoCpf(CpfRequest cpfRequest) {
+        log.info("Método responsável por implementar a lógica de validação de CPF acessado");
+
+        log.info("Iniciando validação dos dígitos verificadores do CPF...");
+        cpfService.realizaValidacaoCpf(cpfRequest.getCpf());
+        log.info("Validação dos dígitos verificadores do CPF realizada com sucesso");
+
+        log.info("Iniciando acesso ao método de validação se CPF já existe...");
+        clienteSistemaValidationService.validaSeCpfJaExiste(cpfRequest.getCpf());
+        log.info("Validação de duplicidade de CPF realizada com sucesso");
     }
 
     @Override
@@ -146,7 +188,7 @@ public class ClienteSistemaServiceImpl implements ClienteSistemaService {
                 "ClienteSistemaEntity para objeto do tipo ClienteSistemaResponse...");
         ClienteSistemaResponse clienteSistemaResponse = new ClienteSistemaResponse()
                 .buildFromEntity(clientePosPersistencia);
-        log.info("Conversão de tipagem realizada com sucesso");
+        log.info(Constantes.CONVERSAO_SUCESSO);
 
         log.info("Atualização do cliente sistêmico realizada com sucesso. Retornando dados...");
         return clienteSistemaResponse;
