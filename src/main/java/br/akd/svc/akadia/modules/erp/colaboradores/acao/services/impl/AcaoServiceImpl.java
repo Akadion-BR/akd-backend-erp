@@ -9,7 +9,7 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.col
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.ModulosEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.ColaboradorRepository;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.impl.ColaboradorRepositoryImpl;
-import br.akd.svc.akadia.utils.SecurityUtil;
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

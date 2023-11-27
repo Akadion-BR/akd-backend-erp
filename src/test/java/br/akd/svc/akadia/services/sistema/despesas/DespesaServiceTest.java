@@ -14,7 +14,7 @@ import br.akd.svc.akadia.modules.erp.despesas.services.crud.DespesaService;
 import br.akd.svc.akadia.modules.erp.despesas.services.validator.DespesaValidationService;
 import br.akd.svc.akadia.exceptions.InvalidRequestException;
 import br.akd.svc.akadia.modules.erp.colaboradores.acao.services.AcaoService;
-import br.akd.svc.akadia.utils.SecurityUtil;
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
