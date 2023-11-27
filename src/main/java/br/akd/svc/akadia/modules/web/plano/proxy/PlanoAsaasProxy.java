@@ -20,8 +20,8 @@ public interface PlanoAsaasProxy {
     ResponseEntity<ConsultaAssinaturaResponse> consultaAssinatura(@PathVariable String idAssinatura,
                                                                   @RequestHeader(value = "access_token") String accessToken);
 
-    @PostMapping(value = "/customers/{id}")
-    ResponseEntity<AtualizaAssinaturaAsaasResponse> atualizaAssinatura(@PathVariable String id,
+    @PostMapping(value = "/subscriptions/{idAssinatura}")
+    ResponseEntity<AtualizaAssinaturaAsaasResponse> atualizaAssinatura(@PathVariable String idAssinatura,
                                                                        @RequestBody AtualizaAssinaturaAsaasRequest atualizaAssinaturaAsaasRequest,
                                                                        @RequestHeader(value = "access_token") String accessToken);
 
