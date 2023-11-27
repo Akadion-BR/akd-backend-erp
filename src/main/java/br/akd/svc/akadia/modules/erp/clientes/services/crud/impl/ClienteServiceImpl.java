@@ -16,7 +16,7 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.col
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.ModulosEnum;
 import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.utils.Constantes;
-import br.akd.svc.akadia.utils.SecurityUtil;
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -77,7 +77,7 @@ public class ClienteServiceImpl implements ClienteService {
 
         log.debug("Cliente persistido com sucesso. Convertendo clienteEntity para clienteResponse...");
         ClienteResponse clienteResponse = new ClienteResponse()
-                .constroiClienteResponse(clientePersistido);
+                .buildFromEntity(clientePersistido);
 
         log.info("Cliente criado com sucesso");
         return clienteResponse;
@@ -115,7 +115,7 @@ public class ClienteServiceImpl implements ClienteService {
 
         log.debug("Busca de clientes por id realizada com sucesso. Acessando método de conversão dos objeto do tipo " +
                 "Entity para objeto do tipo Response...");
-        ClienteResponse clienteResponse = new ClienteResponse().constroiClienteResponse(cliente);
+        ClienteResponse clienteResponse = new ClienteResponse().buildFromEntity(cliente);
         log.debug("Conversão de tipagem realizada com sucesso");
 
         log.info("A busca de cliente por id foi realizada com sucesso");
@@ -158,7 +158,7 @@ public class ClienteServiceImpl implements ClienteService {
 
         log.debug("Cliente persistido com sucesso. Convertendo clienteEntity para clienteResponse...");
         ClienteResponse clienteResponse = new ClienteResponse()
-                .constroiClienteResponse(clientePersistido);
+                .buildFromEntity(clientePersistido);
 
         log.info("Cliente criado com sucesso");
         return clienteResponse;
@@ -192,7 +192,7 @@ public class ClienteServiceImpl implements ClienteService {
                 ModulosEnum.CLIENTES, TipoAcaoEnum.REMOCAO, null);
 
         log.info("Cliente excluído com sucesso");
-        return new ClienteResponse().constroiClienteResponse(clienteExcluido);
+        return new ClienteResponse().buildFromEntity(clienteExcluido);
     }
 
     public void removeClientesEmMassa(ColaboradorId idColaboradorSessao,

@@ -18,7 +18,7 @@ import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.modules.global.imagem.entity.ImagemEntity;
 import br.akd.svc.akadia.modules.global.imagem.response.ImagemResponse;
 import br.akd.svc.akadia.utils.Constantes;
-import br.akd.svc.akadia.utils.SecurityUtil;
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

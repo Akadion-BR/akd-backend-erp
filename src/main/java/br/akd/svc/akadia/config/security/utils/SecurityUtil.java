@@ -1,4 +1,4 @@
-package br.akd.svc.akadia.utils;
+package br.akd.svc.akadia.config.security.utils;
 
 import br.akd.svc.akadia.exceptions.UnauthorizedAccessException;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.ColaboradorEntity;

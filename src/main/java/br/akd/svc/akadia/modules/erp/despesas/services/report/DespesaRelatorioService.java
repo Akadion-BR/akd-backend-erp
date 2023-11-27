@@ -9,7 +9,7 @@ import br.akd.svc.akadia.modules.erp.despesas.models.entity.DespesaEntity;
 import br.akd.svc.akadia.modules.erp.despesas.repository.impl.DespesaRepositoryImpl;
 import br.akd.svc.akadia.utils.Constantes;
 import br.akd.svc.akadia.utils.ConversorDeDados;
-import br.akd.svc.akadia.utils.SecurityUtil;
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import com.lowagie.text.Font;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;

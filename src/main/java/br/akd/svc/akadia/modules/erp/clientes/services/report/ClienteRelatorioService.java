@@ -8,7 +8,7 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.col
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.id.ColaboradorId;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.ModulosEnum;
 import br.akd.svc.akadia.utils.Constantes;
-import br.akd.svc.akadia.utils.SecurityUtil;
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import com.lowagie.text.Font;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
