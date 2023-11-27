@@ -3,7 +3,6 @@ package br.akd.svc.akadia.modules.web.clientesistema.models.entity;
 import br.akd.svc.akadia.modules.global.endereco.entity.EnderecoEntity;
 import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.modules.global.telefone.entity.TelefoneEntity;
-import br.akd.svc.akadia.modules.web.cartao.models.entity.CartaoEntity;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.atualizacao.AtualizaClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.empresa.models.entity.EmpresaEntity;
@@ -133,15 +132,6 @@ public class ClienteSistemaEntity {
 
     @JsonIgnore
     @ToString.Exclude
-    @Comment("Código do cartão do cliente sistêmico")
-    @OneToOne(targetEntity = CartaoEntity.class,
-            orphanRemoval = true,
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    private CartaoEntity cartao;
-
-    @JsonIgnore
-    @ToString.Exclude
     @Builder.Default
     @Comment("Lista de pagamentos realizados pelo sistêmico")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -184,7 +174,6 @@ public class ClienteSistemaEntity {
                 .plano(new PlanoEntity().buildFromRequest(clienteSistemaRequest.getPlano()))
                 .telefone(new TelefoneEntity().buildFromRequest(clienteSistemaRequest.getTelefone()))
                 .endereco(new EnderecoEntity().buildFromRequest(clienteSistemaRequest.getEndereco()))
-                .cartao(null)
                 .pagamentos(new ArrayList<>())
                 .empresas(new ArrayList<>())
                 .build()
@@ -209,7 +198,6 @@ public class ClienteSistemaEntity {
                 .plano(clientePreAtualizacao.getPlano())
                 .telefone(new TelefoneEntity().buildFromRequest(atualizaClienteSistemaRequest.getTelefone()))
                 .endereco(new EnderecoEntity().buildFromRequest(atualizaClienteSistemaRequest.getEndereco()))
-                .cartao(clientePreAtualizacao.getCartao())
                 .pagamentos(clientePreAtualizacao.getPagamentos())
                 .empresas(clientePreAtualizacao.getEmpresas())
                 .build()

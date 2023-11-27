@@ -8,8 +8,7 @@ import lombok.Getter;
 public enum FormaPagamentoSistemaEnum {
 
     BOLETO (0, "Boleto"),
-    CREDIT_CARD(1, "Cartão de crédito"),
-    PIX (2, "Pix");
+    PIX (1, "Pix");
 
     private final int code;
     private final String desc;
