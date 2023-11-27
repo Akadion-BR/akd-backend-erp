@@ -1,8 +1,8 @@
 package br.akd.svc.akadia.modules.web.plano.services.crud;
 
-import br.akd.svc.akadia.modules.web.cartao.models.dto.request.CartaoRequest;
 import br.akd.svc.akadia.modules.web.plano.models.dto.request.PlanoRequest;
 import br.akd.svc.akadia.modules.web.plano.models.dto.response.PlanoResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
@@ -10,8 +10,7 @@ import java.util.UUID;
 public interface PlanoService {
     @Transactional
     PlanoResponse atualizaPlanoDoClienteSistemico(UUID idClienteSistema,
-                                                  PlanoRequest planoRequest,
-                                                  CartaoRequest cartaoRequest);
+                                                  PlanoRequest planoRequest) throws JsonProcessingException;
 
     @Transactional
     PlanoResponse cancelaPlanoDoClienteSistemico(UUID idClienteSistema);

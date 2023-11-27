@@ -3,10 +3,10 @@ package br.akd.svc.akadia.modules.web.plano.controller;
 import br.akd.svc.akadia.exceptions.FeignConnectionException;
 import br.akd.svc.akadia.exceptions.InvalidRequestException;
 import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
-import br.akd.svc.akadia.modules.web.cartao.models.dto.request.CartaoRequest;
 import br.akd.svc.akadia.modules.web.plano.models.dto.request.PlanoRequest;
 import br.akd.svc.akadia.modules.web.plano.models.dto.response.PlanoResponse;
 import br.akd.svc.akadia.modules.web.plano.services.crud.PlanoService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -47,10 +47,9 @@ public class PlanoController {
      * Esse endpoint tem como objetivo realizar a atualização dos dados da assinatura do cliente sistêmico no banco
      * de dados do projeto e na integradora de pagamentos ASAAS
      *
-     * @param idClienteSistema      ID do cliente sistêmico que deverá ser atualizado
-     * @param clienteSistemaRequest Objeto contendo todos os atributos necessários para a atualização de um
-     *                              cliente sistêmico
-     * @param cartaoRequest         Caso a forma de pagamento a ser atualizada seja cartão, o objeto deverá ser enviado
+     * @param idClienteSistema ID do cliente sistêmico que deverá ser atualizado
+     * @param planoRequest     Objeto contendo todos os atributos necessários para a atualização de um
+     *                         cliente sistêmico
      * @return Retorna objeto Plano criado convertido para o tipo Response
      */
     @PutMapping("/{idClienteSistema}")
@@ -77,14 +76,12 @@ public class PlanoController {
                             schema = @Schema(implementation = FeignConnectionException.class))})
     })
     public ResponseEntity<PlanoResponse> atualizaDadosAssinaturaCliente(@PathVariable UUID idClienteSistema,
-                                                                        @RequestBody PlanoRequest clienteSistemaRequest,
-                                                                        @RequestBody(required = false) CartaoRequest cartaoRequest) {
+                                                                        @RequestBody PlanoRequest planoRequest) throws JsonProcessingException {
         log.info("Método controlador de atualização de dados da assinatura do cliente de id {} acessado", idClienteSistema);
         return ResponseEntity.status(HttpStatus.OK).body(
                 planoService.atualizaPlanoDoClienteSistemico(
                         idClienteSistema,
-                        clienteSistemaRequest,
-                        cartaoRequest));
+                        planoRequest));
     }
 
     /**
