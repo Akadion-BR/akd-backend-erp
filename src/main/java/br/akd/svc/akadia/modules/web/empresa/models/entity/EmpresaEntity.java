@@ -8,7 +8,9 @@ import br.akd.svc.akadia.modules.global.objects.telefone.entity.TelefoneEntity;
 import br.akd.svc.akadia.modules.web.clientesistema.models.entity.ClienteSistemaEntity;
 import br.akd.svc.akadia.modules.web.empresa.models.dto.request.EmpresaRequest;
 import br.akd.svc.akadia.modules.web.empresa.models.entity.fiscal.ConfigFiscalEmpresaEntity;
+import br.akd.svc.akadia.modules.web.empresa.models.entity.id.EmpresaId;
 import br.akd.svc.akadia.modules.web.empresa.models.enums.SegmentoEmpresaEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -29,18 +31,17 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@IdClass(EmpresaId.class)
+@IdClass(EmpresaId.class)
 @Table(name = "TB_AKD_EMPRESA",
         uniqueConstraints = {
                 @UniqueConstraint(name = "UK_RAZAOSOCIAL_EMPRESA", columnNames = {"STR_RAZAOSOCIAL_EMP"}),
                 @UniqueConstraint(name = "UK_CNPJ_EMPRESA", columnNames = {"STR_CNPJ_EMP"}),
                 @UniqueConstraint(name = "UK_ENDPOINT_EMPRESA", columnNames = {"STR_ENDPOINT_EMP"}),
-                @UniqueConstraint(name = "STR_INSCRICAOESTADUAL_EMP", columnNames = {"STR_INSCRICAOESTADUAL_EMP"}), //TODO CHAVE ÚNICA COMPOSTA COM IE + ESTADO
-                @UniqueConstraint(name = "STR_INSCRICAOMUNICIPAL_EMP", columnNames = {"STR_INSCRICAOMUNICIPAL_EMP"}), //TODO CHAVE ÚNICA COMPOSTA COM IM + MUNICIPIO
         })
 public class EmpresaEntity {
 
     @Id
+    @JsonIgnore
     @Type(type = "uuid-char")
     @GeneratedValue(generator = "UUID")
     @Comment("Chave primária da empresa - UUID")
@@ -48,54 +49,76 @@ public class EmpresaEntity {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    //    @Id
-//    @JsonIgnore
-//    @ToString.Exclude
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @Comment("Chave primária da empresa - ID da empresa ao qual o cliente faz parte")
-//    @JoinColumn(name = "COD_CLIENTESISTEMA_EMP", referencedColumnName = "COD_CLIENTESISTEMA_CLS", nullable = false, updatable = false)
-//    private ClienteSistemaEntity clienteSistema;
+    @Id
+    @JsonIgnore
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Comment("Chave primária da empresa - ID da empresa ao qual o cliente faz parte")
+    @JoinColumn(name = "COD_CLIENTESISTEMA_EMP", referencedColumnName = "COD_CLIENTESISTEMA_CLS", nullable = false, updatable = false)
+    private ClienteSistemaEntity clienteSistema;
 
+    @JsonIgnore
     @Comment("Data em que o cadastro da empresa foi realizado")
     @Column(name = "DT_DATACADASTRO_EMP", nullable = false, updatable = false, length = 10)
     private String dataCadastro;
 
+    @JsonIgnore
     @Comment("Hora em que o cadastro da empresa foi realizado")
     @Column(name = "HR_HORACADASTRO_EMP", nullable = false, updatable = false, length = 18)
     private String horaCadastro;
 
+    @JsonIgnore
     @Comment("Nome da empresa")
     @Column(name = "STR_NOME_EMP", nullable = false, length = 70)
     private String nome;
 
+    @JsonIgnore
     @Comment("Razão social da empresa")
     @Column(name = "STR_RAZAOSOCIAL_EMP", nullable = false, updatable = false, length = 70)
     private String razaoSocial;
 
+    @JsonIgnore
     @Comment("CNPJ da empresa")
     @Column(name = "STR_CNPJ_EMP", nullable = false, updatable = false, length = 18)
     private String cnpj;
 
+    @JsonIgnore
     @Comment("Endpoint da empresa")
     @Column(name = "STR_ENDPOINT_EMP", nullable = false, length = 30)
     private String endpoint;
 
+    @JsonIgnore
     @Comment("E-mail da empresa")
     @Column(name = "EML_EMAIL_EMP", nullable = false, length = 70)
     private String email;
 
+    @JsonIgnore
     @Comment("Nome fantasia da empresa")
     @Column(name = "STR_NOMEFANTASIA_EMP", nullable = false, length = 70)
     private String nomeFantasia;
 
+    @JsonIgnore
     @Comment("Inscrição estadual da empresa")
     @Column(name = "STR_INSCRICAOESTADUAL_EMP", length = 12)
     private String inscricaoEstadual;
 
+    @JsonIgnore
     @Comment("Inscrição municipal da empresa")
     @Column(name = "STR_INSCRICAOMUNICIPAL_EMP", length = 12)
     private String inscricaoMunicipal;
 
+    @JsonIgnore
+    @Comment("Empresa está ativa")
+    @Column(name = "BOL_ATIVA_EMP")
+    private Boolean ativa;
+
+    @JsonIgnore
+    @Enumerated(EnumType.STRING)
+    @Comment("Tipo de segmento da empresa: 0 - Baterias automotivas")
+    @Column(name = "ENM_SEGMENTOEMPRESA_EMP", nullable = false)
+    private SegmentoEmpresaEnum segmentoEmpresaEnum;
+
+    @JsonIgnore
     @ToString.Exclude
     @Comment("Código de exclusão da empresa")
     @OneToOne(targetEntity = ExclusaoEntity.class,
@@ -104,6 +127,7 @@ public class EmpresaEntity {
             fetch = FetchType.LAZY)
     private ExclusaoEntity exclusao;
 
+    @JsonIgnore
     @ToString.Exclude
     @Comment("Código da imagem de perfil da empresa")
     @OneToOne(targetEntity = ImagemEntity.class,
@@ -112,11 +136,7 @@ public class EmpresaEntity {
             fetch = FetchType.LAZY)
     private ImagemEntity logo;
 
-    @Enumerated(EnumType.STRING)
-    @Comment("Tipo de segmento da empresa: 0 - Baterias automotivas")
-    @Column(name = "ENM_SEGMENTOEMPRESA_EMP", nullable = false)
-    private SegmentoEmpresaEnum segmentoEmpresaEnum;
-
+    @JsonIgnore
     @ToString.Exclude
     @Comment("Código do telefone da empresa")
     @OneToOne(targetEntity = TelefoneEntity.class,
@@ -125,6 +145,7 @@ public class EmpresaEntity {
             fetch = FetchType.LAZY)
     private TelefoneEntity telefone;
 
+    @JsonIgnore
     @ToString.Exclude
     @Comment("Código do endereço da empresa")
     @OneToOne(targetEntity = EnderecoEntity.class,
@@ -133,6 +154,7 @@ public class EmpresaEntity {
             fetch = FetchType.LAZY)
     private EnderecoEntity endereco;
 
+    @JsonIgnore
     @ToString.Exclude
     @Comment("Código da configuração fiscal da empresa")
     @OneToOne(targetEntity = ConfigFiscalEmpresaEntity.class,
@@ -141,7 +163,7 @@ public class EmpresaEntity {
             fetch = FetchType.LAZY)
     private ConfigFiscalEmpresaEntity configFiscalEmpresa;
 
-    //TODO VALIDAR
+    @JsonIgnore
     @Builder.Default
     @ToString.Exclude
     @Comment("Chamados de suporte técnico da empresa")
@@ -152,7 +174,7 @@ public class EmpresaEntity {
     public EmpresaEntity buildFromRequest(ClienteSistemaEntity clienteSistema,
                                           EmpresaRequest empresaRequest) {
         return EmpresaEntity.builder()
-//                .clienteSistema(clienteSistema)
+                .clienteSistema(clienteSistema)
                 .dataCadastro(LocalDate.now().toString())
                 .horaCadastro(LocalTime.now().toString())
                 .nome(empresaRequest.getNome())
@@ -163,9 +185,10 @@ public class EmpresaEntity {
                 .nomeFantasia(empresaRequest.getNomeFantasia())
                 .inscricaoEstadual(empresaRequest.getInscricaoEstadual())
                 .inscricaoMunicipal(empresaRequest.getInscricaoMunicipal())
+                .ativa(true)
+                .segmentoEmpresaEnum(empresaRequest.getSegmentoEmpresaEnum())
                 .exclusao(null)
                 .logo(null)
-                .segmentoEmpresaEnum(empresaRequest.getSegmentoEmpresaEnum())
                 .telefone(new TelefoneEntity()
                         .buildFromRequest(empresaRequest.getTelefone()))
                 .endereco(new EnderecoEntity()
@@ -180,7 +203,7 @@ public class EmpresaEntity {
                                            EmpresaRequest empresaRequest) {
         return EmpresaEntity.builder()
                 .id(empresaPreAtualizacao.getId())
-//                .clienteSistema(empresaPreAtualizacao.getClienteSistema())
+                .clienteSistema(empresaPreAtualizacao.getClienteSistema())
                 .dataCadastro(empresaPreAtualizacao.getDataCadastro())
                 .horaCadastro(empresaPreAtualizacao.getHoraCadastro())
                 .nome(empresaRequest.getNome())
@@ -191,6 +214,7 @@ public class EmpresaEntity {
                 .nomeFantasia(empresaRequest.getNomeFantasia())
                 .inscricaoEstadual(empresaRequest.getInscricaoEstadual())
                 .inscricaoMunicipal(empresaRequest.getInscricaoMunicipal())
+                .ativa(empresaPreAtualizacao.getAtiva())
                 .exclusao(empresaPreAtualizacao.getExclusao())
                 .logo(empresaPreAtualizacao.getLogo())
                 .segmentoEmpresaEnum(empresaRequest.getSegmentoEmpresaEnum())

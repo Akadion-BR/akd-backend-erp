@@ -15605,6 +15605,24 @@
 										},
 										{
 											"_type": "UMLAttributeView",
+											"_id": "AAAAAAGMFlhydg73wkA=",
+											"_parent": {
+												"$ref": "AAAAAAGFy6UFxakqC04="
+											},
+											"model": {
+												"$ref": "AAAAAAGMFlhyTQ6mtgk="
+											},
+											"fillColor": "#fbe1c7",
+											"font": "Arial;13;0",
+											"left": 3589,
+											"top": 2130,
+											"width": 312.85693359375,
+											"height": 13,
+											"text": "-ativa: Boolean",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
 											"_id": "AAAAAAGFy7sxE/kK1TY=",
 											"_parent": {
 												"$ref": "AAAAAAGFy6UFxakqC04="
@@ -15615,7 +15633,7 @@
 											"fillColor": "#fbe1c7",
 											"font": "Arial;13;0",
 											"left": 3589,
-											"top": 2130,
+											"top": 2145,
 											"width": 312.85693359375,
 											"height": 13,
 											"text": "-segmentoEnum: SegmentoEmpresaEnum {ordered}",
@@ -15633,7 +15651,7 @@
 											"fillColor": "#fbe1c7",
 											"font": "Arial;13;0",
 											"left": 3589,
-											"top": 2145,
+											"top": 2160,
 											"width": 312.85693359375,
 											"height": 13,
 											"text": "-logo: Imagem",
@@ -15651,7 +15669,7 @@
 											"fillColor": "#fbe1c7",
 											"font": "Arial;13;0",
 											"left": 3589,
-											"top": 2160,
+											"top": 2175,
 											"width": 312.85693359375,
 											"height": 13,
 											"text": "-exclusao: Exclusao",
@@ -15669,7 +15687,7 @@
 											"fillColor": "#fbe1c7",
 											"font": "Arial;13;0",
 											"left": 3589,
-											"top": 2175,
+											"top": 2190,
 											"width": 312.85693359375,
 											"height": 13,
 											"text": "-telefone: Telefone",
@@ -15687,7 +15705,7 @@
 											"fillColor": "#fbe1c7",
 											"font": "Arial;13;0",
 											"left": 3589,
-											"top": 2190,
+											"top": 2205,
 											"width": 312.85693359375,
 											"height": 13,
 											"text": "-configFiscalEmpresa: ConfigFiscalEmpresa {ordered}",
@@ -15705,7 +15723,7 @@
 											"fillColor": "#fbe1c7",
 											"font": "Arial;13;0",
 											"left": 3589,
-											"top": 2205,
+											"top": 2220,
 											"width": 312.85693359375,
 											"height": 13,
 											"text": "-endereco: Endereco",
@@ -15723,7 +15741,7 @@
 											"fillColor": "#fbe1c7",
 											"font": "Arial;13;0",
 											"left": 3589,
-											"top": 2220,
+											"top": 2235,
 											"width": 312.85693359375,
 											"height": 13,
 											"text": "-chamados: List<Chamado>",
@@ -15735,7 +15753,7 @@
 									"left": 3584,
 									"top": 1945,
 									"width": 322.85693359375,
-									"height": 293
+									"height": 308
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -15749,7 +15767,7 @@
 									"fillColor": "#fbe1c7",
 									"font": "Arial;13;0",
 									"left": 3584,
-									"top": 2238,
+									"top": 2253,
 									"width": 322.85693359375,
 									"height": 10
 								},
@@ -15797,7 +15815,7 @@
 							"left": 3584,
 							"top": 1920,
 							"width": 322.85693359375,
-							"height": 328,
+							"height": 343,
 							"nameCompartment": {
 								"$ref": "AAAAAAGFy6UFxaklttk="
 							},
@@ -26410,7 +26428,7 @@
 									},
 									"font": "Arial;13;0",
 									"left": 3750,
-									"top": 2310,
+									"top": 2318,
 									"width": 32.880859375,
 									"height": 13,
 									"alpha": 1.9862735626570236,
@@ -26433,7 +26451,7 @@
 									"visible": null,
 									"font": "Arial;13;0",
 									"left": 3771,
-									"top": 2320,
+									"top": 2328,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -26454,7 +26472,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 3727,
-									"top": 2321,
+									"top": 2329,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -26475,7 +26493,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 3757,
-									"top": 2266,
+									"top": 2281,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 30,
@@ -26496,7 +26514,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 3770,
-									"top": 2269,
+									"top": 2284,
 									"height": 13,
 									"alpha": 0.7853981633974483,
 									"distance": 40,
@@ -26517,7 +26535,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 3729,
-									"top": 2262,
+									"top": 2277,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 25,
@@ -26627,7 +26645,7 @@
 								"$ref": "AAAAAAGFy6UFxakkkpE="
 							},
 							"lineStyle": 2,
-							"points": "3742:2247;3742:2408",
+							"points": "3742:2262;3742:2408",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGGA8TF9ybSm8A="
@@ -28057,7 +28075,7 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 3348,
+									"left": 3349,
 									"top": 2362,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -28164,7 +28182,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 3553,
-									"top": 2213,
+									"top": 2218,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 30,
@@ -28184,7 +28202,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 3543,
-									"top": 2205,
+									"top": 2209,
 									"height": 13,
 									"alpha": -0.7853981633974483,
 									"distance": 40,
@@ -28202,8 +28220,8 @@
 										"$ref": "AAAAAAGGA9nin/tmXxk="
 									},
 									"font": "Arial;13;0",
-									"left": 3571,
-									"top": 2232,
+									"left": 3570,
+									"top": 2237,
 									"width": 7.22998046875,
 									"height": 13,
 									"alpha": 0.5235987755982988,
@@ -28254,7 +28272,7 @@
 								"$ref": "AAAAAAGFy6rnqe7iVjU="
 							},
 							"lineStyle": 3,
-							"points": "3286:2404;3368:2392;3583:2215",
+							"points": "3286:2404;3368:2392;3583:2220",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGGA9nin/tpeUM="
@@ -48241,6 +48259,16 @@
 									"name": "inscricaoMunicipal",
 									"visibility": "private",
 									"type": "String"
+								},
+								{
+									"_type": "UMLAttribute",
+									"_id": "AAAAAAGMFlhyTQ6mtgk=",
+									"_parent": {
+										"$ref": "AAAAAAGFy6UFxKkikFc="
+									},
+									"name": "ativa",
+									"visibility": "private",
+									"type": "Boolean"
 								},
 								{
 									"_type": "UMLAttribute",

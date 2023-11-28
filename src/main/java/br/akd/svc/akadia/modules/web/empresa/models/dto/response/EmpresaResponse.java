@@ -30,6 +30,7 @@ public class EmpresaResponse {
     private String nomeFantasia;
     private String inscricaoEstadual;
     private String inscricaoMunicipal;
+    private Boolean ativa;
     private String segmentoEmpresaEnum;
     private ImagemResponse logo;
     private TelefoneResponse telefone;
@@ -51,6 +52,7 @@ public class EmpresaResponse {
                 .nomeFantasia(empresaEntity.getNomeFantasia())
                 .inscricaoEstadual(empresaEntity.getInscricaoEstadual())
                 .inscricaoMunicipal(empresaEntity.getInscricaoMunicipal())
+                .ativa(empresaEntity.getAtiva())
                 .segmentoEmpresaEnum(empresaEntity.getSegmentoEmpresaEnum().toString())
                 .logo(new ImagemResponse()
                         .buildFromEntity(empresaEntity.getLogo()))
