@@ -2,6 +2,7 @@ package br.akd.svc.akadia.modules.web.clientesistema.services.crud.impl;
 
 import br.akd.svc.akadia.exceptions.InternalErrorException;
 import br.akd.svc.akadia.modules.global.cpfcnpj.models.CpfRequest;
+import br.akd.svc.akadia.modules.global.cpfcnpj.service.CpfService;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.atualizacao.AtualizaClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.response.ClienteSistemaResponse;
@@ -14,12 +15,12 @@ import br.akd.svc.akadia.modules.web.clientesistema.services.validator.ClienteSi
 import br.akd.svc.akadia.modules.web.plano.proxy.operations.criacao.CriacaoPlanoAsaasProxyImpl;
 import br.akd.svc.akadia.modules.web.plano.proxy.operations.remocao.impl.RemocaoPlanoAsaasProxyImpl;
 import br.akd.svc.akadia.utils.Constantes;
-import br.akd.svc.akadia.modules.global.cpfcnpj.service.CpfService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -140,6 +141,7 @@ public class ClienteSistemaServiceImpl implements ClienteSistemaService {
     }
 
     @Override
+    @Transactional
     public ClienteSistemaResponse atualizaDadosCliente(UUID uuidClienteSistema,
                                                        AtualizaClienteSistemaRequest atualizaClienteSistemaRequest) throws JsonProcessingException {
 
