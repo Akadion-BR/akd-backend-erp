@@ -20,7 +20,7 @@ public interface PlanoAsaasProxy {
                                                                        @RequestBody AtualizaAssinaturaAsaasRequest atualizaAssinaturaAsaasRequest,
                                                                        @RequestHeader(value = "access_token") String accessToken);
 
-    @DeleteMapping(value = "/subscriptions/{id}")
-    ResponseEntity<CancelamentoAssinaturaResponse> cancelarAssinatura(@PathVariable(value = "id") String id,
+    @DeleteMapping(value = "/subscriptions/{idAssinatura}")
+    ResponseEntity<CancelamentoAssinaturaResponse> cancelarAssinatura(@PathVariable(value = "idAssinatura") String idAssinatura,
                                                                       @RequestHeader(value = "access_token") String accessToken);
 }

@@ -93,7 +93,7 @@ public class PlanoServiceImpl implements PlanoService {
 
     @Override
     @Transactional
-    public PlanoResponse cancelaPlanoDoClienteSistemico(UUID idClienteSistema) {
+    public PlanoResponse cancelaPlanoDoClienteSistemico(UUID idClienteSistema) throws JsonProcessingException {
         log.info("Método responsável por realizar o cancelamento de um plano de um cliente sistêmico buscado " +
                 "por id acessado");
 

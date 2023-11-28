@@ -115,7 +115,7 @@ public class PlanoController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = FeignConnectionException.class))})
     })
-    public ResponseEntity<PlanoResponse> cancelaAssinaturaCliente(@PathVariable UUID idClienteSistema) {
+    public ResponseEntity<PlanoResponse> cancelaAssinaturaCliente(@PathVariable UUID idClienteSistema) throws JsonProcessingException {
         log.info("Método controlador de cancelamento de assinatura do cliente acessado");
         return ResponseEntity.status(HttpStatus.OK).body(
                 planoService.cancelaPlanoDoClienteSistemico(

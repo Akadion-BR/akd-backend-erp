@@ -13,5 +13,5 @@ public interface PlanoService {
                                                   PlanoRequest planoRequest) throws JsonProcessingException;
 
     @Transactional
-    PlanoResponse cancelaPlanoDoClienteSistemico(UUID idClienteSistema);
+    PlanoResponse cancelaPlanoDoClienteSistemico(UUID idClienteSistema) throws JsonProcessingException;
 }
