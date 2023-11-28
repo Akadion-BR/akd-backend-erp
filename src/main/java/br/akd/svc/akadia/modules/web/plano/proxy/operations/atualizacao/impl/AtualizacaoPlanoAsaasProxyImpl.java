@@ -28,7 +28,7 @@ public class AtualizacaoPlanoAsaasProxyImpl {
 
     public void realizaAtualizacaoDePlanoDeAssinaturaNaIntegradoraAsaas(PlanoEntity planoAtualizado) throws JsonProcessingException {
 
-        log.debug("Método de serviço responsável pela atualização de assinatura na integradora ASAAS acessado");
+        log.info("Método de serviço responsável pela atualização de assinatura na integradora ASAAS acessado");
 
         log.info("Iniciando construção do objeto AtualizaAssinaturaAsaasRequest...");
         AtualizaAssinaturaAsaasRequest atualizaAssinaturaAsaasRequest =
@@ -36,7 +36,7 @@ public class AtualizacaoPlanoAsaasProxyImpl {
         log.info("Objeto AtualizaAssinaturaAsaasRequest construído com sucesso");
 
         try {
-            log.debug("Realizando envio de requisição de atualização de assinatura para a integradora ASAAS...");
+            log.info("Realizando envio de requisição de atualização de assinatura para a integradora ASAAS...");
             ResponseEntity<AtualizaAssinaturaAsaasResponse> responseAsaas =
                     planoAsaasProxy.atualizaAssinatura(
                             planoAtualizado.getCodigoAssinaturaAsaas(),
