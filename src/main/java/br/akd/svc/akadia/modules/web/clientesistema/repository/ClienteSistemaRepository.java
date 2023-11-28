@@ -33,7 +33,7 @@ public interface ClienteSistemaRepository extends JpaRepository<ClienteSistemaEn
             "AND c.plano.dataVencimento < ?1")
     List<ClienteSistemaEntity> buscaPorClientesComPlanosVencidosAtivos(String dataVencimento);
 
-    @Query("SELECT p FROM ClienteSistemaEntity c " +
+    @Query("SELECT c FROM ClienteSistemaEntity c " +
             "WHERE c.plano.dataAgendamentoRemocao <= ?1 " +
             "AND c.plano.statusPlanoEnum != 'INATIVO'")
     List<ClienteSistemaEntity> buscaPlanosComAgendamentosDeRemocaoPendentes(String dataAgendamentoRemocao);
