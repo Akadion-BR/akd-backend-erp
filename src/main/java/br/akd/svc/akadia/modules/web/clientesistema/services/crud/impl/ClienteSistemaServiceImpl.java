@@ -12,7 +12,7 @@ import br.akd.svc.akadia.modules.web.clientesistema.proxy.impl.criacao.CriacaoCl
 import br.akd.svc.akadia.modules.web.clientesistema.repository.impl.ClienteSistemaRepositoryImpl;
 import br.akd.svc.akadia.modules.web.clientesistema.services.crud.ClienteSistemaService;
 import br.akd.svc.akadia.modules.web.clientesistema.services.validator.ClienteSistemaValidationService;
-import br.akd.svc.akadia.modules.web.plano.proxy.operations.criacao.CriacaoPlanoAsaasProxyImpl;
+import br.akd.svc.akadia.modules.web.plano.proxy.operations.criacao.impl.CriacaoPlanoAsaasProxyImpl;
 import br.akd.svc.akadia.modules.web.plano.proxy.operations.remocao.impl.RemocaoPlanoAsaasProxyImpl;
 import br.akd.svc.akadia.utils.Constantes;
 import com.fasterxml.jackson.core.JsonProcessingException;
