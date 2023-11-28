@@ -1,6 +1,6 @@
 package br.akd.svc.akadia.modules.web.clientesistema.services.crud;
 
-import br.akd.svc.akadia.modules.global.cpfcnpj.models.CpfRequest;
+import br.akd.svc.akadia.modules.global.objects.cpfcnpj.models.CpfRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.atualizacao.AtualizaClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.response.ClienteSistemaResponse;

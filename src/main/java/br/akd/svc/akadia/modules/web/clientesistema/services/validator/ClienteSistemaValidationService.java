@@ -1,7 +1,7 @@
 package br.akd.svc.akadia.modules.web.clientesistema.services.validator;
 
 import br.akd.svc.akadia.exceptions.InvalidRequestException;
-import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
+import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.atualizacao.AtualizaClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.entity.ClienteSistemaEntity;

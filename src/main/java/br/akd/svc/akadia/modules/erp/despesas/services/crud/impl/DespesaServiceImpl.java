@@ -16,7 +16,7 @@ import br.akd.svc.akadia.modules.erp.despesas.repository.DespesaRepository;
 import br.akd.svc.akadia.modules.erp.despesas.repository.impl.DespesaRepositoryImpl;
 import br.akd.svc.akadia.modules.erp.despesas.services.crud.DespesaService;
 import br.akd.svc.akadia.modules.erp.despesas.services.validator.DespesaValidationService;
-import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
+import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.utils.Constantes;
 import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;

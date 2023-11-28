@@ -1,7 +1,7 @@
 package br.akd.svc.akadia.modules.web.clientesistema.models.dto.response;
 
-import br.akd.svc.akadia.modules.global.endereco.dto.response.EnderecoResponse;
-import br.akd.svc.akadia.modules.global.telefone.response.TelefoneResponse;
+import br.akd.svc.akadia.modules.global.objects.endereco.dto.response.EnderecoResponse;
+import br.akd.svc.akadia.modules.global.objects.telefone.response.TelefoneResponse;
 import br.akd.svc.akadia.modules.web.clientesistema.models.entity.ClienteSistemaEntity;
 import br.akd.svc.akadia.modules.web.plano.models.dto.response.PlanoResponse;
 import lombok.*;

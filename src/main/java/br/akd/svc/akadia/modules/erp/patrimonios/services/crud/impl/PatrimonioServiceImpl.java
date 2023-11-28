@@ -14,7 +14,7 @@ import br.akd.svc.akadia.modules.erp.patrimonios.repository.PatrimonioRepository
 import br.akd.svc.akadia.modules.erp.patrimonios.repository.impl.PatrimonioRepositoryImpl;
 import br.akd.svc.akadia.modules.erp.patrimonios.services.crud.PatrimonioService;
 import br.akd.svc.akadia.modules.erp.patrimonios.services.validator.PatrimonioValidationService;
-import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
+import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.utils.Constantes;
 import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;

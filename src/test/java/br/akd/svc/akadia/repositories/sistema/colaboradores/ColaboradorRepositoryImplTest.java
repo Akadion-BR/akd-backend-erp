@@ -1,6 +1,6 @@
 package br.akd.svc.akadia.repositories.sistema.colaboradores;
 
-import br.akd.svc.akadia.modules.global.arquivo.entity.ArquivoEntity;
+import br.akd.svc.akadia.modules.global.objects.arquivo.entity.ArquivoEntity;
 import br.akd.svc.akadia.models.entities.global.mocks.ArquivoEntityBuilder;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.UUID;
 import br.akd.svc.akadia.models.entities.sistema.colaboradores.mocks.ColaboradorEntityBuilder;

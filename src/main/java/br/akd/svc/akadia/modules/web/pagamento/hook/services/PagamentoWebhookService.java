@@ -1,7 +1,5 @@
 package br.akd.svc.akadia.modules.web.pagamento.hook.services;
 
-import br.akd.svc.akadia.modules.web.clientesistema.models.entity.ClienteSistemaEntity;
-import br.akd.svc.akadia.modules.web.clientesistema.repository.impl.ClienteSistemaRepositoryImpl;
 import br.akd.svc.akadia.modules.web.pagamento.hook.services.categorias.atualizado.AtualizacaoPagamentoWebhookService;
 import br.akd.svc.akadia.modules.web.pagamento.hook.services.categorias.confirmado.ConfirmacaoPagamentoWebhookService;
 import br.akd.svc.akadia.modules.web.pagamento.hook.services.categorias.criacao.CriacaoPagamentoWebhookService;
@@ -16,9 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 public class PagamentoWebhookService {
-
-    @Autowired
-    ClienteSistemaRepositoryImpl clienteSistemaRepositoryImpl;
 
     @Autowired
     CriacaoPagamentoWebhookService criacaoPagamentoWebhookService;
@@ -39,9 +34,6 @@ public class PagamentoWebhookService {
     public void realizaRedirecionamentoParaMetodoCorreto(AtualizacaoCobrancaWebHook atualizacaoCobrancaWebHook) {
         log.info("Método orquestrador de Webhook de pagamentos acessado");
 
-        ClienteSistemaEntity clienteSistema = clienteSistemaRepositoryImpl
-                .implementaBuscaPorCodigoClienteAsaas(atualizacaoCobrancaWebHook.getPayment().getCustomer());
-
         log.info("Iniciando orquestração por tipo de atualização de pagamento do webhook...");
         switch (atualizacaoCobrancaWebHook.getEvent()) {
             case PAYMENT_CREATED:
@@ -59,7 +51,7 @@ public class PagamentoWebhookService {
             case PAYMENT_UPDATED:
                 log.debug("Condicional de pagamento ALTERADO acessada");
                 atualizacaoPagamentoWebhookService.realizaAtualizacaoDePagamentoAlterado(
-                        atualizacaoCobrancaWebHook.getPayment(), clienteSistema);
+                        atualizacaoCobrancaWebHook.getPayment());
                 log.info("Cobrança ALTERADA com sucesso");
                 break;
             case PAYMENT_OVERDUE:

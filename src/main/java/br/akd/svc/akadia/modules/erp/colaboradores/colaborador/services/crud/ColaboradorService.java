@@ -3,7 +3,7 @@ package br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.crud;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.colaborador.response.ColaboradorResponse;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.colaborador.response.page.ColaboradorPageResponse;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.id.ColaboradorId;
-import br.akd.svc.akadia.modules.global.imagem.response.ImagemResponse;
+import br.akd.svc.akadia.modules.global.objects.imagem.response.ImagemResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;

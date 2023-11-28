@@ -1,10 +1,10 @@
 package br.akd.svc.akadia.modules.web.empresa.models.entity;
 
 import br.akd.svc.akadia.modules.backoffice.chamado.models.entity.ChamadoEntity;
-import br.akd.svc.akadia.modules.global.endereco.entity.EnderecoEntity;
-import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
-import br.akd.svc.akadia.modules.global.imagem.entity.ImagemEntity;
-import br.akd.svc.akadia.modules.global.telefone.entity.TelefoneEntity;
+import br.akd.svc.akadia.modules.global.objects.endereco.entity.EnderecoEntity;
+import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
+import br.akd.svc.akadia.modules.global.objects.imagem.entity.ImagemEntity;
+import br.akd.svc.akadia.modules.global.objects.telefone.entity.TelefoneEntity;
 import br.akd.svc.akadia.modules.web.clientesistema.models.entity.ClienteSistemaEntity;
 import br.akd.svc.akadia.modules.web.empresa.models.dto.request.EmpresaRequest;
 import br.akd.svc.akadia.modules.web.empresa.models.entity.fiscal.ConfigFiscalEmpresaEntity;

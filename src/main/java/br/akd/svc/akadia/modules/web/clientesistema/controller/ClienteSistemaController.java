@@ -3,7 +3,7 @@ package br.akd.svc.akadia.modules.web.clientesistema.controller;
 import br.akd.svc.akadia.exceptions.FeignConnectionException;
 import br.akd.svc.akadia.exceptions.InvalidRequestException;
 import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
-import br.akd.svc.akadia.modules.global.cpfcnpj.models.CpfRequest;
+import br.akd.svc.akadia.modules.global.objects.cpfcnpj.models.CpfRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.atualizacao.AtualizaClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.response.ClienteSistemaResponse;

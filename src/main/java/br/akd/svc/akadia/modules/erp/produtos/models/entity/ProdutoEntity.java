@@ -7,7 +7,7 @@ import br.akd.svc.akadia.modules.erp.produtos.models.entity.id.ProdutoId;
 import br.akd.svc.akadia.modules.erp.produtos.models.enums.TipoPesoEnum;
 import br.akd.svc.akadia.modules.erp.produtos.models.enums.TipoProdutoEnum;
 import br.akd.svc.akadia.modules.erp.produtos.models.enums.UnidadeComercialEnum;
-import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
+import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.modules.web.empresa.models.entity.EmpresaEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

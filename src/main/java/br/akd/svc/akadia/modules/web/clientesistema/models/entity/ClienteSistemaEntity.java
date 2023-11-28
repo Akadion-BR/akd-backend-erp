@@ -1,8 +1,8 @@
 package br.akd.svc.akadia.modules.web.clientesistema.models.entity;
 
-import br.akd.svc.akadia.modules.global.endereco.entity.EnderecoEntity;
-import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
-import br.akd.svc.akadia.modules.global.telefone.entity.TelefoneEntity;
+import br.akd.svc.akadia.modules.global.objects.endereco.entity.EnderecoEntity;
+import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
+import br.akd.svc.akadia.modules.global.objects.telefone.entity.TelefoneEntity;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.atualizacao.AtualizaClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.empresa.models.entity.EmpresaEntity;

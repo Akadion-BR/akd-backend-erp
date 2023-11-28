@@ -1,6 +1,6 @@
 package br.akd.svc.akadia.modules.web.clientesistema.proxy.utils;
 
-import br.akd.svc.akadia.modules.global.telefone.request.TelefoneRequest;
+import br.akd.svc.akadia.modules.global.objects.telefone.request.TelefoneRequest;
 
 public class ClienteAsaasProxyUtils {
 

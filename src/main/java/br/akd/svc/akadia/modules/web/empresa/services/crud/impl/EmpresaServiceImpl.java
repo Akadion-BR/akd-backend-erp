@@ -6,8 +6,8 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.con
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.*;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.impl.ColaboradorRepositoryImpl;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.crud.ColaboradorService;
-import br.akd.svc.akadia.modules.global.acessosistema.entity.AcessoSistemaEntity;
-import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
+import br.akd.svc.akadia.modules.global.objects.acessosistema.entity.AcessoSistemaEntity;
+import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.modules.web.clientesistema.models.entity.ClienteSistemaEntity;
 import br.akd.svc.akadia.modules.web.clientesistema.repository.impl.ClienteSistemaRepositoryImpl;
 import br.akd.svc.akadia.modules.web.clientesistema.services.validator.ClienteSistemaValidationService;

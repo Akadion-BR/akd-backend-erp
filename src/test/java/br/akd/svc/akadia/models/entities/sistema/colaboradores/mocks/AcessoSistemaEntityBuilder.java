@@ -1,6 +1,6 @@
 package br.akd.svc.akadia.models.entities.sistema.colaboradores.mocks;
 
-import br.akd.svc.akadia.modules.global.acessosistema.entity.AcessoSistemaEntity;
+import br.akd.svc.akadia.modules.global.objects.acessosistema.entity.AcessoSistemaEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.PermissaoEnum;
 
 import java.util.HashSet;

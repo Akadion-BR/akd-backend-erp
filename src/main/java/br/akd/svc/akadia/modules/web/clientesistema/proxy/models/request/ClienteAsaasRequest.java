@@ -1,6 +1,6 @@
 package br.akd.svc.akadia.modules.web.clientesistema.proxy.models.request;
 
-import br.akd.svc.akadia.modules.global.endereco.dto.request.EnderecoRequest;
+import br.akd.svc.akadia.modules.global.objects.endereco.dto.request.EnderecoRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.atualizacao.AtualizaClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.utils.ClienteAsaasProxyUtils;

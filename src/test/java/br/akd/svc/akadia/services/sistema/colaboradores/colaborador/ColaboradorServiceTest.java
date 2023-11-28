@@ -6,7 +6,7 @@ import br.akd.svc.akadia.models.dto.sistema.colaboradores.responses.mocks.Colabo
 import br.akd.svc.akadia.models.dto.sistema.colaboradores.responses.mocks.ColaboradorResponseBuilder;
 import br.akd.svc.akadia.models.entities.global.mocks.ArquivoEntityBuilder;
 import br.akd.svc.akadia.models.entities.global.mocks.EnderecoEntityBuilder;
-import br.akd.svc.akadia.modules.global.acessosistema.entity.AcessoSistemaEntity;
+import br.akd.svc.akadia.modules.global.objects.acessosistema.entity.AcessoSistemaEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.UUID;
 import br.akd.svc.akadia.models.entities.sistema.colaboradores.mocks.ColaboradorEntityBuilder;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.ColaboradorRepository;

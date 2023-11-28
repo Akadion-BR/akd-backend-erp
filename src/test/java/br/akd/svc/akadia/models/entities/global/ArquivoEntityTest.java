@@ -1,8 +1,8 @@
 package br.akd.svc.akadia.models.entities.global;
 
 import br.akd.svc.akadia.models.entities.global.mocks.ArquivoEntityBuilder;
-import br.akd.svc.akadia.modules.global.arquivo.enums.TipoArquivoEnum;
-import br.akd.svc.akadia.modules.global.arquivo.entity.ArquivoEntity;
+import br.akd.svc.akadia.modules.global.objects.arquivo.enums.TipoArquivoEnum;
+import br.akd.svc.akadia.modules.global.objects.arquivo.entity.ArquivoEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

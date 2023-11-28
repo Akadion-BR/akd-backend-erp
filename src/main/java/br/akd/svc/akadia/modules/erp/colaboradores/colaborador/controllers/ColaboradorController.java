@@ -12,7 +12,7 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.colabo
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.colaborador.response.page.ColaboradorPageResponse;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.crud.ColaboradorService;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.report.ColaboradorRelatorioService;
-import br.akd.svc.akadia.modules.global.imagem.response.ImagemResponse;
+import br.akd.svc.akadia.modules.global.objects.imagem.response.ImagemResponse;
 import br.akd.svc.akadia.utils.RelatorioUtil;
 import com.lowagie.text.DocumentException;
 import io.swagger.v3.oas.annotations.Operation;

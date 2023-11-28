@@ -14,9 +14,9 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.impl.C
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.crud.ColaboradorService;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.utils.ColaboradorServiceUtil;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.validator.ColaboradorValidation;
-import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
-import br.akd.svc.akadia.modules.global.imagem.entity.ImagemEntity;
-import br.akd.svc.akadia.modules.global.imagem.response.ImagemResponse;
+import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
+import br.akd.svc.akadia.modules.global.objects.imagem.entity.ImagemEntity;
+import br.akd.svc.akadia.modules.global.objects.imagem.response.ImagemResponse;
 import br.akd.svc.akadia.utils.Constantes;
 import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
