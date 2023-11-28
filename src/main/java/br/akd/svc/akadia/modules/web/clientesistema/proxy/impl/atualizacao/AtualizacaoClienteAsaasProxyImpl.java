@@ -1,9 +1,11 @@
 package br.akd.svc.akadia.modules.web.clientesistema.proxy.impl.atualizacao;
 
 import br.akd.svc.akadia.exceptions.InternalErrorException;
+import br.akd.svc.akadia.modules.global.proxy.ProxyUtils;
+import br.akd.svc.akadia.modules.global.proxy.enums.ProxyModuleEnum;
+import br.akd.svc.akadia.modules.global.proxy.enums.ProxyOperationEnum;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.atualizacao.AtualizaClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.ClienteSistemaAsaasProxy;
-import br.akd.svc.akadia.modules.web.clientesistema.proxy.impl.atualizacao.utils.AtualizacaoClienteAsaasProxyUtils;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.models.request.ClienteAsaasRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.models.response.ClienteAsaasResponse;
 import br.akd.svc.akadia.utils.Constantes;
@@ -22,7 +24,7 @@ public class AtualizacaoClienteAsaasProxyImpl {
     ClienteSistemaAsaasProxy clienteAsaasProxy;
 
     @Autowired
-    AtualizacaoClienteAsaasProxyUtils atualizacaoClienteAsaasProxyUtils;
+    ProxyUtils proxyUtils;
 
     public void realizaAtualizacaoClienteAsaas(String asaasId,
                                                AtualizaClienteSistemaRequest atualizaClienteSistemaRequest) throws JsonProcessingException {
@@ -41,7 +43,8 @@ public class AtualizacaoClienteAsaasProxyImpl {
             log.info("Atualização de cliente sistêmico na integradora ASAAS realizado com sucesso");
 
             log.info("Realizando validações referente à resposta da integradora...");
-            atualizacaoClienteAsaasProxyUtils.realizaValidacaoResponseAsaas(responseAsaas);
+            proxyUtils.realizaValidacaoResponseAsaas(
+                    responseAsaas, ProxyModuleEnum.CLIENTE_SISTEMICO, ProxyOperationEnum.ATUALIZACAO);
             log.info("Validações realizadas com sucesso. Cliente atualizado na ASAAS com sucesso.");
         } catch (FeignException feignException) {
             log.error("Ocorreu um erro durante a integração com o ASAAS para atualização de cliente sistêmico: {}",
@@ -49,7 +52,8 @@ public class AtualizacaoClienteAsaasProxyImpl {
 
             log.info("Iniciando acesso ao método responsável por realizar o tratamento do erro retornado pelo " +
                     "feign client...");
-            throw atualizacaoClienteAsaasProxyUtils.realizaTratamentoRetornoErroFeignException(feignException);
+            throw proxyUtils.realizaTratamentoRetornoErroFeignException(
+                    feignException, ProxyModuleEnum.CLIENTE_SISTEMICO, ProxyOperationEnum.ATUALIZACAO);
         } catch (Exception e) {
             log.error("Ocorreu um erro interno durante a atualização do cliente sistêmico na integradora de " +
                     "pagamentos ASAAS: {}", e.getMessage());

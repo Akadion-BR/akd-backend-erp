@@ -1,9 +1,11 @@
 package br.akd.svc.akadia.modules.web.plano.proxy.operations.atualizacao.impl;
 
 import br.akd.svc.akadia.exceptions.InternalErrorException;
+import br.akd.svc.akadia.modules.global.proxy.enums.ProxyModuleEnum;
+import br.akd.svc.akadia.modules.global.proxy.enums.ProxyOperationEnum;
+import br.akd.svc.akadia.modules.global.proxy.ProxyUtils;
 import br.akd.svc.akadia.modules.web.plano.models.entity.PlanoEntity;
 import br.akd.svc.akadia.modules.web.plano.proxy.PlanoAsaasProxy;
-import br.akd.svc.akadia.modules.web.plano.proxy.operations.atualizacao.impl.utils.AtualizacaoPlanoAsaasProxyUtils;
 import br.akd.svc.akadia.modules.web.plano.proxy.operations.atualizacao.models.request.AtualizaAssinaturaAsaasRequest;
 import br.akd.svc.akadia.modules.web.plano.proxy.operations.atualizacao.models.response.AtualizaAssinaturaAsaasResponse;
 import br.akd.svc.akadia.utils.Constantes;
@@ -22,7 +24,7 @@ public class AtualizacaoPlanoAsaasProxyImpl {
     PlanoAsaasProxy planoAsaasProxy;
 
     @Autowired
-    AtualizacaoPlanoAsaasProxyUtils atualizacaoPlanoAsaasProxyUtils;
+    ProxyUtils proxyUtils;
 
     public void realizaAtualizacaoDePlanoDeAssinaturaNaIntegradoraAsaas(PlanoEntity planoAtualizado) throws JsonProcessingException {
 
@@ -42,7 +44,8 @@ public class AtualizacaoPlanoAsaasProxyImpl {
                             System.getenv(Constantes.TOKEN_ASAAS));
 
             log.info("Realizando validações referente à resposta da integradora...");
-            atualizacaoPlanoAsaasProxyUtils.realizaValidacaoResponseAsaas(responseAsaas);
+            proxyUtils.realizaValidacaoResponseAsaas(
+                    responseAsaas, ProxyModuleEnum.PLANO, ProxyOperationEnum.ATUALIZACAO);
             log.info("Validações realizadas com sucesso. Plano atualizado na ASAAS com sucesso.");
         } catch (FeignException feignException) {
             log.error("Ocorreu um erro durante a integração com o ASAAS para atualização de assinatura: {}",
@@ -50,7 +53,8 @@ public class AtualizacaoPlanoAsaasProxyImpl {
 
             log.info("Iniciando acesso ao método responsável por realizar o tratamento do erro retornado pelo " +
                     "feign client...");
-            throw atualizacaoPlanoAsaasProxyUtils.realizaTratamentoRetornoErroFeignException(feignException);
+            throw proxyUtils.realizaTratamentoRetornoErroFeignException(
+                    feignException, ProxyModuleEnum.PLANO, ProxyOperationEnum.ATUALIZACAO);
         } catch (Exception e) {
             log.error("Ocorreu um erro interno durante a atualização do plano na integradora de " +
                     "pagamentos ASAAS: {}", e.getMessage());

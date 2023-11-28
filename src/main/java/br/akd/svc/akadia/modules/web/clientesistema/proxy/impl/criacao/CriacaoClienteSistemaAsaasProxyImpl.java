@@ -1,9 +1,11 @@
 package br.akd.svc.akadia.modules.web.clientesistema.proxy.impl.criacao;
 
 import br.akd.svc.akadia.exceptions.InternalErrorException;
+import br.akd.svc.akadia.modules.global.proxy.ProxyUtils;
+import br.akd.svc.akadia.modules.global.proxy.enums.ProxyModuleEnum;
+import br.akd.svc.akadia.modules.global.proxy.enums.ProxyOperationEnum;
 import br.akd.svc.akadia.modules.web.clientesistema.models.dto.request.criacao.ClienteSistemaRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.ClienteSistemaAsaasProxy;
-import br.akd.svc.akadia.modules.web.clientesistema.proxy.impl.criacao.utils.CriacaoClienteAsaasProxyUtils;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.models.request.ClienteAsaasRequest;
 import br.akd.svc.akadia.modules.web.clientesistema.proxy.models.response.ClienteAsaasResponse;
 import br.akd.svc.akadia.utils.Constantes;
@@ -23,7 +25,7 @@ public class CriacaoClienteSistemaAsaasProxyImpl {
     ClienteSistemaAsaasProxy clienteAsaasProxy;
 
     @Autowired
-    CriacaoClienteAsaasProxyUtils criacaoClienteAsaasProxyUtils;
+    ProxyUtils proxyUtils;
 
     public String realizaCriacaoClienteAsaas(ClienteSistemaRequest clienteRequest)
             throws JsonProcessingException {
@@ -42,7 +44,8 @@ public class CriacaoClienteSistemaAsaasProxyImpl {
             log.info("Criação de cliente sistêmico na integradora ASAAS realizado com sucesso");
 
             log.info("Realizando validações referente à resposta da integradora...");
-            criacaoClienteAsaasProxyUtils.realizaValidacaoResponseAsaas(responseAsaas);
+            proxyUtils.realizaValidacaoResponseAsaas(
+                    responseAsaas, ProxyModuleEnum.CLIENTE_SISTEMICO, ProxyOperationEnum.CRIACAO);
 
             ClienteAsaasResponse clienteAsaasResponse = responseAsaas.getBody();
 
@@ -55,7 +58,8 @@ public class CriacaoClienteSistemaAsaasProxyImpl {
 
             log.info("Iniciando acesso ao método responsável por realizar o tratamento do erro retornado pelo " +
                     "feign client...");
-            throw criacaoClienteAsaasProxyUtils.realizaTratamentoRetornoErroFeignException(feignException);
+            throw proxyUtils.realizaTratamentoRetornoErroFeignException(
+                    feignException, ProxyModuleEnum.CLIENTE_SISTEMICO, ProxyOperationEnum.CRIACAO);
         } catch (Exception e) {
             log.error("Ocorreu um erro interno durante a criação do cliente sistêmico na integradora de " +
                     "pagamentos ASAAS: {}", e.getMessage());
