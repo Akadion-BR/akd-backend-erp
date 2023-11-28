@@ -1,8 +1,6 @@
 package br.akd.svc.akadia.modules.web.pagamento.hook.services.categorias.atualizado;
 
-import br.akd.svc.akadia.modules.web.clientesistema.models.entity.ClienteSistemaEntity;
 import br.akd.svc.akadia.modules.web.pagamento.hook.models.PagamentoWebHookRequest;
-import br.akd.svc.akadia.modules.web.pagamento.hook.models.enums.BillingTypeEnum;
 import br.akd.svc.akadia.modules.web.pagamento.models.entity.PagamentoSistemaEntity;
 import br.akd.svc.akadia.modules.web.pagamento.models.enums.FormaPagamentoSistemaEnum;
 import br.akd.svc.akadia.modules.web.pagamento.repository.impl.PagamentoSistemaRepositoryImpl;
@@ -18,8 +16,7 @@ public class AtualizacaoPagamentoWebhookService {
     @Autowired
     PagamentoSistemaRepositoryImpl pagamentoSistemaRepository;
 
-    public void realizaAtualizacaoDePagamentoAlterado(PagamentoWebHookRequest pagamentoWebHookRequest,
-                                                      ClienteSistemaEntity clienteSistema) {
+    public void realizaAtualizacaoDePagamentoAlterado(PagamentoWebHookRequest pagamentoWebHookRequest) {
         log.info(ConstantesPagamento.INICIANDO_IMPLEMENTACAO_BUSCA_PAGAMENTO_ASAAS);
         PagamentoSistemaEntity pagamentoEntity = pagamentoSistemaRepository
                 .implementaBuscaPorCodigoPagamentoAsaas(pagamentoWebHookRequest.getId());
@@ -28,10 +25,6 @@ public class AtualizacaoPagamentoWebhookService {
         pagamentoEntity.setDescricao(pagamentoWebHookRequest.getDescription());
         pagamentoEntity.setFormaPagamentoSistemaEnum(FormaPagamentoSistemaEnum.valueOf(
                 pagamentoWebHookRequest.getBillingType().getFormaPagamentoResumida()));
-        pagamentoEntity.setCartao(pagamentoWebHookRequest.getBillingType()
-                .equals(BillingTypeEnum.CREDIT_CARD) && clienteSistema.getCartao() != null
-                ? clienteSistema.getCartao()
-                : null);
         log.info(ConstantesPagamento.OBJETO_PAGAMENTO_CRIADO, pagamentoEntity);
 
         log.info("Iniciando persistência do pagamento atualizado...");
