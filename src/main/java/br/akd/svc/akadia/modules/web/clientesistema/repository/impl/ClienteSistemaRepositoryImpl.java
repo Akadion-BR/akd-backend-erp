@@ -111,4 +111,25 @@ public class ClienteSistemaRepositoryImpl {
         }
     }
 
+    public List<ClienteSistemaEntity> implementaBuscaPorPlanosComCancelamentoAgendadoVencido() {
+        log.info("Método que implementa busca por planos com cancelamento agendado vencido acessado");
+        try {
+            log.info("Iniciando busca de clientes sistêmicos com plano que possui agendamento de " +
+                    "cancelamento vencido...");
+            List<ClienteSistemaEntity> clientesAtrasados = clienteSistemaRepository
+                    .buscaPlanosComAgendamentosDeRemocaoPendentes(LocalDate.now().toString());
+
+            if (clientesAtrasados.isEmpty()) {
+                log.warn("Nenhum cliente sistêmico com o pagamento da assinatura atrasado foi encontrado");
+                throw new ObjectNotFoundException("Nenhum cliente sistêmico com o pagamento da assinatura " +
+                        "atrasado foi encontrado");
+            }
+
+            log.info("Retornando clientes sistêmicos encontrados...");
+            return clientesAtrasados;
+        } catch (Exception e) {
+            throw new InternalErrorException(Constantes.ERRO_INTERNO);
+        }
+    }
+
 }
