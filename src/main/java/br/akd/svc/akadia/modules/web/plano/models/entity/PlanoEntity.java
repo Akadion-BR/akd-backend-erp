@@ -56,6 +56,11 @@ public class PlanoEntity {
     @Column(name = "DT_DATAVENCIMENTO_PLN", nullable = false, length = 10)
     private String dataVencimento;
 
+    @Comment("Data de agendamento para a remoção do plano. Só deve estar preenchido caso o plano tenha sido removido " +
+            "mas possua algum pagamento ativo")
+    @Column(name = "DT_AGENDAMENTOREMOCAO_PLN", length = 10)
+    private String dataAgendamentoRemocao;
+
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     @Column(name = "ENM_TIPO_PLANO", nullable = false)
@@ -90,6 +95,7 @@ public class PlanoEntity {
                 .dataContratacao(LocalDate.now().toString())
                 .horaContratacao(LocalTime.now().toString())
                 .dataVencimento(LocalDate.now().plusDays(7L).toString())
+                .dataAgendamentoRemocao(null)
                 .tipoPlanoEnum(planoRequest.getTipoPlano())
                 .statusPlanoEnum(StatusPlanoEnum.PERIODO_DE_TESTES)
                 .formaPagamentoSistemaEnum(planoRequest.getFormaPagamentoSistema())
@@ -106,6 +112,7 @@ public class PlanoEntity {
                 .dataContratacao(planoEncontrado.getDataContratacao())
                 .horaContratacao(planoEncontrado.getHoraContratacao())
                 .dataVencimento(planoEncontrado.getDataVencimento())
+                .dataAgendamentoRemocao(planoEncontrado.getDataAgendamentoRemocao())
                 .tipoPlanoEnum(planoRequest.getTipoPlano())
                 .statusPlanoEnum(planoEncontrado.getStatusPlanoEnum())
                 .formaPagamentoSistemaEnum(planoRequest.getFormaPagamentoSistema())

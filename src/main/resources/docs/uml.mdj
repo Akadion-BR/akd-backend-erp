@@ -29560,6 +29560,24 @@
 										},
 										{
 											"_type": "UMLAttributeView",
+											"_id": "AAAAAAGMFhowB7sUrgQ=",
+											"_parent": {
+												"$ref": "AAAAAAGFpl3Qp9myI1M="
+											},
+											"model": {
+												"$ref": "AAAAAAGMFhovxLp+8WE="
+											},
+											"fillColor": "#fbe1c7",
+											"font": "Arial;13;0",
+											"left": 2453,
+											"top": 2281,
+											"width": 437.53125,
+											"height": 13,
+											"text": "-dataAgendamentoRemocao: String",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
 											"_id": "AAAAAAGFpl+kptn7N1Q=",
 											"_parent": {
 												"$ref": "AAAAAAGFpl3Qp9myI1M="
@@ -29570,7 +29588,7 @@
 											"fillColor": "#fbe1c7",
 											"font": "Arial;13;0",
 											"left": 2453,
-											"top": 2281,
+											"top": 2296,
 											"width": 437.53125,
 											"height": 13,
 											"text": "-tipoPlanoEnum: PlanoEnum {ordered}",
@@ -29588,7 +29606,7 @@
 											"fillColor": "#fbe1c7",
 											"font": "Arial;13;0",
 											"left": 2453,
-											"top": 2296,
+											"top": 2311,
 											"width": 437.53125,
 											"height": 13,
 											"text": "-statusPlanoEnum: StatusPlanoEnum {ordered}",
@@ -29606,7 +29624,7 @@
 											"fillColor": "#fbe1c7",
 											"font": "Arial;13;0",
 											"left": 2453,
-											"top": 2311,
+											"top": 2326,
 											"width": 437.53125,
 											"height": 13,
 											"text": "+formaPagamentoSistemaEnum: FormaPagamentoSistemaEnum {ordered}",
@@ -29618,7 +29636,7 @@
 									"left": 2448,
 									"top": 2201,
 									"width": 447.53125,
-									"height": 128
+									"height": 143
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -29632,7 +29650,7 @@
 									"fillColor": "#fbe1c7",
 									"font": "Arial;13;0",
 									"left": 2448,
-									"top": 2329,
+									"top": 2344,
 									"width": 447.53125,
 									"height": 10
 								},
@@ -29680,7 +29698,7 @@
 							"left": 2448,
 							"top": 2176,
 							"width": 447.53125,
-							"height": 163,
+							"height": 178,
 							"nameCompartment": {
 								"$ref": "AAAAAAGFpl3QptmtjEQ="
 							},
@@ -49520,6 +49538,16 @@
 										"$ref": "AAAAAAGFpl3QptmqDm0="
 									},
 									"name": "dataVencimento",
+									"visibility": "private",
+									"type": "String"
+								},
+								{
+									"_type": "UMLAttribute",
+									"_id": "AAAAAAGMFhovxLp+8WE=",
+									"_parent": {
+										"$ref": "AAAAAAGFpl3QptmqDm0="
+									},
+									"name": "dataAgendamentoRemocao",
 									"visibility": "private",
 									"type": "String"
 								},

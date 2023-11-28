@@ -1,9 +1,6 @@
 package br.akd.svc.akadia.modules.web.plano.models.dto.response;
 
-import br.akd.svc.akadia.modules.web.pagamento.models.enums.FormaPagamentoSistemaEnum;
 import br.akd.svc.akadia.modules.web.plano.models.entity.PlanoEntity;
-import br.akd.svc.akadia.modules.web.plano.models.enums.StatusPlanoEnum;
-import br.akd.svc.akadia.modules.web.plano.models.enums.TipoPlanoEnum;
 import lombok.*;
 
 import java.util.UUID;
@@ -19,9 +16,10 @@ public class PlanoResponse {
     private String dataContratacao;
     private String horaContratacao;
     private String dataVencimento;
-    private TipoPlanoEnum tipoPlanoEnum;
-    private StatusPlanoEnum statusPlanoEnum;
-    private FormaPagamentoSistemaEnum formaPagamentoSistemaEnum;
+    private String dataAgendamentoRemocao;
+    private String tipoPlanoEnum;
+    private String statusPlanoEnum;
+    private String formaPagamentoSistemaEnum;
 
     public PlanoResponse buildFromEntity(PlanoEntity planoEntity) {
         return planoEntity != null
@@ -30,9 +28,10 @@ public class PlanoResponse {
                 .dataContratacao(planoEntity.getDataContratacao())
                 .horaContratacao(planoEntity.getHoraContratacao())
                 .dataVencimento(planoEntity.getDataVencimento())
-                .tipoPlanoEnum(planoEntity.getTipoPlanoEnum())
-                .statusPlanoEnum(planoEntity.getStatusPlanoEnum())
-                .formaPagamentoSistemaEnum(planoEntity.getFormaPagamentoSistemaEnum())
+                .dataAgendamentoRemocao(planoEntity.getDataAgendamentoRemocao())
+                .tipoPlanoEnum(planoEntity.getTipoPlanoEnum().getDesc())
+                .statusPlanoEnum(planoEntity.getStatusPlanoEnum().getDesc())
+                .formaPagamentoSistemaEnum(planoEntity.getFormaPagamentoSistemaEnum().getDesc())
                 .build()
                 : null;
     }
