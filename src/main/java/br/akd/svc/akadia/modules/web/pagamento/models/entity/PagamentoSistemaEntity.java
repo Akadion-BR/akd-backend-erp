@@ -1,6 +1,5 @@
 package br.akd.svc.akadia.modules.web.pagamento.models.entity;
 
-import br.akd.svc.akadia.modules.web.cartao.models.entity.CartaoEntity;
 import br.akd.svc.akadia.modules.web.pagamento.models.enums.FormaPagamentoSistemaEnum;
 import br.akd.svc.akadia.modules.web.pagamento.models.enums.StatusPagamentoSistemaEnum;
 import lombok.*;
@@ -85,13 +84,5 @@ public class PagamentoSistemaEntity {
             "4 - Cancelado")
     @Column(name = "ENM_STATUS_PGS", nullable = false)
     private StatusPagamentoSistemaEnum statusPagamentoSistemaEnum;
-
-    @ToString.Exclude
-    @Comment("Código do cartão que foi utilizado no pagamento")
-    @OneToOne(targetEntity = CartaoEntity.class,
-            orphanRemoval = true,
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    private CartaoEntity cartao;
 
 }
