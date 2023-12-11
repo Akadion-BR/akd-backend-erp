@@ -1,5 +1,6 @@
 package br.akd.svc.akadia.modules.erp.patrimonios.services.crud.impl;
 
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import br.akd.svc.akadia.exceptions.InvalidRequestException;
 import br.akd.svc.akadia.modules.erp.colaboradores.acao.models.enums.TipoAcaoEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.acao.services.AcaoService;
@@ -16,7 +17,6 @@ import br.akd.svc.akadia.modules.erp.patrimonios.services.crud.PatrimonioService
 import br.akd.svc.akadia.modules.erp.patrimonios.services.validator.PatrimonioValidationService;
 import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.utils.Constantes;
-import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -85,7 +85,7 @@ public class PatrimonioServiceImpl implements PatrimonioService {
 
         log.debug("Acessando repositório de busca de patrimonios");
         Page<PatrimonioEntity> patrimonioPage = patrimonioRepository
-                .buscaPaginadaPorClientes(pageable, idColaboradorSessao.getEmpresa(), campoBusca);
+                .buscaPaginadaPorClientes(pageable, idColaboradorSessao.getEmpresa().getId(), campoBusca);
 
         log.debug("Busca de patrimônios por paginação realizada com sucesso. Acessando método de conversão dos objetos do tipo " +
                 "Entity para objetos do tipo Response...");
@@ -103,7 +103,7 @@ public class PatrimonioServiceImpl implements PatrimonioService {
 
         log.debug("Acessando repositório de busca de patrimônio por ID...");
         PatrimonioEntity patrimonio = patrimonioRepositoryImpl
-                .implementaBuscaPorId(idColaboradorSessao.getEmpresa(), idPatrimonio);
+                .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), idPatrimonio);
 
         log.debug("Busca de patrimônios por id realizada com sucesso. Acessando método de conversão dos objeto do tipo " +
                 "Entity para objeto do tipo Response...");
@@ -127,7 +127,7 @@ public class PatrimonioServiceImpl implements PatrimonioService {
 
         log.debug(INICIA_BUSCA_POR_ID);
         PatrimonioEntity patrimonioEncontrado = patrimonioRepositoryImpl
-                .implementaBuscaPorId(idColaboradorSessao.getEmpresa(), idPatrimonio);
+                .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), idPatrimonio);
 
         log.debug("Iniciando acesso ao método de validação de alteração de dados de patrimônio excluído...");
         patrimonioValidationService
@@ -159,7 +159,7 @@ public class PatrimonioServiceImpl implements PatrimonioService {
 
         log.debug(INICIA_BUSCA_POR_ID);
         PatrimonioEntity patrimonioEncontrado = patrimonioRepositoryImpl
-                .implementaBuscaPorId(idColaboradorSessao.getEmpresa(), uuidPatrimonio);
+                .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), uuidPatrimonio);
 
         log.debug("Iniciando acesso ao método de validação de exclusão de patrimônio que já foi excluído...");
         patrimonioValidationService
@@ -193,7 +193,7 @@ public class PatrimonioServiceImpl implements PatrimonioService {
         for (UUID idPatrimonio : idsPatrimonio) {
             log.debug(INICIA_BUSCA_POR_ID);
             PatrimonioEntity patrimonioEncontrado = patrimonioRepositoryImpl
-                    .implementaBuscaPorId(idColaboradorSessao.getEmpresa(), idPatrimonio);
+                    .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), idPatrimonio);
 
             patrimoniosEncontrados.add(patrimonioEncontrado);
         }

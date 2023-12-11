@@ -80,7 +80,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
         log.debug("Acessando repositório de busca de produtos");
         Page<ProdutoEntity> produtoPage = produtoRepository.buscaPaginadaPorProdutos(
-                pageable, idColaboradorSessao.getEmpresa(), campoBusca);
+                pageable, idColaboradorSessao.getEmpresa().getId(), campoBusca);
 
         log.debug("Busca de produtos por paginação realizada com sucesso. Acessando método de conversão dos " +
                 "objetos do tipo Entity para objetos do tipo Response...");

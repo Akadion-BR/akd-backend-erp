@@ -50,7 +50,8 @@ public class ClienteEntity {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @Comment("Chave primária do cliente - ID da empresa ao qual o cliente faz parte")
-    @JoinColumn(name = "COD_EMPRESA_CLI", referencedColumnName = "COD_EMPRESA_EMP", nullable = false, updatable = false)
+    @JoinColumn(name = "COD_EMPRESA_CLI", referencedColumnName = "COD_EMPRESA_EMP")
+    @JoinColumn(name = "COD_CLIENTESISTEMA_CLI", referencedColumnName = "COD_CLIENTESISTEMA_EMP")
     private EmpresaEntity empresa;
 
     @Comment("Data em que o cadastro do cliente foi realizado")

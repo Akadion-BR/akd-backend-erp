@@ -32,7 +32,7 @@ public class AcessoServiceImpl implements AcessoService {
 
         log.debug("Realizando a busca do colaborador pela matrícula informada: {}...", matricula);
         ColaboradorEntity colaborador = colaboradorRepositoryImpl.implementaBuscaPorMatricula(
-                idColaboradorSessao.getEmpresa(), matricula);
+                idColaboradorSessao.getEmpresa().getId(), matricula);
 
         log.debug("Adicionando objeto Acesso ao colaborador...");
         colaborador.addAcesso();

@@ -61,7 +61,7 @@ public class PatrimonioRelatorioService {
 
         log.debug("Verificando se listagem de ids de patrimônios recebidas por parâmetro é vazia...");
         java.util.List<PatrimonioEntity> patrimonios = idsPatrimonios.isEmpty()
-                ? patrimonioRepositoryImpl.implementaBuscaPorTodos(idColaboradorSessao.getEmpresa())
+                ? patrimonioRepositoryImpl.implementaBuscaPorTodos(idColaboradorSessao.getEmpresa().getId())
                 : patrimonioRepositoryImpl.implementaBuscaPorIdEmMassa(idColaboradorSessao.getEmpresa(), idsPatrimonios);
 
         Collections.reverse(patrimonios);

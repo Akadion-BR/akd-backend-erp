@@ -77,7 +77,7 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
 
         log.debug("Obtendo colaborador pelo id ({})...", idColaboradorAlvo);
         ColaboradorEntity colaboradorEncontrado = colaboradorRepositoryImpl.implementaBuscaPorId(
-                idColaboradorSessao.getEmpresa(), colaboradorLogado.getEmpresa().getId());
+                idColaboradorSessao.getEmpresa().getId(), colaboradorLogado.getEmpresa().getId());
 
         log.debug("Adicionando advertência criada ao objeto colaborador...");
         colaboradorEncontrado.addAdvertencia(advertenciaEntity);
@@ -105,7 +105,7 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
 
         log.debug("Acessando repositório de busca de advertências");
         Page<AdvertenciaEntity> advertenciaPage = colaboradorRepository.buscaAdvertenciasPorIdColaborador(
-                pageable, idColaboradorSessao.getEmpresa(), idColaboradorSessao.getId());
+                pageable, idColaboradorSessao.getEmpresa().getId(), idColaboradorSessao.getId());
 
         log.debug("Busca de advertências por paginação realizada com sucesso. Acessando método de conversão dos objetos do tipo " +
                 "Entity para objetos do tipo Response...");
@@ -152,7 +152,7 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
 
         log.debug("Obtendo colaborador pelo id: {}...", idColaborador);
         ColaboradorEntity colaborador = colaboradorRepositoryImpl.implementaBuscaPorId(
-                idColaboradorSessao.getEmpresa(), idColaboradorSessao.getId());
+                idColaboradorSessao.getEmpresa().getId(), idColaboradorSessao.getId());
 
         log.debug(ACESSA_METODO_BUSCA_ADVERTENCIA);
         AdvertenciaEntity advertenciaEntity = realizaBuscaAdvertenciaPorIdNaListaDeAdvertenciasDoColaborador(
@@ -180,7 +180,7 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
 
         log.debug("Obtendo colaborador pelo id {}...", idColaborador);
         ColaboradorEntity colaborador = colaboradorRepositoryImpl.implementaBuscaPorId(
-                idColaboradorSessao.getEmpresa(), idColaboradorSessao.getId());
+                idColaboradorSessao.getEmpresa().getId(), idColaboradorSessao.getId());
 
         log.debug(ACESSA_METODO_BUSCA_ADVERTENCIA);
         AdvertenciaEntity advertenciaEntity = realizaBuscaAdvertenciaPorIdNaListaDeAdvertenciasDoColaborador(

@@ -102,7 +102,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 
         log.info("Acessando repositório de busca de colaboradores");
         Page<ColaboradorEntity> colaboradorPage = colaboradorRepository
-                .buscaPaginadaPorColaboradores(pageable, idColaboradorSessao.getEmpresa(), campoBusca);
+                .buscaPaginadaPorColaboradores(pageable, idColaboradorSessao.getEmpresa().getId(), campoBusca);
 
         log.info("Busca de colaboradores por paginação realizada com sucesso. Acessando método de conversão dos " +
                 "objetos do tipo Entity para objetos do tipo Response...");
@@ -121,7 +121,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
         log.info("Iniciando acesso ao método responsável por implementar a lógica de busca pela iamgem de perfil do " +
                 "colaborador no banco de dados...");
         ImagemEntity imagemEntity = colaboradorRepositoryImpl
-                .implementaBuscaDeImagemDePerfilPorId(idColaboradorSessao.getEmpresa(), idColaborador);
+                .implementaBuscaDeImagemDePerfilPorId(idColaboradorSessao.getEmpresa().getId(), idColaborador);
         log.info("Objeto ImagemEntity obtido com sucesso");
 
         log.info("Iniciando acesso ao método responsável pela conversão de objeto do tipo ImagemEntity para objeto " +
@@ -137,7 +137,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 
         log.info("Iniciando acesso ao repositório de busca de ocupações da empresa...");
         List<String> ocupacoesEmpresa = colaboradorRepositoryImpl
-                .implementaBuscaPorTodasAsOcupacoesDaEmpresa(idColaboradorSessao.getEmpresa());
+                .implementaBuscaPorTodasAsOcupacoesDaEmpresa(idColaboradorSessao.getEmpresa().getId());
         log.info("Obtenção das ocupações da empresa realizada com sucesso");
 
         log.info("Iniciando ordenação dos dados obtidos...");
@@ -152,7 +152,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 
         log.info("Acessando repositório de busca de colaborador por ID...");
         ColaboradorEntity colaborador = colaboradorRepositoryImpl
-                .implementaBuscaPorId(idColaboradorSessao.getEmpresa(), idColaborador);
+                .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), idColaborador);
 
         log.info("Busca de colaboradores por id realizada com sucesso. Acessando método de conversão dos objeto do tipo " +
                 "Entity para objeto do tipo Response...");
@@ -180,7 +180,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 
         log.info(BUSCA_COLABORADOR_POR_ID);
         ColaboradorEntity colaboradorEncontrado = colaboradorRepositoryImpl
-                .implementaBuscaPorId(idColaboradorSessao.getEmpresa(), idColaborador);
+                .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), idColaborador);
 
         log.info("Iniciando acesso ao método de validação de alteração de dados de colaborador excluído...");
         colaboradorValidation.validaSeColaboradorEstaExcluido(
@@ -285,7 +285,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
         for (UUID id : uuidsColaborador) {
             log.info(BUSCA_COLABORADOR_POR_ID);
             ColaboradorEntity colaboradorEncontrado = colaboradorRepositoryImpl
-                    .implementaBuscaPorId(idColaboradorSessao.getEmpresa(), id);
+                    .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), id);
             colaboradoresEncontrados.add(colaboradorEncontrado);
         }
 

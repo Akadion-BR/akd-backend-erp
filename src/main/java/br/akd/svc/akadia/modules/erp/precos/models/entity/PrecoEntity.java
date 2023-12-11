@@ -42,7 +42,8 @@ public class PrecoEntity {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @Comment("Chave primária do preço - ID da empresa ao qual o preço faz parte")
-    @JoinColumn(name = "COD_EMPRESA_PRC", referencedColumnName = "COD_EMPRESA_EMP", nullable = false, updatable = false)
+    @JoinColumn(name = "COD_EMPRESA_PRC", referencedColumnName = "COD_EMPRESA_EMP")
+    @JoinColumn(name = "COD_CLIENTESISTEMA_PRC", referencedColumnName = "COD_CLIENTESISTEMA_EMP")
     private EmpresaEntity empresa;
 
     @Comment("Data em que o cadastro do preço foi realizado")

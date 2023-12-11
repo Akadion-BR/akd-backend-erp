@@ -1,5 +1,6 @@
 package br.akd.svc.akadia.modules.erp.despesas.services.crud.impl;
 
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import br.akd.svc.akadia.exceptions.InvalidRequestException;
 import br.akd.svc.akadia.modules.erp.colaboradores.acao.models.enums.TipoAcaoEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.acao.services.AcaoService;
@@ -18,7 +19,6 @@ import br.akd.svc.akadia.modules.erp.despesas.services.crud.DespesaService;
 import br.akd.svc.akadia.modules.erp.despesas.services.validator.DespesaValidationService;
 import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.utils.Constantes;
-import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -98,9 +98,9 @@ public class DespesaServiceImpl implements DespesaService {
         log.debug("Acessando repositório de busca de despesas");
         Page<DespesaEntity> despesaPage = campoBusca != null && !campoBusca.isEmpty()
                 ? despesaRepository
-                .buscaPorDespesasTypeAhead(pageable, idColaboradorSessao.getEmpresa(), dataInicio, dataFim, campoBusca)
+                .buscaPorDespesasTypeAhead(pageable, idColaboradorSessao.getEmpresa().getId(), dataInicio, dataFim, campoBusca)
                 : despesaRepository
-                .buscaPorDespesas(pageable, idColaboradorSessao.getEmpresa(), dataInicio, dataFim);
+                .buscaPorDespesas(pageable, idColaboradorSessao.getEmpresa().getId(), dataInicio, dataFim);
 
         log.debug("Busca de despesas por paginação realizada com sucesso. Acessando método de conversão dos objetos do tipo " +
                 "Entity para objetos do tipo Response...");
@@ -117,7 +117,7 @@ public class DespesaServiceImpl implements DespesaService {
 
         log.debug("Acessando repositório de busca de despesa por ID...");
         DespesaEntity despesa = despesaRepositoryImpl
-                .implementaBuscaPorId(idColaboradorSessao.getEmpresa(), idDespesa);
+                .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), idDespesa);
 
         log.debug("Busca de despesas por id realizada com sucesso. Acessando método de conversão dos objeto do tipo " +
                 "Entity para objeto do tipo Response...");
@@ -165,7 +165,7 @@ public class DespesaServiceImpl implements DespesaService {
 
         log.debug(BUSCA_DESPESA_POR_ID);
         DespesaEntity despesaEncontrada = despesaRepositoryImpl
-                .implementaBuscaPorId(idColaboradorSessao.getEmpresa(), idDespesa);
+                .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), idDespesa);
 
         log.debug("Iniciando acesso ao método de validação de alteração de dados de despesa excluída...");
         despesaValidationService.validaSeDespesaEstaExcluida(despesaEncontrada,
@@ -198,7 +198,7 @@ public class DespesaServiceImpl implements DespesaService {
 
         log.debug(BUSCA_DESPESA_POR_ID);
         DespesaEntity despesaEncontrada = despesaRepositoryImpl
-                .implementaBuscaPorId(idColaboradorSessao.getEmpresa(), idDespesa);
+                .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), idDespesa);
 
         log.debug("Iniciando acesso ao método de validação de exclusão de despesa que já foi excluído...");
         despesaValidationService.validaSeDespesaEstaExcluida(despesaEncontrada,

@@ -60,7 +60,7 @@ public class ColaboradorRelatorioService {
 
         log.debug("Verificando se listagem de ids de colaboradores recebida por parâmetro é vazia...");
         java.util.List<ColaboradorEntity> colaboradores = idsColaboradores.isEmpty()
-                ? colaboradorRepository.implementaBuscaPorTodos(idColaboradorLogado.getEmpresa())
+                ? colaboradorRepository.implementaBuscaPorTodos(idColaboradorLogado.getEmpresa().getId())
                 : colaboradorRepository.implementaBuscaPorIdEmMassa(idColaboradorLogado.getEmpresa(), idsColaboradores);
 
         Collections.reverse(colaboradores);

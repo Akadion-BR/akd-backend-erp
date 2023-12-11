@@ -46,7 +46,8 @@ public class DespesaEntity {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @Comment("Chave primária da despesa - ID da empresa ao qual a despesa faz parte")
-    @JoinColumn(name = "COD_EMPRESA_DSP", referencedColumnName = "COD_EMPRESA_EMP", nullable = false, updatable = false)
+    @JoinColumn(name = "COD_EMPRESA_DSP", referencedColumnName = "COD_EMPRESA_EMP")
+    @JoinColumn(name = "COD_CLIENTESISTEMA_DSP", referencedColumnName = "COD_CLIENTESISTEMA_EMP")
     private EmpresaEntity empresa;
 
     @Comment("Data em que o cadastro da despesa foi realizado")

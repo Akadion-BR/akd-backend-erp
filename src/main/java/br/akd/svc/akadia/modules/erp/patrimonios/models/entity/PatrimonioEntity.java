@@ -41,7 +41,8 @@ public class PatrimonioEntity {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @Comment("Chave primária do patrimônio - ID da empresa ao qual o patrimônio faz parte")
-    @JoinColumn(name = "COD_EMPRESA_PTR", referencedColumnName = "COD_EMPRESA_EMP", nullable = false, updatable = false)
+    @JoinColumn(name = "COD_EMPRESA_PTR", referencedColumnName = "COD_EMPRESA_EMP")
+    @JoinColumn(name = "COD_CLIENTESISTEMA_PTR", referencedColumnName = "COD_CLIENTESISTEMA_EMP")
     private EmpresaEntity empresa;
 
     @Comment("Data em que o cadastro do patrimônio foi realizado")

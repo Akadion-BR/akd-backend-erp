@@ -67,7 +67,8 @@ public class ColaboradorEntity {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @Comment("Chave primária do colaborador - ID da empresa ao qual o colaborador faz parte")
-    @JoinColumn(name = "COD_EMPRESA_CLB", referencedColumnName = "COD_EMPRESA_EMP", nullable = false, updatable = false)
+    @JoinColumn(name = "COD_EMPRESA_CLB", referencedColumnName = "COD_EMPRESA_EMP")
+    @JoinColumn(name = "COD_CLIENTESISTEMA_CLB", referencedColumnName = "COD_CLIENTESISTEMA_EMP")
     private EmpresaEntity empresa;
 
     @Comment("Data em que o cadastro do colaborador foi realizado")

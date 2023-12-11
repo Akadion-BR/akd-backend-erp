@@ -53,7 +53,8 @@ public class ProdutoEntity {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @Comment("Chave primária do produto - ID da empresa ao qual o produto faz parte")
-    @JoinColumn(name = "COD_EMPRESA_PDT", referencedColumnName = "COD_EMPRESA_EMP", nullable = false, updatable = false)
+    @JoinColumn(name = "COD_EMPRESA_PDT", referencedColumnName = "COD_EMPRESA_EMP")
+    @JoinColumn(name = "COD_CLIENTESISTEMA_PDT", referencedColumnName = "COD_CLIENTESISTEMA_EMP")
     private EmpresaEntity empresa;
 
     @Comment("Data em que o cadastro do produto foi realizado")
@@ -84,14 +85,17 @@ public class ProdutoEntity {
     @Column(name = "STR_CATEGORIA_PDT", nullable = false, length = 30)
     private String categoria;
 
+    @Builder.Default
     @Comment("Quantidade mínima permitida do produto em estoque")
     @Column(name = "INT_QUANTIDADEMINIMA_PDT", nullable = false)
     private Integer quantidadeMinima = 0;
 
+    @Builder.Default
     @Comment("Quantidade do produto em que, no ato da venda, definirá se o preço aplicado será de atacado")
     @Column(name = "INT_QUANTIDADEATACADO_PDT", nullable = false)
     private Integer quantidadeAtacado = 0;
 
+    @Builder.Default
     @Comment("Quantidade atual do produto em estoque")
     @Column(name = "INT_QUANTIDADE_PDT", nullable = false)
     private Integer quantidade = 0;
@@ -100,6 +104,7 @@ public class ProdutoEntity {
     @Column(name = "INT_CODIGONCM_PDT")
     private Integer codigoNcm;
 
+    @Builder.Default
     @Comment("Peso unitário do produto")
     @Column(name = "DBL_PESOUNITARIO_PDT", nullable = false, scale = 2)
     private Double pesoUnitario = 0.0;

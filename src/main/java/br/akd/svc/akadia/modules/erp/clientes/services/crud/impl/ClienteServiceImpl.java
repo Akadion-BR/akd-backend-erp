@@ -91,7 +91,7 @@ public class ClienteServiceImpl implements ClienteService {
 
         log.debug("Acessando repositório de busca de clientes");
         Page<ClienteEntity> clientePage = clienteRepository
-                .buscaPaginadaPorClientes(pageable, idColaboradorSessao.getEmpresa(), campoBusca);
+                .buscaPaginadaPorClientes(pageable, idColaboradorSessao.getEmpresa().getId(), campoBusca);
 
         log.debug("Busca de clientes por paginação realizada com sucesso. Acessando método de conversão dos objetos do tipo " +
                 "Entity para objetos do tipo Response...");

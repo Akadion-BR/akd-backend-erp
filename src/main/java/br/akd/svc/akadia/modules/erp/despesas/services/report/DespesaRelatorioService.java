@@ -60,7 +60,7 @@ public class DespesaRelatorioService {
 
         log.debug("Verificando se listagem de ids de despesas recebidas por parâmetro é vazia...");
         java.util.List<DespesaEntity> despesas = idsdespesas.isEmpty()
-                ? despesaRepositoryImpl.implementaBuscaPorTodos(idColaboradorSessao.getEmpresa())
+                ? despesaRepositoryImpl.implementaBuscaPorTodos(idColaboradorSessao.getEmpresa().getId())
                 : despesaRepositoryImpl.implementaBuscaPorIdEmMassa(idColaboradorSessao.getEmpresa(), idsdespesas);
 
         Collections.reverse(despesas);
