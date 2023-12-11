@@ -4,6 +4,7 @@ import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
 import br.akd.svc.akadia.modules.erp.clientes.models.entity.ClienteEntity;
 import br.akd.svc.akadia.modules.erp.clientes.models.entity.id.ClienteId;
 import br.akd.svc.akadia.modules.erp.clientes.repository.ClienteRepository;
+import br.akd.svc.akadia.modules.external.empresa.entity.id.EmpresaId;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,12 +60,12 @@ public class ClienteRepositoryImpl {
         return clienteEntity;
     }
 
-    public List<ClienteEntity> implementaBuscaPorIdEmMassa(UUID uuidEmpresa,
+    public List<ClienteEntity> implementaBuscaPorIdEmMassa(EmpresaId empresaId,
                                                            List<UUID> ids) {
         log.debug("Método que implementa busca de cliente por id em massa acessado. Ids: {}", ids.toString());
 
         List<ClienteId> clienteIds = new ArrayList<>();
-        ids.forEach(id -> clienteIds.add(new ClienteId(uuidEmpresa, id)));
+        ids.forEach(id -> clienteIds.add(new ClienteId(empresaId, id)));
 
         List<ClienteEntity> clientes = repository.findAllById(clienteIds);
 
