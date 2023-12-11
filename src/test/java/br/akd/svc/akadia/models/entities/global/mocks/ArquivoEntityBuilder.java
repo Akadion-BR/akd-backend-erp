@@ -1,7 +1,7 @@
 package br.akd.svc.akadia.models.entities.global.mocks;
 
-import br.akd.svc.akadia.modules.global.arquivo.entity.ArquivoEntity;
-import br.akd.svc.akadia.modules.global.arquivo.enums.TipoArquivoEnum;
+import br.akd.svc.akadia.modules.global.objects.arquivo.entity.ArquivoEntity;
+import br.akd.svc.akadia.modules.global.objects.arquivo.enums.TipoArquivoEnum;
 
 public class ArquivoEntityBuilder {
     ArquivoEntityBuilder() {

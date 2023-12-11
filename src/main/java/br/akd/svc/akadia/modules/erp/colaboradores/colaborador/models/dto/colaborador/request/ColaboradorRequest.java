@@ -5,9 +5,9 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.Mode
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.ModeloTrabalhoEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.StatusColaboradorEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.TipoOcupacaoEnum;
-import br.akd.svc.akadia.modules.global.acessosistema.dto.request.AcessoSistemaRequest;
-import br.akd.svc.akadia.modules.global.endereco.dto.request.EnderecoRequest;
-import br.akd.svc.akadia.modules.global.telefone.request.TelefoneRequest;
+import br.akd.svc.akadia.modules.global.objects.acessosistema.dto.request.AcessoSistemaRequest;
+import br.akd.svc.akadia.modules.global.objects.endereco.dto.request.EnderecoRequest;
+import br.akd.svc.akadia.modules.global.objects.telefone.request.TelefoneRequest;
 import lombok.*;
 
 @Getter

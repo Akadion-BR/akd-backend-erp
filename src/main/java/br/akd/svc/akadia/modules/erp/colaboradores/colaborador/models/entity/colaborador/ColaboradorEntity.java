@@ -10,24 +10,24 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.dis
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.expediente.ExpedienteEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.ferias.FeriasEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.ponto.PontoEntity;
-import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.ModeloContratacaoEnum;
-import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.ModeloTrabalhoEnum;
-import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.StatusColaboradorEnum;
-import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.TipoOcupacaoEnum;
-import br.akd.svc.akadia.modules.global.acessosistema.entity.AcessoSistemaEntity;
-import br.akd.svc.akadia.modules.global.arquivo.entity.ArquivoEntity;
-import br.akd.svc.akadia.modules.global.endereco.entity.EnderecoEntity;
-import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
-import br.akd.svc.akadia.modules.global.imagem.entity.ImagemEntity;
-import br.akd.svc.akadia.modules.global.telefone.entity.TelefoneEntity;
-import br.akd.svc.akadia.modules.web.empresa.models.entity.EmpresaEntity;
+import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.*;
+import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.utils.ColaboradorServiceUtil;
+import br.akd.svc.akadia.modules.external.empresa.entity.EmpresaEntity;
+import br.akd.svc.akadia.modules.global.objects.acessosistema.entity.AcessoSistemaEntity;
+import br.akd.svc.akadia.modules.global.objects.arquivo.entity.ArquivoEntity;
+import br.akd.svc.akadia.modules.global.objects.endereco.entity.EnderecoEntity;
+import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
+import br.akd.svc.akadia.modules.global.objects.imagem.entity.ImagemEntity;
+import br.akd.svc.akadia.modules.global.objects.telefone.entity.TelefoneEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Entity
 @Getter
 @Setter
@@ -355,5 +356,56 @@ public class ColaboradorEntity {
                 .acoes(colaboradorPreAtualizacao.getAcoes())
                 .build()
                 : null;
+    }
+
+    public ColaboradorEntity buildRoot(ColaboradorServiceUtil colaboradorServiceUtil,
+                                       EmpresaEntity empresaEntity) {
+
+        log.info("Iniciando acesso ao método de geração de senha aleatória...");
+        String senha = colaboradorServiceUtil.geraSenhaAleatoriaParaNovoLogin(empresaEntity);
+        log.info("Senha criada com sucesso");
+
+        return ColaboradorEntity.builder()
+                .dataCadastro(LocalDate.now().toString())
+                .horaCadastro(LocalTime.now().toString())
+                .matricula(colaboradorServiceUtil.geraMatriculaUnica())
+                .fotoPerfil(null)
+                .nome("admin")
+                .dataNascimento(null)
+                .email(null)
+                .cpfCnpj(null)
+                .salario(0.0)
+                .entradaEmpresa(null)
+                .saidaEmpresa(null)
+                .contratoContratacao(null)
+                .ocupacao("Administrador do sistema")
+                .tipoOcupacaoEnum(TipoOcupacaoEnum.ADMINISTRADOR)
+                .modeloTrabalhoEnum(ModeloTrabalhoEnum.PRESENCIAL)
+                .modeloContratacaoEnum(ModeloContratacaoEnum.CLT)
+                .statusColaboradorEnum(StatusColaboradorEnum.ATIVO)
+                .acessoSistema(AcessoSistemaEntity.builder()
+                        .acessoSistemaAtivo(true)
+                        .senha(senha)
+                        .senhaCriptografada(new BCryptPasswordEncoder().encode(senha))
+                        .permissaoEnum(PermissaoEnum.LEITURA_AVANCADA_ALTERACAO)
+                        .privilegios(colaboradorServiceUtil.habilitaTodosModulosColaborador())
+                        .build())
+                .configuracaoPerfil(ConfiguracaoPerfilEntity.builder()
+                        .dataUltimaAtualizacao(LocalDate.now().toString())
+                        .horaUltimaAtualizacao(LocalTime.now().toString())
+                        .temaTelaEnum(TemaTelaEnum.TELA_CLARA)
+                        .build())
+                .exclusao(null)
+                .endereco(null)
+                .telefone(null)
+                .expediente(null)
+                .dispensa(null)
+                .pontos(new ArrayList<>())
+                .historicoFerias(new ArrayList<>())
+                .advertencias(new ArrayList<>())
+                .acessos(new ArrayList<>())
+                .acoes(new ArrayList<>())
+                .empresa(empresaEntity)
+                .build();
     }
 }

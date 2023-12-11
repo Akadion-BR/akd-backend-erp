@@ -1,7 +1,7 @@
 package br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.dispensa;
 
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.dispensa.DispensaEntity;
-import br.akd.svc.akadia.modules.global.arquivo.entity.ArquivoEntity;
+import br.akd.svc.akadia.modules.global.objects.arquivo.entity.ArquivoEntity;
 import lombok.*;
 
 import java.util.List;

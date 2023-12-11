@@ -1,8 +1,8 @@
 package br.akd.svc.akadia.modules.erp.clientes.models.dto.response;
 
 import br.akd.svc.akadia.modules.erp.clientes.models.entity.ClienteEntity;
-import br.akd.svc.akadia.modules.global.endereco.dto.response.EnderecoResponse;
-import br.akd.svc.akadia.modules.global.telefone.response.TelefoneResponse;
+import br.akd.svc.akadia.modules.global.objects.endereco.dto.response.EnderecoResponse;
+import br.akd.svc.akadia.modules.global.objects.telefone.response.TelefoneResponse;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 

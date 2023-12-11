@@ -7,10 +7,10 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.expedi
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.ferias.FeriasResponse;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.ponto.PontoResponse;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.ColaboradorEntity;
-import br.akd.svc.akadia.modules.global.arquivo.dto.ArquivoResponse;
-import br.akd.svc.akadia.modules.global.endereco.dto.response.EnderecoResponse;
-import br.akd.svc.akadia.modules.global.imagem.response.ImagemResponse;
-import br.akd.svc.akadia.modules.global.telefone.response.TelefoneResponse;
+import br.akd.svc.akadia.modules.global.objects.arquivo.dto.ArquivoResponse;
+import br.akd.svc.akadia.modules.global.objects.endereco.dto.response.EnderecoResponse;
+import br.akd.svc.akadia.modules.global.objects.imagem.response.ImagemResponse;
+import br.akd.svc.akadia.modules.global.objects.telefone.response.TelefoneResponse;
 import lombok.*;
 
 import java.util.ArrayList;

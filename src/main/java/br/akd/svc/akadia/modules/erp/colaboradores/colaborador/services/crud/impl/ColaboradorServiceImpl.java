@@ -1,10 +1,12 @@
 package br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.crud.impl;
 
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
 import br.akd.svc.akadia.modules.erp.colaboradores.acao.models.enums.TipoAcaoEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.acao.services.AcaoService;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.colaborador.request.ColaboradorRequest;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.colaborador.response.ColaboradorResponse;
+import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.colaborador.response.CriacaoColaboradorResponse;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.colaborador.response.page.ColaboradorPageResponse;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.ColaboradorEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.id.ColaboradorId;
@@ -14,11 +16,11 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.impl.C
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.crud.ColaboradorService;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.utils.ColaboradorServiceUtil;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.validator.ColaboradorValidation;
-import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
-import br.akd.svc.akadia.modules.global.imagem.entity.ImagemEntity;
-import br.akd.svc.akadia.modules.global.imagem.response.ImagemResponse;
+import br.akd.svc.akadia.modules.external.empresa.entity.EmpresaEntity;
+import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
+import br.akd.svc.akadia.modules.global.objects.imagem.entity.ImagemEntity;
+import br.akd.svc.akadia.modules.global.objects.imagem.response.ImagemResponse;
 import br.akd.svc.akadia.utils.Constantes;
-import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,14 +64,14 @@ public class ColaboradorServiceImpl implements ColaboradorService {
                                       MultipartFile contratoColaborador,
                                       String colaboradorEmJson) throws IOException {
 
-        log.debug("Método de serviço de criação de novo colaborador acessado");
+        log.info("Método de serviço de criação de novo colaborador acessado");
 
         ColaboradorEntity colaboradorLogado = securityUtil.obtemUsuarioSessao(idColaboradorSessao);
 
-        log.debug(Constantes.VERIFICANDO_SE_COLABORADOR_PODE_ALTERAR_DADOS);
+        log.info(Constantes.VERIFICANDO_SE_COLABORADOR_PODE_ALTERAR_DADOS);
         securityUtil.verificaSePodeRealizarAlteracoes(colaboradorLogado.getAcessoSistema());
 
-        log.debug("Convertendo objeto colaborador recebido de Json para entity...");
+        log.info("Convertendo objeto colaborador recebido de Json para entity...");
         ColaboradorRequest colaboradorEntity = new ObjectMapper()
                 .readValue(colaboradorEmJson, ColaboradorRequest.class);
 
@@ -81,11 +83,11 @@ public class ColaboradorServiceImpl implements ColaboradorService {
                 contratoColaborador,
                 colaboradorEntity);
 
-        log.debug(Constantes.INICIANDO_IMPL_PERSISTENCIA_COLABORADOR);
+        log.info(Constantes.INICIANDO_IMPL_PERSISTENCIA_COLABORADOR);
         ColaboradorEntity colaboradorPersistido = colaboradorRepositoryImpl
                 .implementaPersistencia(colaboradorGerado);
 
-        log.debug(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
+        log.info(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
         acaoService.salvaHistoricoColaborador(idColaboradorSessao, colaboradorPersistido.getId(),
                 ModulosEnum.COLABORADORES, TipoAcaoEnum.CRIACAO, null);
 
@@ -146,16 +148,16 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 
     public ColaboradorResponse realizaBuscaDeColaboradorPorId(ColaboradorId idColaboradorSessao,
                                                               UUID idColaborador) {
-        log.debug("Método de serviço de obtenção de colaborador por id. ID recebido: {}", idColaborador);
+        log.info("Método de serviço de obtenção de colaborador por id. ID recebido: {}", idColaborador);
 
-        log.debug("Acessando repositório de busca de colaborador por ID...");
+        log.info("Acessando repositório de busca de colaborador por ID...");
         ColaboradorEntity colaborador = colaboradorRepositoryImpl
                 .implementaBuscaPorId(idColaboradorSessao.getEmpresa(), idColaborador);
 
-        log.debug("Busca de colaboradores por id realizada com sucesso. Acessando método de conversão dos objeto do tipo " +
+        log.info("Busca de colaboradores por id realizada com sucesso. Acessando método de conversão dos objeto do tipo " +
                 "Entity para objeto do tipo Response...");
         ColaboradorResponse colaboradorResponse = new ColaboradorResponse().buildFromEntity(colaborador);
-        log.debug("Conversão de tipagem realizada com sucesso");
+        log.info("Conversão de tipagem realizada com sucesso");
 
         log.info("A busca de colaborador por id foi realizada com sucesso");
         return colaboradorResponse;
@@ -165,39 +167,39 @@ public class ColaboradorServiceImpl implements ColaboradorService {
                                                    UUID idColaborador,
                                                    MultipartFile contratoColaborador,
                                                    String colaboradorEmJson) throws IOException {
-        log.debug("Método de serviço de atualização de colaborador acessado");
+        log.info("Método de serviço de atualização de colaborador acessado");
 
         ColaboradorEntity colaboradorLogado = securityUtil.obtemUsuarioSessao(idColaboradorSessao);
 
-        log.debug(Constantes.VERIFICANDO_SE_COLABORADOR_PODE_ALTERAR_DADOS);
+        log.info(Constantes.VERIFICANDO_SE_COLABORADOR_PODE_ALTERAR_DADOS);
         securityUtil.verificaSePodeRealizarAlteracoes(colaboradorLogado.getAcessoSistema());
 
-        log.debug("Convertendo objeto colaborador recebido de Json para entity...");
+        log.info("Convertendo objeto colaborador recebido de Json para entity...");
         ColaboradorRequest colaboradorRequest = new ObjectMapper()
                 .readValue(colaboradorEmJson, ColaboradorRequest.class);
 
-        log.debug(BUSCA_COLABORADOR_POR_ID);
+        log.info(BUSCA_COLABORADOR_POR_ID);
         ColaboradorEntity colaboradorEncontrado = colaboradorRepositoryImpl
                 .implementaBuscaPorId(idColaboradorSessao.getEmpresa(), idColaborador);
 
-        log.debug("Iniciando acesso ao método de validação de alteração de dados de colaborador excluído...");
+        log.info("Iniciando acesso ao método de validação de alteração de dados de colaborador excluído...");
         colaboradorValidation.validaSeColaboradorEstaExcluido(
                 colaboradorEncontrado, "Não é possível atualizar um colaborador excluído");
 
-        log.debug("Iniciando criação do objeto ColaboradorEntity...");
+        log.info("Iniciando criação do objeto ColaboradorEntity...");
         ColaboradorEntity novoColaboradorAtualizado = new ColaboradorEntity()
                 .updateFromRequest(contratoColaborador, colaboradorEncontrado, colaboradorRequest);
-        log.debug("Objeto colaborador construído com sucesso");
+        log.info("Objeto colaborador construído com sucesso");
 
-        log.debug(Constantes.INICIANDO_IMPL_PERSISTENCIA_COLABORADOR);
+        log.info(Constantes.INICIANDO_IMPL_PERSISTENCIA_COLABORADOR);
         ColaboradorEntity colaboradorPersistido = colaboradorRepositoryImpl
                 .implementaPersistencia(novoColaboradorAtualizado);
 
-        log.debug(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
+        log.info(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
         acaoService.salvaHistoricoColaborador(idColaboradorSessao, colaboradorPersistido.getId(),
                 ModulosEnum.COLABORADORES, TipoAcaoEnum.ALTERACAO, null);
 
-        log.debug("Colaborador persistido com sucesso. Convertendo colaboradorEntity para colaboradorResponse...");
+        log.info("Colaborador persistido com sucesso. Convertendo colaboradorEntity para colaboradorResponse...");
         ColaboradorResponse colaboradorResponse = new ColaboradorResponse()
                 .buildFromEntity(colaboradorPersistido);
 
@@ -209,33 +211,33 @@ public class ColaboradorServiceImpl implements ColaboradorService {
                                                                UUID idColaborador,
                                                                MultipartFile fotoPerfil) throws IOException {
 
-        log.debug("Método de serviço de atualização de foto de perfil de colaborador acessado");
+        log.info("Método de serviço de atualização de foto de perfil de colaborador acessado");
 
         ColaboradorEntity colaboradorLogado = securityUtil.obtemUsuarioSessao(idColaboradorSessao);
 
-        log.debug(Constantes.VERIFICANDO_SE_COLABORADOR_PODE_ALTERAR_DADOS);
+        log.info(Constantes.VERIFICANDO_SE_COLABORADOR_PODE_ALTERAR_DADOS);
         securityUtil.verificaSePodeRealizarAlteracoes(colaboradorLogado.getAcessoSistema());
 
-        log.debug("Iniciando construção do objeto ImagemEntity da foto de perfil do colaborador...");
+        log.info("Iniciando construção do objeto ImagemEntity da foto de perfil do colaborador...");
         ImagemEntity fotoPerfilEntity = new ImagemEntity().constroiImagemEntity(fotoPerfil);
 
-        log.debug("Acessando repositório de busca de colaborador por ID...");
+        log.info("Acessando repositório de busca de colaborador por ID...");
         ColaboradorEntity colaborador = colaboradorRepositoryImpl
                 .implementaBuscaPorId(idColaborador, colaboradorLogado.getEmpresa().getId());
 
-        log.debug("Acoplando foto de perfil ao objeto do colaborador...");
+        log.info("Acoplando foto de perfil ao objeto do colaborador...");
         colaborador.setFotoPerfil(fotoPerfilEntity);
 
-        log.debug(Constantes.INICIANDO_IMPL_PERSISTENCIA_COLABORADOR);
+        log.info(Constantes.INICIANDO_IMPL_PERSISTENCIA_COLABORADOR);
         ColaboradorEntity colaboradorPersistido = colaboradorRepositoryImpl.implementaPersistencia(colaborador);
 
         if (fotoPerfil != null) {
-            log.debug(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
+            log.info(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
             acaoService.salvaHistoricoColaborador(idColaboradorSessao, colaboradorPersistido.getId(),
                     ModulosEnum.COLABORADORES, TipoAcaoEnum.ALTERACAO, "Alteração da foto de perfil do colaborador "
                             + colaboradorPersistido.getNome());
         } else {
-            log.debug(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
+            log.info(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
             acaoService.salvaHistoricoColaborador(idColaboradorSessao, colaboradorPersistido.getId(),
                     ModulosEnum.COLABORADORES, TipoAcaoEnum.REMOCAO, "Remoção da foto de perfil do colaborador "
                             + colaboradorPersistido.getNome());
@@ -246,27 +248,27 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 
     public ColaboradorResponse removeColaborador(ColaboradorId idColaboradorSessao,
                                                  UUID idColaborador) {
-        log.debug("Método de serviço de remoção de colaborador acessado");
+        log.info("Método de serviço de remoção de colaborador acessado");
 
-        log.debug(BUSCA_COLABORADOR_POR_ID);
+        log.info(BUSCA_COLABORADOR_POR_ID);
         ColaboradorEntity colaboradorEncontrado = colaboradorRepositoryImpl
                 .implementaBuscaPorId(idColaboradorSessao.getId(), idColaborador);
 
-        log.debug("Iniciando acesso ao método de validação de exclusão de colaborador que já foi excluído...");
+        log.info("Iniciando acesso ao método de validação de exclusão de colaborador que já foi excluído...");
         colaboradorValidation.validaSeColaboradorEstaExcluido(
                 colaboradorEncontrado, "O colaborador selecionado já foi excluído");
 
-        log.debug("Atualizando objeto ExclusaoColaborador do colaborador com dados referentes à sua exclusão...");
+        log.info("Atualizando objeto ExclusaoColaborador do colaborador com dados referentes à sua exclusão...");
         ExclusaoEntity exclusao = new ExclusaoEntity().constroiObjetoExclusao();
 
-        log.debug("Setando objeto exclusão criado no colaborador encontrado...");
+        log.info("Setando objeto exclusão criado no colaborador encontrado...");
         colaboradorEncontrado.setExclusao(exclusao);
 
-        log.debug("Persistindo colaborador excluído no banco de dados...");
+        log.info("Persistindo colaborador excluído no banco de dados...");
         ColaboradorEntity colaboradorExcluido = colaboradorRepositoryImpl
                 .implementaPersistencia(colaboradorEncontrado);
 
-        log.debug(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
+        log.info(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
         acaoService.salvaHistoricoColaborador(idColaboradorSessao, null, ModulosEnum.COLABORADORES,
                 TipoAcaoEnum.REMOCAO, null);
 
@@ -276,12 +278,12 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 
     public void removeColaboradoresEmMassa(ColaboradorId idColaboradorSessao,
                                            List<UUID> uuidsColaborador) {
-        log.debug("Método de serviço de remoção de colaborador acessado");
+        log.info("Método de serviço de remoção de colaborador acessado");
 
         List<ColaboradorEntity> colaboradoresEncontrados = new ArrayList<>();
 
         for (UUID id : uuidsColaborador) {
-            log.debug(BUSCA_COLABORADOR_POR_ID);
+            log.info(BUSCA_COLABORADOR_POR_ID);
             ColaboradorEntity colaboradorEncontrado = colaboradorRepositoryImpl
                     .implementaBuscaPorId(idColaboradorSessao.getEmpresa(), id);
             colaboradoresEncontrados.add(colaboradorEncontrado);
@@ -295,17 +297,35 @@ public class ColaboradorServiceImpl implements ColaboradorService {
             log.info("Objeto ExclusaoColaborador do colaborador de id {} setado com sucesso", colaborador.getId());
         });
 
-        log.debug("Verificando se listagem de colaboradores encontrados está preenchida...");
+        log.info("Verificando se listagem de colaboradores encontrados está preenchida...");
         if (!colaboradoresEncontrados.isEmpty()) {
-            log.debug("Persistindo colaborador excluído no banco de dados...");
+            log.info("Persistindo colaborador excluído no banco de dados...");
             colaboradorRepositoryImpl.implementaPersistenciaEmMassa(colaboradoresEncontrados);
 
-            log.debug(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
+            log.info(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
             acaoService.salvaHistoricoColaborador(idColaboradorSessao, null, ModulosEnum.COLABORADORES,
                     TipoAcaoEnum.REMOCAO_EM_MASSA, colaboradoresEncontrados.size() + " Itens removidos");
         } else throw new ObjectNotFoundException("Nenhum colaborador foi encontrado para remoção");
 
         log.info("colaboradores excluídos com sucesso");
     }
+
+
+    @Override
+    public CriacaoColaboradorResponse criaColaboradorAdminParaNovaEmpresa(EmpresaEntity empresaEntity) {
+        log.info("Método de criação de colaborador ADMIN DEFAULT para nova empresa acessado");
+
+        log.info("Iniciando construção de objeto colaborador entity...");
+        ColaboradorEntity colaboradorCriado = new ColaboradorEntity().buildRoot(colaboradorServiceUtil, empresaEntity);
+        log.info("ColaboradorEntity criado com sucesso");
+
+        log.info("Iniciando acesso ao método de implementação da persistência do colaborador...");
+        ColaboradorEntity colaboradorPersistido = colaboradorRepositoryImpl.implementaPersistencia(colaboradorCriado);
+        log.info("Colaborador persistido com sucesso. Retornando...");
+
+        return new CriacaoColaboradorResponse(
+                colaboradorPersistido.getMatricula(), colaboradorPersistido.getAcessoSistema().getSenha());
+    }
+
 
 }

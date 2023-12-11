@@ -3,7 +3,7 @@ package br.akd.svc.akadia.models.entities.sistema.colaboradores.mocks;
 import br.akd.svc.akadia.models.entities.global.mocks.EnderecoEntityBuilder;
 import br.akd.svc.akadia.models.entities.global.mocks.ExclusaoEntityBuilder;
 import br.akd.svc.akadia.models.entities.global.mocks.TelefoneEntityBuilder;
-import br.akd.svc.akadia.modules.global.acessosistema.entity.AcessoSistemaEntity;
+import br.akd.svc.akadia.modules.global.objects.acessosistema.entity.AcessoSistemaEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.UUID;
 import br.akd.svc.akadia.modules.web.models.entity.empresa.mocks.EmpresaEntityBuilder;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.*;

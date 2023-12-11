@@ -2,7 +2,7 @@ package br.akd.svc.akadia.modules.backoffice.colaboradorinterno.entity;
 
 import br.akd.svc.akadia.modules.backoffice.colaboradorinterno.enums.CargoInternoEnum;
 import br.akd.svc.akadia.modules.backoffice.colaboradorinterno.enums.StatusAtividadeEnum;
-import br.akd.svc.akadia.modules.global.telefone.entity.TelefoneEntity;
+import br.akd.svc.akadia.modules.global.objects.telefone.entity.TelefoneEntity;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.GenericGenerator;

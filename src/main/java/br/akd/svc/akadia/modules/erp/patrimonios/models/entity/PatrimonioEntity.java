@@ -4,8 +4,8 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.col
 import br.akd.svc.akadia.modules.erp.patrimonios.models.dto.request.PatrimonioRequest;
 import br.akd.svc.akadia.modules.erp.patrimonios.models.entity.id.PatrimonioId;
 import br.akd.svc.akadia.modules.erp.patrimonios.models.enums.TipoPatrimonioEnum;
-import br.akd.svc.akadia.modules.global.exclusao.entity.ExclusaoEntity;
-import br.akd.svc.akadia.modules.web.empresa.models.entity.EmpresaEntity;
+import br.akd.svc.akadia.modules.external.empresa.entity.EmpresaEntity;
+import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Comment;

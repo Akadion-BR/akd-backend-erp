@@ -4,7 +4,7 @@ import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.ColaboradorEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.id.ColaboradorId;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.ColaboradorRepository;
-import br.akd.svc.akadia.modules.global.imagem.entity.ImagemEntity;
+import br.akd.svc.akadia.modules.global.objects.imagem.entity.ImagemEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
