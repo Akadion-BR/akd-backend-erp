@@ -1,9 +1,7 @@
 package br.akd.svc.akadia.modules.external.empresa.entity;
 
 import br.akd.svc.akadia.modules.backoffice.chamado.models.entity.ChamadoEntity;
-import br.akd.svc.akadia.modules.external.cliente.entity.ClienteSistemaEntity;
 import br.akd.svc.akadia.modules.external.empresa.entity.fiscal.ConfigFiscalEmpresaEntity;
-import br.akd.svc.akadia.modules.external.empresa.entity.id.EmpresaId;
 import br.akd.svc.akadia.modules.external.empresa.enums.SegmentoEmpresaEnum;
 import br.akd.svc.akadia.modules.global.objects.endereco.entity.EnderecoEntity;
 import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
@@ -28,7 +26,6 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(EmpresaId.class)
 @Table(name = "TB_AKD_EMPRESA",
         uniqueConstraints = {
                 @UniqueConstraint(name = "UK_RAZAOSOCIAL_EMPRESA", columnNames = {"STR_RAZAOSOCIAL_EMP"}),
@@ -45,14 +42,6 @@ public class EmpresaEntity {
     @Column(name = "COD_EMPRESA_EMP", nullable = false, updatable = false)
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
-
-    @Id
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Comment("Chave primária da empresa - ID da empresa ao qual o cliente faz parte")
-    @JoinColumn(name = "COD_CLIENTESISTEMA_EMP", referencedColumnName = "COD_CLIENTESISTEMA_CLS", nullable = false, updatable = false)
-    private ClienteSistemaEntity clienteSistema;
 
     @JsonIgnore
     @Comment("Data em que o cadastro da empresa foi realizado")
