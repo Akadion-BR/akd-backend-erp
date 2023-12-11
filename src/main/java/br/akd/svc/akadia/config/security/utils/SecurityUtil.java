@@ -5,7 +5,7 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.col
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.id.ColaboradorId;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.PermissaoEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.ColaboradorRepository;
-import br.akd.svc.akadia.modules.global.acessosistema.entity.AcessoSistemaEntity;
+import br.akd.svc.akadia.modules.global.objects.acessosistema.entity.AcessoSistemaEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

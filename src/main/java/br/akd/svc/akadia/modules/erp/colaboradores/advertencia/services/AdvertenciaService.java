@@ -3,7 +3,7 @@ package br.akd.svc.akadia.modules.erp.colaboradores.advertencia.services;
 import br.akd.svc.akadia.modules.erp.colaboradores.advertencia.models.dto.response.AdvertenciaPageResponse;
 import br.akd.svc.akadia.modules.erp.colaboradores.advertencia.models.enums.StatusAdvertenciaEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.id.ColaboradorId;
-import br.akd.svc.akadia.modules.global.arquivo.entity.ArquivoEntity;
+import br.akd.svc.akadia.modules.global.objects.arquivo.entity.ArquivoEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;

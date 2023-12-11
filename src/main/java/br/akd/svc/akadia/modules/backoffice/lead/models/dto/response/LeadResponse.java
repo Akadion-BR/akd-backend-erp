@@ -1,7 +1,7 @@
 package br.akd.svc.akadia.modules.backoffice.lead.models.dto.response;
 
 import br.akd.svc.akadia.modules.backoffice.lead.models.enums.OrigemLeadEnum;
-import br.akd.svc.akadia.modules.global.telefone.response.TelefoneResponse;
+import br.akd.svc.akadia.modules.global.objects.telefone.response.TelefoneResponse;
 import lombok.*;
 
 import java.util.UUID;

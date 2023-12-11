@@ -2,7 +2,7 @@ package br.akd.svc.akadia.modules.erp.colaboradores.advertencia.models.entity;
 
 import br.akd.svc.akadia.modules.erp.colaboradores.advertencia.models.dto.request.AdvertenciaRequest;
 import br.akd.svc.akadia.modules.erp.colaboradores.advertencia.models.enums.StatusAdvertenciaEnum;
-import br.akd.svc.akadia.modules.global.arquivo.entity.ArquivoEntity;
+import br.akd.svc.akadia.modules.global.objects.arquivo.entity.ArquivoEntity;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.GenericGenerator;

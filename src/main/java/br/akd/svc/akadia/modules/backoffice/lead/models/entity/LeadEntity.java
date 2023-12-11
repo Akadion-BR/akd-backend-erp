@@ -2,7 +2,7 @@ package br.akd.svc.akadia.modules.backoffice.lead.models.entity;
 
 import br.akd.svc.akadia.modules.backoffice.lead.models.dto.request.LeadRequest;
 import br.akd.svc.akadia.modules.backoffice.lead.models.enums.OrigemLeadEnum;
-import br.akd.svc.akadia.modules.global.telefone.entity.TelefoneEntity;
+import br.akd.svc.akadia.modules.global.objects.telefone.entity.TelefoneEntity;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.GenericGenerator;

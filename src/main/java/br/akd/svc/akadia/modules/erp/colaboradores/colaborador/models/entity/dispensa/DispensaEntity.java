@@ -1,6 +1,6 @@
 package br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.dispensa;
 
-import br.akd.svc.akadia.modules.global.arquivo.entity.ArquivoEntity;
+import br.akd.svc.akadia.modules.global.objects.arquivo.entity.ArquivoEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.Comment;

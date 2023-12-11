@@ -1,14 +1,14 @@
 package br.akd.svc.akadia.services.sistema.colaboradores.advertencia;
 
 import br.akd.svc.akadia.modules.erp.colaboradores.advertencia.models.dto.response.AdvertenciaPageResponse;
-import br.akd.svc.akadia.modules.global.arquivo.entity.ArquivoEntity;
+import br.akd.svc.akadia.modules.global.objects.arquivo.entity.ArquivoEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.advertencia.models.entity.AdvertenciaEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.advertencia.services.report.AdvertenciaRelatorioService;
 import br.akd.svc.akadia.modules.erp.colaboradores.advertencia.services.AdvertenciaService;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.UUID;
 import br.akd.svc.akadia.models.entities.sistema.colaboradores.mocks.AdvertenciaEntityBuilder;
 import br.akd.svc.akadia.models.entities.sistema.colaboradores.mocks.ColaboradorEntityBuilder;
-import br.akd.svc.akadia.modules.global.arquivo.enums.TipoArquivoEnum;
+import br.akd.svc.akadia.modules.global.objects.arquivo.enums.TipoArquivoEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.advertencia.models.enums.StatusAdvertenciaEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.ColaboradorRepository;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.impl.ColaboradorRepositoryImpl;

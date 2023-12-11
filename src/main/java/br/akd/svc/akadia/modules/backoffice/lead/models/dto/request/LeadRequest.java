@@ -1,6 +1,6 @@
 package br.akd.svc.akadia.modules.backoffice.lead.models.dto.request;
 
-import br.akd.svc.akadia.modules.global.telefone.request.TelefoneRequest;
+import br.akd.svc.akadia.modules.global.objects.telefone.request.TelefoneRequest;
 import lombok.*;
 
 import javax.validation.Valid;

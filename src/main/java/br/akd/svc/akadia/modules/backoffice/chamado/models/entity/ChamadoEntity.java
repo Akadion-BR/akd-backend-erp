@@ -1,13 +1,10 @@
 package br.akd.svc.akadia.modules.backoffice.chamado.models.entity;
 
+import br.akd.svc.akadia.modules.backoffice.chamado.avaliacao.entity.AvaliacaoEntity;
 import br.akd.svc.akadia.modules.backoffice.chamado.mensagem.entity.MensagemEntity;
-import br.akd.svc.akadia.modules.backoffice.chamado.models.entity.id.ChamadoId;
 import br.akd.svc.akadia.modules.backoffice.chamado.models.enums.CategoriaChamadoEnum;
 import br.akd.svc.akadia.modules.backoffice.chamado.models.enums.StatusChamadoEnum;
-import br.akd.svc.akadia.modules.backoffice.chamado.avaliacao.entity.AvaliacaoEntity;
 import br.akd.svc.akadia.modules.backoffice.colaboradorinterno.entity.ColaboradorInternoEntity;
-import br.akd.svc.akadia.modules.web.empresa.models.entity.EmpresaEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -26,11 +23,7 @@ import java.util.UUID;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@IdClass(ChamadoId.class)
-@Table(name = "TB_AKD_CHAMADO",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "UK_TICKET_CHMD", columnNames = {"COD_EMPRESA_CHMD", "LNG_TICKET_CHMD"}),
-        })
+@Table(name = "TB_AKD_CHAMADO")
 public class ChamadoEntity {
 
     @Id
@@ -41,14 +34,6 @@ public class ChamadoEntity {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @Id
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Comment("Chave primária do chamado - ID da empresa ao qual o chamado faz parte")
-    @JoinColumn(name = "COD_EMPRESA_CHMD", referencedColumnName = "COD_EMPRESA_EMP", nullable = false, updatable = false)
-    private EmpresaEntity empresa;
-
     @Comment("Data em que o cadastro do chamado foi realizado")
     @Column(name = "DT_DATACADASTRO_CHMD", nullable = false, updatable = false, length = 10)
     private String dataCadastro;
@@ -58,7 +43,7 @@ public class ChamadoEntity {
     private String horaCadastro;
 
     @Comment("Código único do ticket de atendimento do chamado")
-    @Column(name = "LNG_TICKET_CHMD", nullable = false, updatable = false)
+    @Column(name = "LNG_TICKET_CHMD", nullable = false, updatable = false, unique = true)
     private Long ticket;
 
     @Comment("Título do chamado")

@@ -5,7 +5,7 @@ import br.akd.svc.akadia.modules.erp.colaboradores.acesso.models.entity.AcessoEn
 import br.akd.svc.akadia.modules.erp.colaboradores.advertencia.models.entity.AdvertenciaEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.ColaboradorEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.id.ColaboradorId;
-import br.akd.svc.akadia.modules.global.imagem.entity.ImagemEntity;
+import br.akd.svc.akadia.modules.global.objects.imagem.entity.ImagemEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

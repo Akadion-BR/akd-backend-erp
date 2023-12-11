@@ -6,7 +6,7 @@ import br.akd.svc.akadia.models.entities.site.mocks.ClienteSistemaEntityBuilder;
 import br.akd.svc.akadia.modules.web.clientesistema.controller.ClienteSistemaController;
 import br.akd.svc.akadia.modules.web.clientesistema.repository.impl.ClienteSistemaRepositoryImpl;
 import br.akd.svc.akadia.modules.backoffice.lead.service.LeadService;
-import br.akd.svc.akadia.modules.web.plano.services.PlanoService;
+import br.akd.svc.akadia.modules.web.plano.services.crud.PlanoService;
 import br.akd.svc.akadia.modules.web.clientesistema.services.crud.ClienteSistemaService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

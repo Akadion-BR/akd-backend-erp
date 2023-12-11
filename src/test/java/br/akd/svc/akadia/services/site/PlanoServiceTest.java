@@ -2,7 +2,7 @@ package br.akd.svc.akadia.services.site;
 
 import br.akd.svc.akadia.models.dto.site.mocks.ClienteSistemaDtoBuilder;
 import br.akd.svc.akadia.models.entities.site.mocks.ClienteSistemaEntityBuilder;
-import br.akd.svc.akadia.modules.web.plano.services.PlanoService;
+import br.akd.svc.akadia.modules.web.plano.services.crud.PlanoService;
 import br.akd.svc.akadia.modules.web.clientesistema.services.crud.ClienteSistemaService;
 import br.akd.svc.akadia.modules.web.proxy.asaas.AsaasProxy;
 import br.akd.svc.akadia.proxy.asaas.responses.assinatura.atualiza.mocks.AtualizaAssinaturaResponseBuilder;

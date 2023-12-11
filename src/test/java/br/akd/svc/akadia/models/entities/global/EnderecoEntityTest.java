@@ -1,15 +1,13 @@
 package br.akd.svc.akadia.models.entities.global;
 
 import br.akd.svc.akadia.models.entities.global.mocks.EnderecoEntityBuilder;
-import br.akd.svc.akadia.modules.global.endereco.entity.EnderecoEntity;
-import br.akd.svc.akadia.modules.global.endereco.enums.EstadoEnum;
+import br.akd.svc.akadia.modules.global.objects.endereco.entity.EnderecoEntity;
+import br.akd.svc.akadia.modules.global.objects.endereco.enums.EstadoEnum;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.util.UUID;
 
 @SpringBootTest
 @ActiveProfiles("test")
