@@ -1,10 +1,15 @@
 package br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.utils;
 
+import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.ModulosEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.ColaboradorRepository;
+import br.akd.svc.akadia.modules.external.empresa.entity.EmpresaEntity;
 import br.akd.svc.akadia.utils.ConversorDeDados;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Slf4j
 @Component
@@ -32,6 +37,39 @@ public class ColaboradorServiceUtil {
 
             else log.debug("A matrícula gerada já existe. Tentando novamente...");
         }
+    }
+
+    public Set<ModulosEnum> habilitaTodosModulosColaborador() {
+        log.info("Método de setagem de todos os privilégios à lista de privilégios do colaborador acessado");
+        log.info("Iniciando setagem de privilégios...");
+
+        Set<ModulosEnum> privilegios = new HashSet<>();
+        privilegios.add(ModulosEnum.HOME);
+        privilegios.add(ModulosEnum.CLIENTES);
+        privilegios.add(ModulosEnum.VENDAS);
+        privilegios.add(ModulosEnum.PDV);
+        privilegios.add(ModulosEnum.ESTOQUE);
+        privilegios.add(ModulosEnum.DESPESAS);
+        privilegios.add(ModulosEnum.FECHAMENTOS);
+        privilegios.add(ModulosEnum.PATRIMONIOS);
+        privilegios.add(ModulosEnum.FORNECEDORES);
+        privilegios.add(ModulosEnum.COMPRAS);
+        privilegios.add(ModulosEnum.COLABORADORES);
+        privilegios.add(ModulosEnum.PRECOS);
+        log.info("Lista de privilégios preenchida com sucesso");
+        return privilegios;
+    }
+
+    public String geraSenhaAleatoriaParaNovoLogin(EmpresaEntity empresaEntity) {
+        log.info("Método de criação de senha aleatória acessado");
+        return "@" + empresaEntity.getNome().replace(" ", "").substring(0, 2).toUpperCase() +
+                empresaEntity.getCnpj()
+                        .replace("-", ".")
+                        .replace(".", "")
+                        .replace("/", "")
+                        .substring(0, 2) +
+                empresaEntity.getDataCadastro().substring(0, 2) +
+                empresaEntity.getSegmentoEmpresaEnum().getDesc().substring(0, 2).toUpperCase();
     }
 
 }
