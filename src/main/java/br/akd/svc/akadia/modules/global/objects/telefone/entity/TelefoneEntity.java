@@ -34,7 +34,7 @@ public class TelefoneEntity {
 
     @Comment("Número do telefone")
     @Column(name = "STR_NUMERO_TEL", nullable = false, length = 9)
-    private Integer numero;
+    private String numero;
 
     @Enumerated(EnumType.STRING)
     @Comment("Tipo do telefone")

@@ -37,15 +37,15 @@ public class EnderecoEntity {
     private Integer numero;
 
     @Comment("Bairro do endereço")
-    @Column(name = "STR_BAIRRO_END", length = 80)
+    @Column(name = "STR_BAIRRO_END", nullable = false, length = 80)
     private String bairro;
 
     @Comment("Cep do endereço")
-    @Column(name = "STR_CODIGOPOSTAL_END", length = 8)
+    @Column(name = "STR_CODIGOPOSTAL_END", nullable = false, length = 9)
     private String codigoPostal;
 
     @Comment("Cidade do ENDEREÇO")
-    @Column(name = "str_cidade_end", length = 80)
+    @Column(name = "STR_CIDADE_END", nullable = false, length = 80)
     private String cidade;
 
     @Comment("Complemento do endereço")
