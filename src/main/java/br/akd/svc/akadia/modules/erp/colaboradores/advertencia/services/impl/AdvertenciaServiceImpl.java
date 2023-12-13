@@ -88,7 +88,7 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
         log.debug("Persistência realizada com sucesso");
 
         log.debug("Iniciando acesso ao método de exportação de PDF para gerar a advertência em PDF...");
-        advertenciaRelatorioService.exportarPdf(res, colaboradorLogado, colaboradorEncontrado, advertenciaEntity);
+        advertenciaRelatorioService.exportarPdf(res, colaboradorLogado, advertenciaEntity);
 
         log.debug(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
         acaoService.salvaHistoricoColaborador(idColaboradorSessao, colaboradorEncontrado.getId(),
@@ -135,7 +135,7 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
                 colaborador.getAdvertencias(), idAdvertencia);
 
         log.debug("Iniciando exportação do PDF padrão");
-        advertenciaRelatorioService.exportarPdf(res, colaboradorLogado, colaborador, advertenciaEntity);
+        advertenciaRelatorioService.exportarPdf(res, colaboradorLogado, advertenciaEntity);
 
         log.debug(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
         acaoService.salvaHistoricoColaborador(idColaboradorSessao, colaborador.getId(),
