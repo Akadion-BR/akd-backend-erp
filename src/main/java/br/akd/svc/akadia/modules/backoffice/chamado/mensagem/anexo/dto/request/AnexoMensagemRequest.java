@@ -9,7 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnexoMensagemRequest {
-    //TODO JAVAX VALIDATOR
     private byte[] dados;
     private String nome;
     private String tipo;

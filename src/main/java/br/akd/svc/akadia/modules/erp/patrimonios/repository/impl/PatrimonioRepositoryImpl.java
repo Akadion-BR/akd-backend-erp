@@ -4,6 +4,7 @@ import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
 import br.akd.svc.akadia.modules.erp.patrimonios.models.entity.PatrimonioEntity;
 import br.akd.svc.akadia.modules.erp.patrimonios.models.entity.id.PatrimonioId;
 import br.akd.svc.akadia.modules.erp.patrimonios.repository.PatrimonioRepository;
+import br.akd.svc.akadia.modules.external.empresa.EmpresaId;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,12 +50,18 @@ public class PatrimonioRepositoryImpl {
         return patrimonioEntity;
     }
 
-    public List<PatrimonioEntity> implementaBuscaPorIdEmMassa(UUID uuidEmpresa,
+    public List<PatrimonioEntity> implementaBuscaPorIdEmMassa(EmpresaId empresaId,
                                                               List<UUID> ids) {
         log.debug("Método que implementa busca de patrimônios por id em massa acessado. Ids: {}", ids.toString());
 
         List<PatrimonioId> patrimoniosId = new ArrayList<>();
-        ids.forEach(id -> patrimoniosId.add(new PatrimonioId(uuidEmpresa, id)));
+        ids.forEach(id -> patrimoniosId.add(
+                PatrimonioId.builder()
+                        .idClienteSistema(empresaId.getClienteSistema())
+                        .idEmpresa(empresaId.getId())
+                        .id(id)
+                        .build()
+        ));
 
         List<PatrimonioEntity> patrimonios =
                 patrimonioRepository.findAllById(patrimoniosId);

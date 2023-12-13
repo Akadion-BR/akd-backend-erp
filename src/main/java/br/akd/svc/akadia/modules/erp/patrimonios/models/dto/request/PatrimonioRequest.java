@@ -13,7 +13,6 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 public class PatrimonioRequest {
 
-    //TODO JAVAX VALIDATOR
     @NotNull(message = "O campo 'Data de aquisição' não pode ser vazio")
     @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "O campo 'Data de aquisição' é inválido")
     private String dataEntrada;

@@ -19,7 +19,6 @@ import java.util.UUID;
 @Table(name = "TB_AKD_ACESSO")
 public class AcessoEntity {
 
-    //TODO TESTAR SE ESTÁ FUNCIONANDO
     public AcessoEntity() {
         this.id = null;
         this.dataCadastro = LocalDate.now().toString();

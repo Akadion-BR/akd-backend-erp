@@ -14,7 +14,7 @@ import java.util.UUID;
 public interface ProdutoRepository extends JpaRepository<ProdutoEntity, ProdutoId> {
 
     @Query("SELECT p FROM ProdutoEntity p " +
-            "WHERE p.empresa.id = ?1 " +
+            "WHERE p.idEmpresa = ?1 " +
             "AND (?2 IS NULL OR (upper(p.descricao) LIKE ?2% and p.exclusao IS NULL " +
             "OR upper(p.categoria) LIKE ?2% and p.exclusao IS NULL " +
             "OR upper(p.marca) LIKE ?2% and p.exclusao IS NULL " +

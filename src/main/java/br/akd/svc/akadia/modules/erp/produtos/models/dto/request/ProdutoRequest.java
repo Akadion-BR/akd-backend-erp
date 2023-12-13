@@ -17,8 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ProdutoRequest {
 
-    //TODO VERIFICAR JAVAX VALIDATOR
-
     @NotBlank(message = "O campo código interno não pode ser vazio")
     @Size(message = "O campo código interno deve possuir no máximo {max} caracteres", max = 10)
     private String codigoInterno;

@@ -14,7 +14,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AcessoSistemaRequest {
-    //TODO JAVAX VALIDATOR
     private Boolean acessoSistemaAtivo = true;
     private String senha;
     private PermissaoEnum permissaoEnum;

@@ -10,7 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChamadoRequest {
-    //TODO JAVAX VALIDATOR
     private String titulo;
     private String descricao;
     private CategoriaChamadoEnum categoriaChamadoEnum;

@@ -6,9 +6,7 @@ import br.akd.svc.akadia.modules.erp.despesas.models.entity.id.DespesaId;
 import br.akd.svc.akadia.modules.erp.despesas.models.enums.StatusDespesaEnum;
 import br.akd.svc.akadia.modules.erp.despesas.models.enums.TipoDespesaEnum;
 import br.akd.svc.akadia.modules.erp.despesas.models.enums.TipoRecorrenciaDespesaEnum;
-import br.akd.svc.akadia.modules.external.empresa.entity.EmpresaEntity;
 import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.Comment;
@@ -42,12 +40,18 @@ public class DespesaEntity {
     private UUID id;
 
     @Id
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Comment("Chave primária da despesa - ID da empresa ao qual a despesa faz parte")
-    @JoinColumn(name = "COD_EMPRESA_DSP", referencedColumnName = "COD_EMPRESA_EMP", nullable = false, updatable = false)
-    private EmpresaEntity empresa;
+    @Type(type = "uuid-char")
+    @GeneratedValue(generator = "UUID")
+    @Comment("Chave primária da despesa - Código do cliente sistêmico")
+    @Column(name = "COD_CLIENTESISTEMA_DSP", nullable = false, updatable = false)
+    private UUID idClienteSistema;
+
+    @Id
+    @Type(type = "uuid-char")
+    @GeneratedValue(generator = "UUID")
+    @Comment("Chave primária da despesa - Código da empresa")
+    @Column(name = "COD_EMPRESA_DSP", nullable = false, updatable = false)
+    private UUID idEmpresa;
 
     @Comment("Data em que o cadastro da despesa foi realizado")
     @Column(name = "DT_CADASTRO_DSP", nullable = false, updatable = false, length = 10)
@@ -122,34 +126,41 @@ public class DespesaEntity {
     public DespesaEntity buildFromRequest(ColaboradorEntity colaboradorSessao,
                                           List<DespesaEntity> recorrencias,
                                           DespesaRequest despesaRequest) {
-        //TODO MELHORAR MÉTODO
-        return despesaRequest != null
-                ? DespesaEntity.builder()
+
+        String observacaoTratada = despesaRequest.getQtdRecorrencias() > 0
+                ? "Possui " + despesaRequest.getQtdRecorrencias() + " recorrência(s)"
+                : "Não possui recorrências";
+
+        TipoRecorrenciaDespesaEnum tipoRecorrenciaTratada = despesaRequest.getQtdRecorrencias() > 0
+                ? TipoRecorrenciaDespesaEnum.PRINCIPAL
+                : TipoRecorrenciaDespesaEnum.SEM_RECORRENCIA;
+
+        String dataPagamentoTratada = despesaRequest.getDataPagamento() == null
+                ? "Agendado"
+                : despesaRequest.getDataPagamento();
+
+        String dataAgendamentoTratada = despesaRequest.getDataAgendamento() == null
+                ? "Pago"
+                : despesaRequest.getDataAgendamento();
+
+        return DespesaEntity.builder()
                 .id(null)
-                .empresa(colaboradorSessao.getEmpresa())
+                .idClienteSistema(colaboradorSessao.getIdClienteSistema())
+                .idEmpresa(colaboradorSessao.getIdEmpresa())
                 .dataCadastro(LocalDate.now().toString())
                 .horaCadastro(LocalTime.now().toString())
-                .dataPagamento(despesaRequest.getDataPagamento() == null
-                        ? "Agendado"
-                        : despesaRequest.getDataPagamento())
-                .dataAgendamento(despesaRequest.getDataAgendamento() == null
-                        ? "Pago"
-                        : despesaRequest.getDataAgendamento())
+                .dataPagamento(dataPagamentoTratada)
+                .dataAgendamento(dataAgendamentoTratada)
                 .descricao(despesaRequest.getDescricao())
                 .valor(despesaRequest.getValor())
-                .observacao(despesaRequest.getQtdRecorrencias() > 0
-                        ? "Possui " + despesaRequest.getQtdRecorrencias() + " recorrência(s)"
-                        : "Não possui recorrências")
+                .observacao(observacaoTratada)
                 .nomeResponsavel(colaboradorSessao.getNome())
-                .tipoRecorrencia(despesaRequest.getQtdRecorrencias() > 0
-                        ? TipoRecorrenciaDespesaEnum.PRINCIPAL
-                        : TipoRecorrenciaDespesaEnum.SEM_RECORRENCIA)
+                .tipoRecorrencia(tipoRecorrenciaTratada)
                 .statusDespesa(despesaRequest.getStatusDespesa())
                 .tipoDespesa(despesaRequest.getTipoDespesa())
                 .exclusao(null)
                 .recorrencias(recorrencias)
-                .build()
-                : null;
+                .build();
     }
 
     public DespesaEntity buildRecorrencia(ColaboradorEntity colaboradorSessao,
@@ -157,7 +168,8 @@ public class DespesaEntity {
                                           int indiceRecorrencia,
                                           DespesaRequest despesaRequest) {
         return DespesaEntity.builder()
-                .empresa(colaboradorSessao.getEmpresa())
+                .idClienteSistema(colaboradorSessao.getIdClienteSistema())
+                .idEmpresa(colaboradorSessao.getIdEmpresa())
                 .dataCadastro(LocalDate.now().toString())
                 .horaCadastro(LocalTime.now().toString())
                 .dataPagamento("Agendado")
@@ -176,19 +188,23 @@ public class DespesaEntity {
 
     public DespesaEntity updateFromRequest(DespesaEntity despesaPreAtualizacao,
                                            DespesaRequest despesaRequest) {
-        //TODO MELHORAR MÉTODO
-        return despesaRequest != null
-                ? DespesaEntity.builder()
+
+        String dataPagamentoTratada = despesaRequest.getDataPagamento() == null
+                ? "Agendado"
+                : despesaRequest.getDataPagamento();
+
+        String dataAgendamentoTratada = despesaRequest.getDataAgendamento() == null
+                ? "Pago"
+                : despesaRequest.getDataAgendamento();
+
+        return DespesaEntity.builder()
                 .id(despesaPreAtualizacao.getId())
-                .empresa(despesaPreAtualizacao.getEmpresa())
+                .idClienteSistema(despesaPreAtualizacao.getIdClienteSistema())
+                .idEmpresa(despesaPreAtualizacao.getIdEmpresa())
                 .dataCadastro(despesaPreAtualizacao.getDataCadastro())
                 .horaCadastro(despesaPreAtualizacao.getHoraCadastro())
-                .dataPagamento(despesaRequest.getDataPagamento() == null
-                        ? "Agendado"
-                        : despesaRequest.getDataPagamento())
-                .dataAgendamento(despesaRequest.getDataAgendamento() == null
-                        ? "Pago"
-                        : despesaRequest.getDataAgendamento())
+                .dataPagamento(dataPagamentoTratada)
+                .dataAgendamento(dataAgendamentoTratada)
                 .descricao(despesaRequest.getDescricao())
                 .valor(despesaRequest.getValor())
                 .observacao(despesaPreAtualizacao.getObservacao())
@@ -198,7 +214,6 @@ public class DespesaEntity {
                 .exclusao(null)
                 .nomeResponsavel(despesaPreAtualizacao.getNomeResponsavel())
                 .recorrencias(despesaPreAtualizacao.getRecorrencias())
-                .build()
-                : null;
+                .build();
     }
 }

@@ -13,7 +13,7 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.colabo
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.colaborador.response.page.ColaboradorPageResponse;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.crud.ColaboradorService;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.report.ColaboradorRelatorioService;
-import br.akd.svc.akadia.modules.external.empresa.entity.EmpresaEntity;
+import br.akd.svc.akadia.modules.external.empresa.EmpresaId;
 import br.akd.svc.akadia.modules.global.objects.imagem.response.ImagemResponse;
 import br.akd.svc.akadia.utils.RelatorioUtil;
 import com.lowagie.text.DocumentException;
@@ -110,13 +110,11 @@ public class ColaboradorController {
      * Cadastro de colaborador raiz
      * Este método tem como objetivo disponibilizar o endpoint de acionamento da lógica de criação de novo colaborador
      *
-     * @param userDetails Dados do usuário logado na sessão atual
-     * @param empresa     Empresa na qual o colaborador que será persistido pertence
+     * @param empresaId Empresa na qual o colaborador que será persistido pertence
      * @return Retorna objeto Colaborador criado convertido para o tipo ColaboradorResponse
      * @throws InvalidRequestException Exception lançada caso ocorra alguma falha interna na criação do colaborador
      */
     @PostMapping("/cria-colaborador-raiz")
-    @PreAuthorize("hasAnyRole('COLABORADORES')")
     @Tag(name = "Cadastro de colaborador raiz da aplicação")
     @Operation(summary = "Esse endpoint tem como objetivo realizar a criação do primeiro colaborador da aplicação",
             method = "POST")
@@ -130,12 +128,11 @@ public class ColaboradorController {
                     content = {@Content(mediaType = "application/json",
                             schema = @Schema(implementation = InvalidRequestException.class))}),
     })
-    public ResponseEntity<CriacaoColaboradorResponse> criaColaboradorRaiz(@AuthenticationPrincipal UserDetails userDetails,
-                                                                          @RequestBody EmpresaEntity empresa) {
+    public ResponseEntity<CriacaoColaboradorResponse> criaColaboradorRaiz(@RequestBody EmpresaId empresaId) {
         log.info("Método controlador de criação de colaborador raiz acessado");
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(colaboradorService.criaColaboradorAdminParaNovaEmpresa(empresa));
+                .body(colaboradorService.criaColaboradorAdminParaNovaEmpresa(empresaId));
     }
 
     /**

@@ -1,5 +1,6 @@
 package br.akd.svc.akadia.modules.erp.patrimonios.services.report;
 
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import br.akd.svc.akadia.modules.erp.colaboradores.acao.models.enums.TipoAcaoEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.acao.services.AcaoService;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.ColaboradorEntity;
@@ -7,9 +8,9 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.col
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.ModulosEnum;
 import br.akd.svc.akadia.modules.erp.patrimonios.models.entity.PatrimonioEntity;
 import br.akd.svc.akadia.modules.erp.patrimonios.repository.impl.PatrimonioRepositoryImpl;
+import br.akd.svc.akadia.modules.external.empresa.EmpresaId;
 import br.akd.svc.akadia.utils.Constantes;
 import br.akd.svc.akadia.utils.ConversorDeDados;
-import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import com.lowagie.text.Font;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPCell;
@@ -61,8 +62,9 @@ public class PatrimonioRelatorioService {
 
         log.debug("Verificando se listagem de ids de patrimônios recebidas por parâmetro é vazia...");
         java.util.List<PatrimonioEntity> patrimonios = idsPatrimonios.isEmpty()
-                ? patrimonioRepositoryImpl.implementaBuscaPorTodos(idColaboradorSessao.getEmpresa())
-                : patrimonioRepositoryImpl.implementaBuscaPorIdEmMassa(idColaboradorSessao.getEmpresa(), idsPatrimonios);
+                ? patrimonioRepositoryImpl.implementaBuscaPorTodos(idColaboradorSessao.getIdEmpresa())
+                : patrimonioRepositoryImpl.implementaBuscaPorIdEmMassa(
+                new EmpresaId(idColaboradorSessao.getIdClienteSistema(), idColaboradorSessao.getIdEmpresa()), idsPatrimonios);
 
         Collections.reverse(patrimonios);
 

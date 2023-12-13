@@ -11,7 +11,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DespesaRequest {
-    //TODO JAVAX VALIDATOR
     private String dataPagamento;
     private String dataAgendamento;
     private String descricao;

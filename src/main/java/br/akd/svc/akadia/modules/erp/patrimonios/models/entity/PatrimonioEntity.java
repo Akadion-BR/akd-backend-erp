@@ -4,9 +4,7 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.col
 import br.akd.svc.akadia.modules.erp.patrimonios.models.dto.request.PatrimonioRequest;
 import br.akd.svc.akadia.modules.erp.patrimonios.models.entity.id.PatrimonioId;
 import br.akd.svc.akadia.modules.erp.patrimonios.models.enums.TipoPatrimonioEnum;
-import br.akd.svc.akadia.modules.external.empresa.entity.EmpresaEntity;
 import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.GenericGenerator;
@@ -37,12 +35,18 @@ public class PatrimonioEntity {
     private UUID id;
 
     @Id
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Comment("Chave primária do patrimônio - ID da empresa ao qual o patrimônio faz parte")
-    @JoinColumn(name = "COD_EMPRESA_PTR", referencedColumnName = "COD_EMPRESA_EMP", nullable = false, updatable = false)
-    private EmpresaEntity empresa;
+    @Type(type = "uuid-char")
+    @GeneratedValue(generator = "UUID")
+    @Comment("Chave primária do patrimônio - Código do cliente sistêmico")
+    @Column(name = "COD_CLIENTESISTEMA_PTR", nullable = false, updatable = false)
+    private UUID idClienteSistema;
+
+    @Id
+    @Type(type = "uuid-char")
+    @GeneratedValue(generator = "UUID")
+    @Comment("Chave primária do patrimônio - Código da empresa")
+    @Column(name = "COD_EMPRESA_PTR", nullable = false, updatable = false)
+    private UUID idEmpresa;
 
     @Comment("Data em que o cadastro do patrimônio foi realizado")
     @Column(name = "DT_CADASTRO_PTR", nullable = false, updatable = false, length = 10)
@@ -89,7 +93,8 @@ public class PatrimonioEntity {
         return patrimonioRequest != null
                 ? PatrimonioEntity.builder()
                 .id(null)
-                .empresa(colaboradorSessao.getEmpresa())
+                .idClienteSistema(colaboradorSessao.getIdClienteSistema())
+                .idEmpresa(colaboradorSessao.getIdEmpresa())
                 .dataCadastro(LocalDate.now().toString())
                 .horaCadastro(LocalTime.now().toString())
                 .dataEntrada(patrimonioRequest.getDataEntrada())
@@ -107,7 +112,8 @@ public class PatrimonioEntity {
         return patrimonioRequest != null
                 ? PatrimonioEntity.builder()
                 .id(patrimonioPreAtualizacao.getId())
-                .empresa(patrimonioPreAtualizacao.getEmpresa())
+                .idClienteSistema(patrimonioPreAtualizacao.getIdClienteSistema())
+                .idEmpresa(patrimonioPreAtualizacao.getIdEmpresa())
                 .dataCadastro(patrimonioPreAtualizacao.getDataCadastro())
                 .horaCadastro(patrimonioPreAtualizacao.getHoraCadastro())
                 .dataEntrada(patrimonioRequest.getDataEntrada())

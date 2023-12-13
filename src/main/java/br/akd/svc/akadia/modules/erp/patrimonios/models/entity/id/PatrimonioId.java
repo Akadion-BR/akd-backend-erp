@@ -8,11 +8,15 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class PatrimonioId implements Serializable {
     @Type(type = "uuid-char")
-    private UUID empresa;
+    private UUID idClienteSistema;
+    @Type(type = "uuid-char")
+    private UUID idEmpresa;
+    @Type(type = "uuid-char")
     private UUID id;
 }

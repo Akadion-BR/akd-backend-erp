@@ -1,5 +1,6 @@
 package br.akd.svc.akadia.modules.erp.colaboradores.advertencia.services.impl;
 
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
 import br.akd.svc.akadia.modules.erp.colaboradores.acao.models.enums.TipoAcaoEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.acao.services.AcaoService;
@@ -16,7 +17,6 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.Colabo
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.impl.ColaboradorRepositoryImpl;
 import br.akd.svc.akadia.modules.global.objects.arquivo.entity.ArquivoEntity;
 import br.akd.svc.akadia.utils.Constantes;
-import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +77,7 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
 
         log.debug("Obtendo colaborador pelo id ({})...", idColaboradorAlvo);
         ColaboradorEntity colaboradorEncontrado = colaboradorRepositoryImpl.implementaBuscaPorId(
-                idColaboradorSessao.getEmpresa(), colaboradorLogado.getEmpresa().getId());
+                idColaboradorSessao.getIdEmpresa(), colaboradorLogado.getId());
 
         log.debug("Adicionando advertência criada ao objeto colaborador...");
         colaboradorEncontrado.addAdvertencia(advertenciaEntity);
@@ -88,7 +88,7 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
         log.debug("Persistência realizada com sucesso");
 
         log.debug("Iniciando acesso ao método de exportação de PDF para gerar a advertência em PDF...");
-        advertenciaRelatorioService.exportarPdf(res, colaboradorLogado, colaboradorEncontrado, advertenciaEntity);
+        advertenciaRelatorioService.exportarPdf(res, colaboradorLogado, advertenciaEntity);
 
         log.debug(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
         acaoService.salvaHistoricoColaborador(idColaboradorSessao, colaboradorEncontrado.getId(),
@@ -105,7 +105,7 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
 
         log.debug("Acessando repositório de busca de advertências");
         Page<AdvertenciaEntity> advertenciaPage = colaboradorRepository.buscaAdvertenciasPorIdColaborador(
-                pageable, idColaboradorSessao.getEmpresa(), idColaboradorSessao.getId());
+                pageable, idColaboradorSessao.getIdEmpresa(), idColaboradorSessao.getId());
 
         log.debug("Busca de advertências por paginação realizada com sucesso. Acessando método de conversão dos objetos do tipo " +
                 "Entity para objetos do tipo Response...");
@@ -128,14 +128,14 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
 
         log.debug("Obtendo colaborador pelo id ({})...", idColaborador);
         ColaboradorEntity colaborador = colaboradorRepositoryImpl.implementaBuscaPorId(
-                idColaborador, colaboradorLogado.getEmpresa().getId());
+                idColaborador, colaboradorLogado.getIdEmpresa());
 
         log.debug(ACESSA_METODO_BUSCA_ADVERTENCIA);
         AdvertenciaEntity advertenciaEntity = realizaBuscaAdvertenciaPorIdNaListaDeAdvertenciasDoColaborador(
                 colaborador.getAdvertencias(), idAdvertencia);
 
         log.debug("Iniciando exportação do PDF padrão");
-        advertenciaRelatorioService.exportarPdf(res, colaboradorLogado, colaborador, advertenciaEntity);
+        advertenciaRelatorioService.exportarPdf(res, colaboradorLogado, advertenciaEntity);
 
         log.debug(Constantes.INICIANDO_SALVAMENTO_HISTORICO_COLABORADOR);
         acaoService.salvaHistoricoColaborador(idColaboradorSessao, colaborador.getId(),
@@ -152,7 +152,7 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
 
         log.debug("Obtendo colaborador pelo id: {}...", idColaborador);
         ColaboradorEntity colaborador = colaboradorRepositoryImpl.implementaBuscaPorId(
-                idColaboradorSessao.getEmpresa(), idColaboradorSessao.getId());
+                idColaboradorSessao.getIdEmpresa(), idColaboradorSessao.getId());
 
         log.debug(ACESSA_METODO_BUSCA_ADVERTENCIA);
         AdvertenciaEntity advertenciaEntity = realizaBuscaAdvertenciaPorIdNaListaDeAdvertenciasDoColaborador(
@@ -180,7 +180,7 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
 
         log.debug("Obtendo colaborador pelo id {}...", idColaborador);
         ColaboradorEntity colaborador = colaboradorRepositoryImpl.implementaBuscaPorId(
-                idColaboradorSessao.getEmpresa(), idColaboradorSessao.getId());
+                idColaboradorSessao.getIdEmpresa(), idColaboradorSessao.getId());
 
         log.debug(ACESSA_METODO_BUSCA_ADVERTENCIA);
         AdvertenciaEntity advertenciaEntity = realizaBuscaAdvertenciaPorIdNaListaDeAdvertenciasDoColaborador(
@@ -215,7 +215,7 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
 
         log.debug("Obtendo colaborador pelo id {}...", idColaborador);
         ColaboradorEntity colaborador = colaboradorRepositoryImpl.implementaBuscaPorId(
-                idColaborador, colaboradorLogado.getEmpresa().getId());
+                idColaborador, colaboradorLogado.getIdEmpresa());
 
         log.debug(ACESSA_METODO_BUSCA_ADVERTENCIA);
         AdvertenciaEntity advertenciaEntity = realizaBuscaAdvertenciaPorIdNaListaDeAdvertenciasDoColaborador(
@@ -247,7 +247,7 @@ public class AdvertenciaServiceImpl implements AdvertenciaService {
 
         log.debug("Obtendo colaborador pelo id: {}...", idColaborador);
         ColaboradorEntity colaborador = colaboradorRepositoryImpl.implementaBuscaPorId(idColaborador,
-                colaboradorLogado.getEmpresa().getId());
+                colaboradorLogado.getIdEmpresa());
 
         log.debug(ACESSA_METODO_BUSCA_ADVERTENCIA);
         AdvertenciaEntity advertenciaEntity = realizaBuscaAdvertenciaPorIdNaListaDeAdvertenciasDoColaborador(

@@ -22,7 +22,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Optional<ColaboradorEntity> colaborador = colaboradorRepository.findByMatricula(matricula);
         if (colaborador.isPresent()) {
             return new UserSS(
-                    new ColaboradorId(colaborador.get().getEmpresa().getId(), colaborador.get().getId()),
+                    new ColaboradorId(
+                            colaborador.get().getIdClienteSistema(),
+                            colaborador.get().getIdEmpresa(),
+                            colaborador.get().getId()),
                     colaborador.get().getMatricula(),
                     colaborador.get().getAcessoSistema().getSenhaCriptografada(),
                     colaborador.get().getAcessoSistema().getPrivilegios());

@@ -5,10 +5,10 @@ import lombok.*;
 
 import javax.validation.constraints.*;
 
-@Builder
-@ToString
 @Getter
 @Setter
+@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class EnderecoRequest {
@@ -16,17 +16,20 @@ public class EnderecoRequest {
     @Size(max = 100, message = "O campo logradouro deve conter no máximo {max} caracteres")
     private String logradouro;
 
-    @NotNull(message = "O campo número deverá ser informado")
+    @NotNull(message = "O número do endereço deverá ser informado")
     @Min(value = 1, message = "O valor mínimo para o campo número é {value}")
-    @Max(value = 99999, message = "O valor máximo para o campo número é {value}")
+    @Max(value = 9999, message = "O valor máximo para o campo número é {value}")
     private Integer numero;
 
+    @NotEmpty(message = "O campo deverá ser informado")
     @Size(max = 80, message = "O campo bairro deve conter no máximo {max} caracteres")
     private String bairro;
 
-    @Pattern(regexp = "\\d{8}", message = "O campo CEP deve conter 8 caracteres numéricos")
+    @NotEmpty(message = "O código postal deverá ser informado")
+    @Pattern(regexp = "\\d{5}-\\d{3}", message = "O campo CEP deve conter 8 caracteres numéricos")
     private String codigoPostal;
 
+    @NotEmpty(message = "A cidade deverá ser informada")
     @Size(max = 80, message = "O campo cidade deve conter no máximo {max} caracteres")
     private String cidade;
 

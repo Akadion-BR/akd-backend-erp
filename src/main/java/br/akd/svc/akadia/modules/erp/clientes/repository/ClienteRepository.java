@@ -16,14 +16,14 @@ import java.util.UUID;
 public interface ClienteRepository extends JpaRepository<ClienteEntity, ClienteId> {
 
     @Query("SELECT COUNT(c)>0 FROM ClienteEntity c " +
-            "WHERE c.empresa.id = ?1 " +
+            "WHERE c.idEmpresa = ?1 " +
             "AND c.cpfCnpj = ?2 " +
             "AND c.exclusao IS NULL")
     boolean verificaSeClienteAtivoJaExisteComCpfCnpjInformado(UUID uuidEmpresaSessao,
                                                               String cpfCnpj);
 
     @Query("SELECT COUNT(c)>0 FROM ClienteEntity c " +
-            "WHERE c.empresa.id = ?1 " +
+            "WHERE c.idEmpresa = ?1 " +
             "AND c.inscricaoEstadual = ?2 " +
             "AND c.exclusao IS NULL")
     boolean verificaSeClienteAtivoJaExisteComInscricaoEstadualInformada(UUID uuidEmpresaSessao,
@@ -31,32 +31,32 @@ public interface ClienteRepository extends JpaRepository<ClienteEntity, ClienteI
 
     @Query("SELECT c FROM ClienteEntity c " +
             "WHERE c.id = ?2 " +
-            "AND c.empresa.id = ?1 " +
+            "AND c.idEmpresa = ?1 " +
             "AND c.exclusao IS NULL")
     Optional<ClienteEntity> buscaPorId(UUID uuidEmpresa,
                                        UUID uuidCliente);
 
     @Query("SELECT c FROM ClienteEntity c " +
             "WHERE c.cpfCnpj = ?2 " +
-            "and c.empresa.id = ?1 " +
+            "and c.idEmpresa = ?1 " +
             "and c.exclusao IS NULL")
     Optional<ClienteEntity> buscaPorCpfCnpjIdenticoNaEmpresaDaSessaoAtual(UUID uuidEmpresa,
                                                                           String cpfCnpj);
 
     @Query("SELECT c FROM ClienteEntity c " +
             "WHERE c.inscricaoEstadual = ?2 " +
-            "AND c.empresa.id = ?1 " +
+            "AND c.idEmpresa = ?1 " +
             "AND c.exclusao IS NULL")
     Optional<ClienteEntity> buscaPorInscricaoEstadualIdenticaNaEmpresaDaSessaoAtual(UUID uuidEmpresa,
                                                                                     String inscricaoEstadual);
 
     @Query("SELECT c FROM ClienteEntity c " +
-            "WHERE c.empresa.id = ?1 " +
+            "WHERE c.idEmpresa = ?1 " +
             "AND c.exclusao IS NULL")
     List<ClienteEntity> buscaTodos(UUID uuidEmpresa);
 
     @Query("SELECT c FROM ClienteEntity c " +
-            "WHERE c.empresa.id = ?1 " +
+            "WHERE c.idEmpresa = ?1 " +
             "AND (?2 IS NULL OR (upper(c.nome) LIKE ?2% and c.exclusao IS NULL " +
             "OR upper(c.email) LIKE ?2% and c.exclusao IS NULL " +
             "OR upper(c.cpfCnpj) LIKE ?2% and c.exclusao IS NULL))")

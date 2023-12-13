@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -32,7 +31,7 @@ public class AcessoServiceImpl implements AcessoService {
 
         log.debug("Realizando a busca do colaborador pela matrícula informada: {}...", matricula);
         ColaboradorEntity colaborador = colaboradorRepositoryImpl.implementaBuscaPorMatricula(
-                idColaboradorSessao.getEmpresa(), matricula);
+                idColaboradorSessao.getIdEmpresa(), matricula);
 
         log.debug("Adicionando objeto Acesso ao colaborador...");
         colaborador.addAcesso();

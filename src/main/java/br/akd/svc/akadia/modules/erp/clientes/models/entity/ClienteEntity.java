@@ -5,11 +5,9 @@ import br.akd.svc.akadia.modules.erp.clientes.models.entity.id.ClienteId;
 import br.akd.svc.akadia.modules.erp.clientes.models.enums.StatusClienteEnum;
 import br.akd.svc.akadia.modules.erp.clientes.models.enums.TipoPessoaEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.ColaboradorEntity;
-import br.akd.svc.akadia.modules.external.empresa.entity.EmpresaEntity;
 import br.akd.svc.akadia.modules.global.objects.endereco.entity.EnderecoEntity;
 import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.modules.global.objects.telefone.entity.TelefoneEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.DynamicUpdate;
@@ -46,12 +44,18 @@ public class ClienteEntity {
     private UUID id;
 
     @Id
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Comment("Chave primária do cliente - ID da empresa ao qual o cliente faz parte")
-    @JoinColumn(name = "COD_EMPRESA_CLI", referencedColumnName = "COD_EMPRESA_EMP", nullable = false, updatable = false)
-    private EmpresaEntity empresa;
+    @Type(type = "uuid-char")
+    @GeneratedValue(generator = "UUID")
+    @Comment("Chave primária do cliente - Código do cliente sistêmico")
+    @Column(name = "COD_CLIENTESISTEMA_CLI", nullable = false, updatable = false)
+    private UUID idClienteSistema;
+
+    @Id
+    @Type(type = "uuid-char")
+    @GeneratedValue(generator = "UUID")
+    @Comment("Chave primária do cliente - Código da empresa")
+    @Column(name = "COD_EMPRESA_CLI", nullable = false, updatable = false)
+    private UUID idEmpresa;
 
     @Comment("Data em que o cadastro do cliente foi realizado")
     @Column(name = "DT_CADASTRO_CLI", nullable = false, updatable = false, length = 10)
@@ -128,7 +132,9 @@ public class ClienteEntity {
     public ClienteEntity constroiClienteEntityParaCriacao(ColaboradorEntity colaboradorLogado,
                                                           ClienteRequest clienteRequest) {
         return ClienteEntity.builder()
-                .empresa(colaboradorLogado.getEmpresa())
+                .id(colaboradorLogado.getId())
+                .idEmpresa(colaboradorLogado.getIdEmpresa())
+                .idClienteSistema(colaboradorLogado.getIdClienteSistema())
                 .dataCadastro(LocalDate.now().toString())
                 .horaCadastro(LocalTime.now().toString())
                 .dataNascimento(clienteRequest.getDataNascimento())
@@ -151,7 +157,9 @@ public class ClienteEntity {
     public ClienteEntity atualizaEntidadeComAtributosRequest(ClienteEntity clienteEncontrado,
                                                              ClienteRequest clienteAtualizado) {
         return ClienteEntity.builder()
-                .empresa(clienteEncontrado.getEmpresa())
+                .id(clienteEncontrado.getId())
+                .idClienteSistema(clienteEncontrado.getIdClienteSistema())
+                .idEmpresa(clienteEncontrado.getIdEmpresa())
                 .id(clienteEncontrado.getId())
                 .dataCadastro(clienteEncontrado.getDataCadastro())
                 .horaCadastro(clienteEncontrado.getHoraCadastro())

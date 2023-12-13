@@ -24,7 +24,13 @@ import java.util.Arrays;
         jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String[] PUBLIC_MATCHERS = {"/h2-console/**", "/api/site/**", "/hook/v1/**", "/swagger-ui.html/**", "/v2/api-docs"};
+    private static final String[] PUBLIC_MATCHERS = {
+            "/h2-console/**",
+            "/api/sistema/v1/colaborador/cria-colaborador-raiz",
+            "/hook/v1/**",
+            "/swagger-ui.html/**",
+            "/v2/api-docs"
+    };
 
     @Autowired
     private Environment env;

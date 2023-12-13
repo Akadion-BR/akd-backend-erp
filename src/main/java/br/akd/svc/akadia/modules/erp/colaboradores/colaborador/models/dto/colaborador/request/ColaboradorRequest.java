@@ -17,7 +17,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ColaboradorRequest {
-    //TODO JAVAX VALIDATOR
     private String nome;
     private String dataNascimento;
     private String email;

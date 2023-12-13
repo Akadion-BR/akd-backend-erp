@@ -6,6 +6,7 @@ import lombok.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Data
 @Builder
@@ -20,14 +21,13 @@ public class TelefoneRequest {
     private Integer prefixo;
 
     @NotNull(message = "O número do telefone deverá ser informado")
-    @Min(value = 8, message = "O número do telefone deve conter no mínimo {value} caracteres numéricos")
-    @Min(value = 9, message = "O número do telefone deve conter no máximo {value} caracteres numéricos")
-    private Integer numero;
+    @Pattern(regexp = "^(((?:9\\d|[2-9])\\d{3})(\\d{4}))$", message = "O número de telefone é inválido")
+    private String numero;
 
     @NotNull(message = "O tipo do telefone deverá ser informado")
     private TipoTelefoneEnum tipoTelefone;
 
     public String obtemPrefixoComNumeroJuntos() {
-        return this.getPrefixo().toString() + this.getNumero().toString();
+        return this.getPrefixo().toString() + this.getNumero();
     }
 }

@@ -5,8 +5,6 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.col
 import br.akd.svc.akadia.modules.erp.precos.models.dto.request.PrecoRequest;
 import br.akd.svc.akadia.modules.erp.precos.models.entity.id.PrecoId;
 import br.akd.svc.akadia.modules.erp.precos.models.enums.TipoPrecoEnum;
-import br.akd.svc.akadia.modules.external.empresa.entity.EmpresaEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.GenericGenerator;
@@ -38,12 +36,18 @@ public class PrecoEntity {
     private UUID id;
 
     @Id
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Comment("Chave primária do preço - ID da empresa ao qual o preço faz parte")
-    @JoinColumn(name = "COD_EMPRESA_PRC", referencedColumnName = "COD_EMPRESA_EMP", nullable = false, updatable = false)
-    private EmpresaEntity empresa;
+    @Type(type = "uuid-char")
+    @GeneratedValue(generator = "UUID")
+    @Comment("Chave primária do preço - Código do cliente sistêmico")
+    @Column(name = "COD_CLIENTESISTEMA_PRC", nullable = false, updatable = false)
+    private UUID idClienteSistema;
+
+    @Id
+    @Type(type = "uuid-char")
+    @GeneratedValue(generator = "UUID")
+    @Comment("Chave primária do preço - Código da empresa")
+    @Column(name = "COD_EMPRESA_PRC", nullable = false, updatable = false)
+    private UUID idEmpresa;
 
     @Comment("Data em que o cadastro do preço foi realizado")
     @Column(name = "DT_CADASTRO_PRC", nullable = false, updatable = false, length = 10)
@@ -95,13 +99,14 @@ public class PrecoEntity {
         for (PrecoRequest precoRequest : precosRequest) {
 
             PrecoEntity precoEntity = PrecoEntity.builder()
+                    .idClienteSistema(colaboradorLogado.getIdClienteSistema())
+                    .idEmpresa(colaboradorLogado.getIdEmpresa())
                     .dataCadastro(LocalDate.now().toString())
                     .horaCadastro(LocalDate.now().toString())
                     .valor(precoRequest.getValor())
                     .observacao(precoRequest.getObservacao())
                     .tipoPreco(precoRequest.getTipoPreco())
                     .nomeResponsavel(colaboradorLogado.getNome())
-                    .empresa(colaboradorLogado.getEmpresa())
                     .build();
 
             precos.add(precoEntity);
