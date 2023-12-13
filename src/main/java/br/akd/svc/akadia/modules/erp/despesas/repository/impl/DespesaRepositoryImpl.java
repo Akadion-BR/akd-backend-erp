@@ -4,7 +4,7 @@ import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
 import br.akd.svc.akadia.modules.erp.despesas.models.entity.DespesaEntity;
 import br.akd.svc.akadia.modules.erp.despesas.models.entity.id.DespesaId;
 import br.akd.svc.akadia.modules.erp.despesas.repository.DespesaRepository;
-import br.akd.svc.akadia.modules.external.empresa.entity.id.EmpresaId;
+import br.akd.svc.akadia.modules.external.empresa.EmpresaId;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,7 +59,12 @@ public class DespesaRepositoryImpl {
         log.debug("Método que implementa busca de despesa por id em massa acessado. Ids: {}", ids.toString());
 
         List<DespesaId> despesasId = new ArrayList<>();
-        ids.forEach(id -> despesasId.add(new DespesaId(empresaId, id)));
+        ids.forEach(id -> despesasId.add(
+                DespesaId.builder()
+                        .idClienteSistema(empresaId.getClienteSistema())
+                        .idEmpresa(empresaId.getId())
+                        .id(id)
+                        .build()));
 
         List<DespesaEntity> despesas = despesaRepository.findAllById(despesasId);
 

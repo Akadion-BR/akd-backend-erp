@@ -4,7 +4,7 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.colabo
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.colaborador.response.CriacaoColaboradorResponse;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.dto.colaborador.response.page.ColaboradorPageResponse;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.id.ColaboradorId;
-import br.akd.svc.akadia.modules.external.empresa.entity.id.EmpresaId;
+import br.akd.svc.akadia.modules.external.empresa.EmpresaId;
 import br.akd.svc.akadia.modules.global.objects.imagem.response.ImagemResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;

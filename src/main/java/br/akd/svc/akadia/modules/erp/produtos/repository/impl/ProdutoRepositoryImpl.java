@@ -1,13 +1,12 @@
 package br.akd.svc.akadia.modules.erp.produtos.repository.impl;
 
+import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
 import br.akd.svc.akadia.modules.erp.produtos.models.entity.ProdutoEntity;
 import br.akd.svc.akadia.modules.erp.produtos.models.entity.id.ProdutoId;
 import br.akd.svc.akadia.modules.erp.produtos.repository.ProdutoRepository;
-import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service

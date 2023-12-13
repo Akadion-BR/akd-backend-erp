@@ -17,16 +17,16 @@ public interface DespesaRepository extends JpaRepository<DespesaEntity, DespesaI
 
     @Query("SELECT c FROM DespesaEntity c " +
             "WHERE c.id = ?2 " +
-            "AND c.empresa.id = ?1 " +
+            "AND c.idEmpresa = ?1 " +
             "AND c.exclusao IS NULL")
     Optional<DespesaEntity> buscaPorId(UUID idEmpresa,
                                        UUID idDespesa);
 
     @Query("SELECT d FROM DespesaEntity d " +
-            "WHERE d.empresa.id = ?1 " +
+            "WHERE d.idEmpresa = ?1 " +
             "AND d.exclusao IS NULL " +
             "AND d.dataAgendamento BETWEEN ?2 AND ?3" +
-            "OR d.empresa.id = ?1 " +
+            "OR d.idEmpresa = ?1 " +
             "AND d.exclusao IS NULL " +
             "AND d.dataPagamento BETWEEN ?2 AND ?3")
     Page<DespesaEntity> buscaPorDespesas(Pageable pageable,
@@ -34,14 +34,13 @@ public interface DespesaRepository extends JpaRepository<DespesaEntity, DespesaI
                                          String dataInicio,
                                          String dataFim);
 
-    //TODO MELHORAR QUERY DINAMICA
     @Query("SELECT d FROM DespesaEntity d " +
             "WHERE UPPER(d.descricao) LIKE ?4% " +
-            "AND d.empresa.id = ?1 " +
+            "AND d.idEmpresa = ?1 " +
             "AND d.exclusao IS NULL " +
             "AND d.dataAgendamento BETWEEN ?2 and ?3" +
             "OR upper(d.descricao) LIKE ?4% " +
-            "AND d.empresa.id = ?1 " +
+            "AND d.idEmpresa = ?1 " +
             "AND d.exclusao IS NULL " +
             "AND d.dataPagamento BETWEEN ?2 and ?3")
     Page<DespesaEntity> buscaPorDespesasTypeAhead(Pageable pageable,
@@ -51,7 +50,7 @@ public interface DespesaRepository extends JpaRepository<DespesaEntity, DespesaI
                                                   String busca);
 
     @Query("SELECT d FROM DespesaEntity d " +
-            "WHERE d.empresa.id = ?1 " +
+            "WHERE d.idEmpresa = ?1 " +
             "AND d.exclusao IS NULL")
     List<DespesaEntity> buscaTodos(UUID idEmpresa);
 }

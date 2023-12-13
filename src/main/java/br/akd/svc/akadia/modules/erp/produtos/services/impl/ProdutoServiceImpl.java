@@ -1,5 +1,6 @@
 package br.akd.svc.akadia.modules.erp.produtos.services.impl;
 
+import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import br.akd.svc.akadia.modules.erp.colaboradores.acao.models.enums.TipoAcaoEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.acao.services.AcaoService;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.ColaboradorEntity;
@@ -15,7 +16,6 @@ import br.akd.svc.akadia.modules.erp.produtos.repository.ProdutoRepository;
 import br.akd.svc.akadia.modules.erp.produtos.repository.impl.ProdutoRepositoryImpl;
 import br.akd.svc.akadia.modules.erp.produtos.services.ProdutoService;
 import br.akd.svc.akadia.utils.Constantes;
-import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -80,7 +80,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
         log.debug("Acessando repositório de busca de produtos");
         Page<ProdutoEntity> produtoPage = produtoRepository.buscaPaginadaPorProdutos(
-                pageable, idColaboradorSessao.getEmpresa().getId(), campoBusca);
+                pageable, idColaboradorSessao.getIdEmpresa(), campoBusca);
 
         log.debug("Busca de produtos por paginação realizada com sucesso. Acessando método de conversão dos " +
                 "objetos do tipo Entity para objetos do tipo Response...");
@@ -97,7 +97,11 @@ public class ProdutoServiceImpl implements ProdutoService {
 
         log.debug("Acessando repositório de busca de produto por ID...");
         ProdutoEntity produtoEncontrado = produtoRepositoryImpl.implementaBuscaPorId(
-                new ProdutoId(idColaboradorSessao.getEmpresa(), idProduto));
+                ProdutoId.builder()
+                        .idClienteSistema(idColaboradorSessao.getIdClienteSistema())
+                        .idEmpresa(idColaboradorSessao.getIdEmpresa())
+                        .id(idColaboradorSessao.getId())
+                        .build());
 
         log.debug("Busca de produtos por id realizada com sucesso. Acessando método de conversão dos objeto do tipo " +
                 "Entity para objeto do tipo Response...");

@@ -8,7 +8,7 @@ import br.akd.svc.akadia.modules.erp.colaboradores.acao.services.AcaoService;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.ColaboradorEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.id.ColaboradorId;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.ModulosEnum;
-import br.akd.svc.akadia.modules.external.empresa.entity.id.EmpresaId;
+import br.akd.svc.akadia.modules.external.empresa.EmpresaId;
 import br.akd.svc.akadia.utils.Constantes;
 import com.lowagie.text.Font;
 import com.lowagie.text.*;
@@ -60,11 +60,11 @@ public class ClienteRelatorioService {
 
         log.debug("Verificando se listagem de ids de clientes recebidas por parâmetro é vazia...");
         List<ClienteEntity> clientes = idsClientes.isEmpty()
-                ? clienteRepositoryImpl.implementaBuscaPorTodos(usuarioLogado.getEmpresa().getId())
+                ? clienteRepositoryImpl.implementaBuscaPorTodos(usuarioLogado.getIdEmpresa())
                 : clienteRepositoryImpl.implementaBuscaPorIdEmMassa(
                 new EmpresaId(
-                        usuarioLogado.getEmpresa().getClienteSistema().getId(),
-                        usuarioLogado.getEmpresa().getId()),
+                        usuarioLogado.getIdClienteSistema(),
+                        usuarioLogado.getIdEmpresa()),
                 idsClientes);
 
         Collections.reverse(clientes);

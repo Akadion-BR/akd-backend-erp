@@ -17,21 +17,21 @@ public interface PatrimonioRepository extends JpaRepository<PatrimonioEntity, Pa
 
     @Query("SELECT p FROM PatrimonioEntity p " +
             "WHERE p.id = ?2 " +
-            "AND p.empresa.id = ?1 " +
+            "AND p.idEmpresa = ?1 " +
             "AND p.exclusao IS NULL")
     Optional<PatrimonioEntity> buscaPorId(UUID idEmpresa,
                                           UUID idPatrimonio);
 
     @Query("SELECT p FROM PatrimonioEntity p " +
-            "WHERE p.empresa.id = ?1 " +
+            "WHERE p.idEmpresa = ?1 " +
             "AND p.exclusao IS NULL")
     List<PatrimonioEntity> buscaTodos(UUID idEmpresa);
 
     @Query("SELECT p FROM PatrimonioEntity p " +
-            "WHERE p.empresa.id = ?1 " +
+            "WHERE p.idEmpresa = ?1 " +
             "AND (?2 IS NULL OR (upper(p.descricao) LIKE ?2% and p.exclusao IS NULL))")
     Page<PatrimonioEntity> buscaPaginadaPorClientes(Pageable pageable,
-                                                    UUID uuidEmpresa,
+                                                    UUID idEmpresa,
                                                     String busca);
 
 }

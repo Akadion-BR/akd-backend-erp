@@ -4,8 +4,7 @@ import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.ColaboradorEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.id.ColaboradorId;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.ColaboradorRepository;
-import br.akd.svc.akadia.modules.external.empresa.entity.EmpresaEntity;
-import br.akd.svc.akadia.modules.external.empresa.entity.id.EmpresaId;
+import br.akd.svc.akadia.modules.external.empresa.EmpresaId;
 import br.akd.svc.akadia.modules.global.objects.imagem.entity.ImagemEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,7 +103,11 @@ public class ColaboradorRepositoryImpl {
         log.debug("Método que implementa busca de colaborador por id em massa acessado. Ids: {}", ids.toString());
 
         List<ColaboradorId> colaboradorIds = new ArrayList<>();
-        ids.forEach(uuid -> colaboradorIds.add(new ColaboradorId(empresaId, uuid)));
+        ids.forEach(uuid -> colaboradorIds.add(
+                ColaboradorId.builder()
+                        .idClienteSistema(empresaId.getClienteSistema())
+                        .idEmpresa(empresaId.getId())
+                        .id(uuid).build()));
 
         List<ColaboradorEntity> colaboradores =
                 colaboradorRepository.findAllById(colaboradorIds);

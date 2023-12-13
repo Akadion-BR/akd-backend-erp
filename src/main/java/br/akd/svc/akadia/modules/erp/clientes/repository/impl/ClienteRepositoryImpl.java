@@ -4,11 +4,10 @@ import br.akd.svc.akadia.exceptions.ObjectNotFoundException;
 import br.akd.svc.akadia.modules.erp.clientes.models.entity.ClienteEntity;
 import br.akd.svc.akadia.modules.erp.clientes.models.entity.id.ClienteId;
 import br.akd.svc.akadia.modules.erp.clientes.repository.ClienteRepository;
-import br.akd.svc.akadia.modules.external.empresa.entity.id.EmpresaId;
+import br.akd.svc.akadia.modules.external.empresa.EmpresaId;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +18,14 @@ import java.util.UUID;
 @Service
 public class ClienteRepositoryImpl {
 
-    //TODO ARRUMAR TRANSACTIONALS
-
     @Autowired
     ClienteRepository repository;
 
-    @Transactional
     public ClienteEntity implementaPersistencia(ClienteEntity cliente) {
         log.debug("Método de serviço que implementa persistência do cliente");
         return repository.save(cliente);
     }
 
-    @Transactional
     public void implementaPersistenciaEmMassa(List<ClienteEntity> clientes) {
         log.debug("Método de serviço que implementa persistência em massa do cliente acessado");
         repository.saveAll((clientes));
@@ -65,7 +60,12 @@ public class ClienteRepositoryImpl {
         log.debug("Método que implementa busca de cliente por id em massa acessado. Ids: {}", ids.toString());
 
         List<ClienteId> clienteIds = new ArrayList<>();
-        ids.forEach(id -> clienteIds.add(new ClienteId(empresaId, id)));
+        ids.forEach(id -> clienteIds.add(
+                ClienteId.builder()
+                        .idClienteSistema(empresaId.getClienteSistema())
+                        .idEmpresa(empresaId.getId())
+                        .id(id)
+                        .build()));
 
         List<ClienteEntity> clientes = repository.findAllById(clienteIds);
 

@@ -2,7 +2,6 @@ package br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.utils;
 
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.ModulosEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.ColaboradorRepository;
-import br.akd.svc.akadia.modules.external.empresa.entity.EmpresaEntity;
 import br.akd.svc.akadia.utils.ConversorDeDados;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,16 +59,17 @@ public class ColaboradorServiceUtil {
         return privilegios;
     }
 
-    public String geraSenhaAleatoriaParaNovoLogin(EmpresaEntity empresaEntity) {
+    public String geraSenhaAleatoriaParaNovoLogin() {
         log.info("Método de criação de senha aleatória acessado");
-        return "@" + empresaEntity.getNome().replace(" ", "").substring(0, 2).toUpperCase() +
-                empresaEntity.getCnpj()
-                        .replace("-", ".")
-                        .replace(".", "")
-                        .replace("/", "")
-                        .substring(0, 2) +
-                empresaEntity.getDataCadastro().substring(0, 2) +
-                empresaEntity.getSegmentoEmpresaEnum().getDesc().substring(0, 2).toUpperCase();
+//        return "@" + empresaEntity.getNome().replace(" ", "").substring(0, 2).toUpperCase() +
+//                empresaEntity.getCnpj()
+//                        .replace("-", ".")
+//                        .replace(".", "")
+//                        .replace("/", "")
+//                        .substring(0, 2) +
+//                empresaEntity.getDataCadastro().substring(0, 2) +
+//                empresaEntity.getSegmentoEmpresaEnum().getDesc().substring(0, 2).toUpperCase(); //TODO ALTERADO
+        return "senhaTeste"; //TODO ALTERADO
     }
 
 }

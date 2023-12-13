@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,8 @@ public class ClienteServiceImpl implements ClienteService {
 
     String BUSCA_CLIENTE_POR_ID = "Iniciando acesso ao método de implementação de busca pelo cliente por id...";
 
+    @Override
+    @Transactional
     public ClienteResponse criaNovoCliente(ColaboradorId idColaboradorSessao,
                                            ClienteRequest clienteRequest) {
 
@@ -60,7 +63,7 @@ public class ClienteServiceImpl implements ClienteService {
 
         log.debug("Iniciando acesso ao método de validação de chave única...");
         clienteValidationService.validaSeChavesUnicasJaExistemParaNovoCliente(
-                colaboradorLogado.getEmpresa().getId(),
+                colaboradorLogado.getIdEmpresa(),
                 clienteRequest);
 
         log.debug("Iniciando criação do objeto ClienteEntity...");
@@ -83,6 +86,7 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteResponse;
     }
 
+    @Override
     public ClientePageResponse realizaBuscaPaginadaPorClientes(Pageable pageable,
                                                                ColaboradorId idColaboradorSessao,
                                                                String campoBusca) {
@@ -91,7 +95,7 @@ public class ClienteServiceImpl implements ClienteService {
 
         log.debug("Acessando repositório de busca de clientes");
         Page<ClienteEntity> clientePage = clienteRepository
-                .buscaPaginadaPorClientes(pageable, idColaboradorSessao.getEmpresa().getId(), campoBusca);
+                .buscaPaginadaPorClientes(pageable, idColaboradorSessao.getIdEmpresa(), campoBusca);
 
         log.debug("Busca de clientes por paginação realizada com sucesso. Acessando método de conversão dos objetos do tipo " +
                 "Entity para objetos do tipo Response...");
@@ -103,6 +107,7 @@ public class ClienteServiceImpl implements ClienteService {
         return clientePageResponse;
     }
 
+    @Override
     public ClienteResponse realizaBuscaDeClientePorId(ColaboradorId idColaboradorSessao,
                                                       UUID uuidCliente) {
         log.debug("Método de serviço de obtenção de cliente por id. ID recebido: {}", uuidCliente);
@@ -111,7 +116,7 @@ public class ClienteServiceImpl implements ClienteService {
 
         log.debug("Acessando repositório de busca de cliente por ID...");
         ClienteEntity cliente = clienteRepositoryImpl
-                .implementaBuscaPorId(colaboradorLogado.getEmpresa().getId(), uuidCliente);
+                .implementaBuscaPorId(colaboradorLogado.getIdEmpresa(), uuidCliente);
 
         log.debug("Busca de clientes por id realizada com sucesso. Acessando método de conversão dos objeto do tipo " +
                 "Entity para objeto do tipo Response...");
@@ -122,6 +127,8 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteResponse;
     }
 
+    @Override
+    @Transactional
     public ClienteResponse atualizaCliente(ColaboradorId idColaboradorSessao,
                                            UUID uuidCliente,
                                            ClienteRequest clienteRequest) {
@@ -133,14 +140,14 @@ public class ClienteServiceImpl implements ClienteService {
         securityUtil.verificaSePodeRealizarAlteracoes(colaboradorLogado.getAcessoSistema());
 
         log.debug(BUSCA_CLIENTE_POR_ID);
-        ClienteEntity clienteEncontrado = clienteRepositoryImpl.implementaBuscaPorId(uuidCliente, colaboradorLogado.getEmpresa().getId());
+        ClienteEntity clienteEncontrado = clienteRepositoryImpl.implementaBuscaPorId(uuidCliente, colaboradorLogado.getIdEmpresa());
 
         log.debug("Iniciando acesso ao método de validação de alteração de dados de cliente excluído...");
         clienteValidationService.validaSeClienteEstaExcluido(clienteEncontrado, "Não é possível atualizar um cliente excluído");
 
         log.debug("Iniciando acesso ao método de validação de chave única...");
         clienteValidationService.validaSeChavesUnicasJaExistemParaClienteAtualizado(
-                colaboradorLogado.getEmpresa().getId(),
+                colaboradorLogado.getIdEmpresa(),
                 clienteRequest,
                 clienteEncontrado);
 
@@ -164,6 +171,8 @@ public class ClienteServiceImpl implements ClienteService {
         return clienteResponse;
     }
 
+    @Override
+    @Transactional
     public ClienteResponse removeCliente(ColaboradorId idColaboradorSessao,
                                          UUID uuidCliente) {
         log.debug("Método de serviço de remoção de cliente acessado");
@@ -172,7 +181,7 @@ public class ClienteServiceImpl implements ClienteService {
 
         log.debug(BUSCA_CLIENTE_POR_ID);
         ClienteEntity clienteEncontrado = clienteRepositoryImpl
-                .implementaBuscaPorId(colaboradorLogado.getEmpresa().getId(), uuidCliente);
+                .implementaBuscaPorId(colaboradorLogado.getIdEmpresa(), uuidCliente);
 
         log.debug("Iniciando acesso ao método de validação de exclusão de cliente que já foi excluído...");
         clienteValidationService.validaSeClienteEstaExcluido(clienteEncontrado,
@@ -195,6 +204,8 @@ public class ClienteServiceImpl implements ClienteService {
         return new ClienteResponse().buildFromEntity(clienteExcluido);
     }
 
+    @Override
+    @Transactional
     public void removeClientesEmMassa(ColaboradorId idColaboradorSessao,
                                       List<UUID> idClientes) {
         log.debug("Método de serviço de remoção de cliente acessado");
@@ -206,7 +217,7 @@ public class ClienteServiceImpl implements ClienteService {
         for (UUID uuidCliente : idClientes) {
             log.debug(BUSCA_CLIENTE_POR_ID);
             ClienteEntity clienteEncontrado = clienteRepositoryImpl
-                    .implementaBuscaPorId(colaboradorLogado.getEmpresa().getId(), uuidCliente);
+                    .implementaBuscaPorId(colaboradorLogado.getIdEmpresa(), uuidCliente);
             clientesEncontrados.add(clienteEncontrado);
         }
 

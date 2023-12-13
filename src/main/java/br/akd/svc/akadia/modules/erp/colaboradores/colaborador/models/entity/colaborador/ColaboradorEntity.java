@@ -12,14 +12,13 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.fer
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.ponto.PontoEntity;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.*;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.utils.ColaboradorServiceUtil;
-import br.akd.svc.akadia.modules.external.empresa.entity.EmpresaEntity;
+import br.akd.svc.akadia.modules.external.empresa.EmpresaId;
 import br.akd.svc.akadia.modules.global.objects.acessosistema.entity.AcessoSistemaEntity;
 import br.akd.svc.akadia.modules.global.objects.arquivo.entity.ArquivoEntity;
 import br.akd.svc.akadia.modules.global.objects.endereco.entity.EnderecoEntity;
 import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.modules.global.objects.imagem.entity.ImagemEntity;
 import br.akd.svc.akadia.modules.global.objects.telefone.entity.TelefoneEntity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
@@ -63,13 +62,18 @@ public class ColaboradorEntity {
     private UUID id;
 
     @Id
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @Comment("Chave primária do colaborador - ID da empresa ao qual o colaborador faz parte")
-    @JoinColumn(name = "COD_EMPRESA_CLB", referencedColumnName = "COD_EMPRESA_EMP")
-    @JoinColumn(name = "COD_CLIENTESISTEMA_CLB", referencedColumnName = "COD_CLIENTESISTEMA_EMP")
-    private EmpresaEntity empresa;
+    @Type(type = "uuid-char")
+    @GeneratedValue(generator = "UUID")
+    @Comment("Chave primária do colaborador - Código do cliente sistêmico")
+    @Column(name = "COD_CLIENTESISTEMA_CLB", nullable = false, updatable = false)
+    private UUID idClienteSistema;
+
+    @Id
+    @Type(type = "uuid-char")
+    @GeneratedValue(generator = "UUID")
+    @Comment("Chave primária do colaborador - Código da empresa")
+    @Column(name = "COD_EMPRESA_CLB", nullable = false, updatable = false)
+    private UUID idEmpresa;
 
     @Comment("Data em que o cadastro do colaborador foi realizado")
     @Column(name = "DT_DATACADASTRO_CLB", nullable = false, updatable = false, length = 10)
@@ -275,17 +279,18 @@ public class ColaboradorEntity {
     }
 
     public void removeAdvertencia(AdvertenciaEntity advertenciaEntity) {
-        //TODO VALIDAR SE MÉTODO ESTÁ FUNCIONAL
         this.advertencias.remove(advertenciaEntity);
     }
 
-    public ColaboradorEntity buildFromRequest(EmpresaEntity empresaSessao,
+    public ColaboradorEntity buildFromRequest(EmpresaId empresaId,
                                               String matriculaGerada,
                                               MultipartFile contratoContratacao,
                                               ColaboradorRequest colaboradorRequest) throws IOException {
         return colaboradorRequest != null
                 ? ColaboradorEntity.builder()
-                .empresa(empresaSessao)
+                .id(null)
+                .idEmpresa(empresaId.getId())
+                .idClienteSistema(empresaId.getClienteSistema())
                 .dataCadastro(LocalDate.now().toString())
                 .horaCadastro(LocalTime.now().toString())
                 .matricula(matriculaGerada)
@@ -325,7 +330,8 @@ public class ColaboradorEntity {
         return colaboradorRequest != null
                 ? ColaboradorEntity.builder()
                 .id(colaboradorPreAtualizacao.getId())
-                .empresa(colaboradorPreAtualizacao.getEmpresa())
+                .idEmpresa(colaboradorPreAtualizacao.getIdEmpresa())
+                .idClienteSistema(colaboradorPreAtualizacao.getIdClienteSistema())
                 .dataCadastro(colaboradorPreAtualizacao.getDataCadastro())
                 .horaCadastro(colaboradorPreAtualizacao.getHoraCadastro())
                 .matricula(colaboradorPreAtualizacao.getMatricula())
@@ -360,13 +366,16 @@ public class ColaboradorEntity {
     }
 
     public ColaboradorEntity buildRoot(ColaboradorServiceUtil colaboradorServiceUtil,
-                                       EmpresaEntity empresaEntity) {
+                                       EmpresaId empresaId) {
 
         log.info("Iniciando acesso ao método de geração de senha aleatória...");
-        String senha = colaboradorServiceUtil.geraSenhaAleatoriaParaNovoLogin(empresaEntity);
+        String senha = colaboradorServiceUtil.geraSenhaAleatoriaParaNovoLogin();
         log.info("Senha criada com sucesso");
 
         return ColaboradorEntity.builder()
+                .id(null)
+                .idEmpresa(empresaId.getId())
+                .idClienteSistema(empresaId.getClienteSistema())
                 .dataCadastro(LocalDate.now().toString())
                 .horaCadastro(LocalTime.now().toString())
                 .matricula(colaboradorServiceUtil.geraMatriculaUnica())
@@ -406,7 +415,6 @@ public class ColaboradorEntity {
                 .advertencias(new ArrayList<>())
                 .acessos(new ArrayList<>())
                 .acoes(new ArrayList<>())
-                .empresa(empresaEntity)
                 .build();
     }
 }

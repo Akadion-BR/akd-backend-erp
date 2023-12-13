@@ -54,7 +54,7 @@ public class AcaoServiceImpl implements AcaoService {
 
         log.debug("Acessando repositório de busca de ações");
         Page<AcaoEntity> acaoPage = colaboradorRepository.buscaAcoesPorIdColaborador(
-                pageable, idColaboradorSessao.getEmpresa().getId(), uuidColaborador);
+                pageable, idColaboradorSessao.getIdEmpresa(), uuidColaborador);
 
         log.debug("Busca de ações por paginação realizada com sucesso. Acessando método de conversão dos objetos do tipo " +
                 "Entity para objetos do tipo Response...");

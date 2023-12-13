@@ -10,7 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExpedienteRequest {
-    //TODO JAVAX VALIDATOR
     private String horaEntrada;
     private String horaSaidaAlmoco;
     private String horaEntradaAlmoco;

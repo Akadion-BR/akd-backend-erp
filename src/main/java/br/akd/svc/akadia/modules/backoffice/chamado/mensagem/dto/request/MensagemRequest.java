@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MensagemRequest {
-    //TODO JAVAX VALIDATOR
     private String conteudo;
     private List<AnexoMensagemRequest> anexos = new ArrayList<>();
 }

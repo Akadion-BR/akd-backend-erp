@@ -5,15 +5,12 @@ import br.akd.svc.akadia.modules.erp.clientes.models.dto.response.ClienteRespons
 import br.akd.svc.akadia.modules.erp.clientes.models.dto.response.page.ClientePageResponse;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.id.ColaboradorId;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface ClienteService {
 
-    @Transactional
     ClienteResponse criaNovoCliente(ColaboradorId idColaboradorSessao,
                                     ClienteRequest clienteRequest);
 
@@ -24,16 +21,13 @@ public interface ClienteService {
     ClienteResponse realizaBuscaDeClientePorId(ColaboradorId idColaboradorSessao,
                                                UUID uuidCliente);
 
-    @Transactional
     ClienteResponse atualizaCliente(ColaboradorId idColaboradorSessao,
                                     UUID uuidCliente,
                                     ClienteRequest clienteRequest);
 
-    @Transactional
     ClienteResponse removeCliente(ColaboradorId idColaboradorSessao,
                                   UUID uuidCliente);
 
-    @Transactional
     void removeClientesEmMassa(ColaboradorId idColaboradorSessao,
                                List<UUID> idClientes);
 }

@@ -315,7 +315,7 @@ public class ClienteController {
                                                                   @RequestBody String inscricaoEstadual) {
         log.info("Endpoint de validação de duplicidade de inscrição estadual acessado. IE: " + inscricaoEstadual);
         clienteValidationService.validaSeInscricaoEstadualJaExiste(
-                ((UserSS) userDetails).getColaboradorId().getEmpresa().getId(),
+                ((UserSS) userDetails).getColaboradorId().getIdEmpresa(),
                 inscricaoEstadual);
         return ResponseEntity.ok().build();
     }
@@ -347,7 +347,7 @@ public class ClienteController {
                                                         @RequestBody String cpfCnpj) {
         log.info("Endpoint de validação de duplicidade de CPF/CNPJ acessado. CPF/CNPJ: " + cpfCnpj);
         clienteValidationService.validaSeCpfCnpjJaExiste(
-                ((UserSS) userDetails).getColaboradorId().getEmpresa().getId(),
+                ((UserSS) userDetails).getColaboradorId().getIdEmpresa(),
                 cpfCnpj);
         return ResponseEntity.ok().build();
     }

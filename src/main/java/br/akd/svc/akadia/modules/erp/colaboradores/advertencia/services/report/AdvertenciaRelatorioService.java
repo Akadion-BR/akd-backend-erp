@@ -20,7 +20,6 @@ import java.util.Date;
 public class AdvertenciaRelatorioService {
 
     public void exportarPdf(HttpServletResponse response,
-                            ColaboradorEntity usuarioLogado,
                             ColaboradorEntity colaboradorAdvertencia,
                             AdvertenciaEntity advertenciaEntity)
             throws DocumentException, IOException {
@@ -30,9 +29,9 @@ public class AdvertenciaRelatorioService {
 
         response.setContentType("application/pdf");
         String headerKey = "Content-Disposition";
-        String headerValue = "attachement; filename=akadion_"
-                + usuarioLogado.getEmpresa().getNome().replace(" ", "-").toLowerCase()
-                + "_colaboradores_"
+        String headerValue = "attachement; filename=" +
+                "akadion_"
+                + "colaboradores_"
                 + new SimpleDateFormat("dd.MM.yyyy_HHmmss").format(new Date())
                 + ".pdf";
         response.setHeader(headerKey, headerValue);
@@ -69,11 +68,12 @@ public class AdvertenciaRelatorioService {
 
         Paragraph p;
 
-        p = new Paragraph("EMPREGADOR: " + colaboradorAdvertencia.getEmpresa().getRazaoSocial().toUpperCase(), fontBold);
-        p.setAlignment(Element.ALIGN_LEFT);
-        p.setSpacingBefore(0);
-        p.setSpacingAfter(0);
-        document.add(p);
+//        p = new Paragraph("EMPREGADOR: " + colaboradorAdvertencia.getEmpresa().getRazaoSocial().toUpperCase(), fontBold);
+//        p = new Paragraph();
+//        p.setAlignment(Element.ALIGN_LEFT);
+//        p.setSpacingBefore(0);
+//        p.setSpacingAfter(0);
+//        document.add(p);
 
         p = new Paragraph("EMPREGADO:  " + colaboradorAdvertencia.getNome().toUpperCase(), fontBold);
         p.setAlignment(Element.ALIGN_LEFT);

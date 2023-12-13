@@ -6,6 +6,7 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.col
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.entity.colaborador.id.ColaboradorId;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.models.enums.ModulosEnum;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.impl.ColaboradorRepositoryImpl;
+import br.akd.svc.akadia.modules.external.empresa.EmpresaId;
 import br.akd.svc.akadia.utils.Constantes;
 import br.akd.svc.akadia.config.security.utils.SecurityUtil;
 import com.lowagie.text.Font;
@@ -60,8 +61,9 @@ public class ColaboradorRelatorioService {
 
         log.debug("Verificando se listagem de ids de colaboradores recebida por parâmetro é vazia...");
         java.util.List<ColaboradorEntity> colaboradores = idsColaboradores.isEmpty()
-                ? colaboradorRepository.implementaBuscaPorTodos(idColaboradorLogado.getEmpresa().getId())
-                : colaboradorRepository.implementaBuscaPorIdEmMassa(idColaboradorLogado.getEmpresa(), idsColaboradores);
+                ? colaboradorRepository.implementaBuscaPorTodos(idColaboradorLogado.getIdEmpresa())
+                : colaboradorRepository.implementaBuscaPorIdEmMassa(
+                        new EmpresaId(idColaboradorLogado.getIdClienteSistema(), idColaboradorLogado.getIdEmpresa()), idsColaboradores);
 
         Collections.reverse(colaboradores);
 

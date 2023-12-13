@@ -1,5 +1,4 @@
-package br.akd.svc.akadia.modules.erp.despesas.models.entity.id;
-
+package br.akd.svc.akadia.modules.erp.compras.models.entity.id;
 
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -13,7 +12,7 @@ import java.util.UUID;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class DespesaId implements Serializable {
+public class CompraId implements Serializable {
     @Type(type = "uuid-char")
     private UUID idClienteSistema;
     @Type(type = "uuid-char")

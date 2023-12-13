@@ -16,7 +16,7 @@ import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.repository.impl.C
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.crud.ColaboradorService;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.utils.ColaboradorServiceUtil;
 import br.akd.svc.akadia.modules.erp.colaboradores.colaborador.services.validator.ColaboradorValidation;
-import br.akd.svc.akadia.modules.external.empresa.entity.EmpresaEntity;
+import br.akd.svc.akadia.modules.external.empresa.EmpresaId;
 import br.akd.svc.akadia.modules.global.objects.exclusao.entity.ExclusaoEntity;
 import br.akd.svc.akadia.modules.global.objects.imagem.entity.ImagemEntity;
 import br.akd.svc.akadia.modules.global.objects.imagem.response.ImagemResponse;
@@ -78,7 +78,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
         String matriculaGerada = colaboradorServiceUtil.geraMatriculaUnica();
 
         ColaboradorEntity colaboradorGerado = new ColaboradorEntity().buildFromRequest(
-                colaboradorLogado.getEmpresa(),
+                new EmpresaId(colaboradorLogado.getIdClienteSistema(), colaboradorLogado.getIdEmpresa()),
                 matriculaGerada,
                 contratoColaborador,
                 colaboradorEntity);
@@ -101,8 +101,8 @@ public class ColaboradorServiceImpl implements ColaboradorService {
         log.info("Método de serviço de obtenção paginada de colaboradores acessado");
 
         log.info("Acessando repositório de busca de colaboradores");
-        Page<ColaboradorEntity> colaboradorPage = colaboradorRepository
-                .buscaPaginadaPorColaboradores(pageable, idColaboradorSessao.getEmpresa().getId(), campoBusca);
+        Page<ColaboradorEntity> colaboradorPage = colaboradorRepository.buscaPaginadaPorColaboradores(
+                pageable, idColaboradorSessao.getIdEmpresa(), campoBusca);
 
         log.info("Busca de colaboradores por paginação realizada com sucesso. Acessando método de conversão dos " +
                 "objetos do tipo Entity para objetos do tipo Response...");
@@ -121,7 +121,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
         log.info("Iniciando acesso ao método responsável por implementar a lógica de busca pela iamgem de perfil do " +
                 "colaborador no banco de dados...");
         ImagemEntity imagemEntity = colaboradorRepositoryImpl
-                .implementaBuscaDeImagemDePerfilPorId(idColaboradorSessao.getEmpresa().getId(), idColaborador);
+                .implementaBuscaDeImagemDePerfilPorId(idColaboradorSessao.getIdEmpresa(), idColaborador);
         log.info("Objeto ImagemEntity obtido com sucesso");
 
         log.info("Iniciando acesso ao método responsável pela conversão de objeto do tipo ImagemEntity para objeto " +
@@ -137,7 +137,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 
         log.info("Iniciando acesso ao repositório de busca de ocupações da empresa...");
         List<String> ocupacoesEmpresa = colaboradorRepositoryImpl
-                .implementaBuscaPorTodasAsOcupacoesDaEmpresa(idColaboradorSessao.getEmpresa().getId());
+                .implementaBuscaPorTodasAsOcupacoesDaEmpresa(idColaboradorSessao.getIdEmpresa());
         log.info("Obtenção das ocupações da empresa realizada com sucesso");
 
         log.info("Iniciando ordenação dos dados obtidos...");
@@ -152,7 +152,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 
         log.info("Acessando repositório de busca de colaborador por ID...");
         ColaboradorEntity colaborador = colaboradorRepositoryImpl
-                .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), idColaborador);
+                .implementaBuscaPorId(idColaboradorSessao.getIdEmpresa(), idColaborador);
 
         log.info("Busca de colaboradores por id realizada com sucesso. Acessando método de conversão dos objeto do tipo " +
                 "Entity para objeto do tipo Response...");
@@ -180,7 +180,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 
         log.info(BUSCA_COLABORADOR_POR_ID);
         ColaboradorEntity colaboradorEncontrado = colaboradorRepositoryImpl
-                .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), idColaborador);
+                .implementaBuscaPorId(idColaboradorSessao.getIdEmpresa(), idColaborador);
 
         log.info("Iniciando acesso ao método de validação de alteração de dados de colaborador excluído...");
         colaboradorValidation.validaSeColaboradorEstaExcluido(
@@ -223,7 +223,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 
         log.info("Acessando repositório de busca de colaborador por ID...");
         ColaboradorEntity colaborador = colaboradorRepositoryImpl
-                .implementaBuscaPorId(idColaborador, colaboradorLogado.getEmpresa().getId());
+                .implementaBuscaPorId(idColaborador, colaboradorLogado.getId());
 
         log.info("Acoplando foto de perfil ao objeto do colaborador...");
         colaborador.setFotoPerfil(fotoPerfilEntity);
@@ -285,7 +285,7 @@ public class ColaboradorServiceImpl implements ColaboradorService {
         for (UUID id : uuidsColaborador) {
             log.info(BUSCA_COLABORADOR_POR_ID);
             ColaboradorEntity colaboradorEncontrado = colaboradorRepositoryImpl
-                    .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), id);
+                    .implementaBuscaPorId(idColaboradorSessao.getIdEmpresa(), id);
             colaboradoresEncontrados.add(colaboradorEncontrado);
         }
 
@@ -312,11 +312,13 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 
 
     @Override
-    public CriacaoColaboradorResponse criaColaboradorAdminParaNovaEmpresa(EmpresaEntity empresaEntity) {
+//    @Transactional
+    public CriacaoColaboradorResponse criaColaboradorAdminParaNovaEmpresa(EmpresaId empresaId) {
         log.info("Método de criação de colaborador ADMIN DEFAULT para nova empresa acessado");
 
         log.info("Iniciando construção de objeto colaborador entity...");
-        ColaboradorEntity colaboradorCriado = new ColaboradorEntity().buildRoot(colaboradorServiceUtil, empresaEntity);
+        ColaboradorEntity colaboradorCriado = new ColaboradorEntity().buildRoot(
+                colaboradorServiceUtil, empresaId);
         log.info("ColaboradorEntity criado com sucesso");
 
         log.info("Iniciando acesso ao método de implementação da persistência do colaborador...");

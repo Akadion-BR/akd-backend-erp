@@ -85,7 +85,7 @@ public class PatrimonioServiceImpl implements PatrimonioService {
 
         log.debug("Acessando repositório de busca de patrimonios");
         Page<PatrimonioEntity> patrimonioPage = patrimonioRepository
-                .buscaPaginadaPorClientes(pageable, idColaboradorSessao.getEmpresa().getId(), campoBusca);
+                .buscaPaginadaPorClientes(pageable, idColaboradorSessao.getIdEmpresa(), campoBusca);
 
         log.debug("Busca de patrimônios por paginação realizada com sucesso. Acessando método de conversão dos objetos do tipo " +
                 "Entity para objetos do tipo Response...");
@@ -103,7 +103,7 @@ public class PatrimonioServiceImpl implements PatrimonioService {
 
         log.debug("Acessando repositório de busca de patrimônio por ID...");
         PatrimonioEntity patrimonio = patrimonioRepositoryImpl
-                .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), idPatrimonio);
+                .implementaBuscaPorId(idColaboradorSessao.getIdEmpresa(), idPatrimonio);
 
         log.debug("Busca de patrimônios por id realizada com sucesso. Acessando método de conversão dos objeto do tipo " +
                 "Entity para objeto do tipo Response...");
@@ -127,7 +127,7 @@ public class PatrimonioServiceImpl implements PatrimonioService {
 
         log.debug(INICIA_BUSCA_POR_ID);
         PatrimonioEntity patrimonioEncontrado = patrimonioRepositoryImpl
-                .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), idPatrimonio);
+                .implementaBuscaPorId(idColaboradorSessao.getIdEmpresa(), idPatrimonio);
 
         log.debug("Iniciando acesso ao método de validação de alteração de dados de patrimônio excluído...");
         patrimonioValidationService
@@ -159,7 +159,7 @@ public class PatrimonioServiceImpl implements PatrimonioService {
 
         log.debug(INICIA_BUSCA_POR_ID);
         PatrimonioEntity patrimonioEncontrado = patrimonioRepositoryImpl
-                .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), uuidPatrimonio);
+                .implementaBuscaPorId(idColaboradorSessao.getIdEmpresa(), uuidPatrimonio);
 
         log.debug("Iniciando acesso ao método de validação de exclusão de patrimônio que já foi excluído...");
         patrimonioValidationService
@@ -193,7 +193,7 @@ public class PatrimonioServiceImpl implements PatrimonioService {
         for (UUID idPatrimonio : idsPatrimonio) {
             log.debug(INICIA_BUSCA_POR_ID);
             PatrimonioEntity patrimonioEncontrado = patrimonioRepositoryImpl
-                    .implementaBuscaPorId(idColaboradorSessao.getEmpresa().getId(), idPatrimonio);
+                    .implementaBuscaPorId(idColaboradorSessao.getIdEmpresa(), idPatrimonio);
 
             patrimoniosEncontrados.add(patrimonioEncontrado);
         }
