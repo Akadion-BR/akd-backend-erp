@@ -101,9 +101,13 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
         StandartError standartError = StandartError.builder()
                 .localDateTime(LocalDateTime.now())
                 .status(400)
-                .error(errors.toString())
+                .error((errors.size() > 1
+                        ? "Ocorreram alguns erros de validação no formulário: "
+                        : "Ocorreu um erro de validação no formulário: ")
+                        + (errors.toString().replace("[", "").replace("]", "")))
                 .path(((ServletWebRequest) request).getRequest().getRequestURI())
                 .build();
+
         return ResponseEntity.status(status).body(standartError);
     }
 
